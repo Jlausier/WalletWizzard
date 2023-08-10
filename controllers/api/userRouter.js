@@ -1,5 +1,5 @@
 import express from "express";
-import { User } from "../../models";
+import { User } from "../../models/index.js";
 
 const router = express.Router();
 
@@ -31,7 +31,7 @@ router.post("/login", async (req, res) => {
       req.session.logged_in = true;
       res
         .json({ user: userData, message: "Logged in successfully" })
-        .redirect("/overview");
+        .redirect("/dashboard/overview");
     });
   } catch (err) {
     res.status(400).json(err);
