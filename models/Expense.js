@@ -27,7 +27,7 @@ Income.init(
         key: "id",
       },
     },
-    category_id: {
+    categoryId: {
       type: DataTypes.UUID,
       references: {
         model: "expense_category",
