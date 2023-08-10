@@ -1,0 +1,20 @@
+[
+  {
+    "name": "John Doe",
+    "email": "john@example.com",
+    "password": "password123",
+    "darkmode": true
+  },
+  {
+    "name": "Jane Smith",
+    "email": "jane@example.com",
+    "password": "securepass",
+    "darkmode": false
+  },
+  {
+    "name": "Alice Johnson",
+    "email": "alice@example.com",
+    "password": "mypassword",
+    "darkmode": true
+  }
+]
