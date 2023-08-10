@@ -16,6 +16,13 @@ ExpenseType.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    categoryId: {
+      type: DataTypes.UUID,
+      references: {
+        model: "expense_category",
+        key: "id",
+      },
+    },
   },
   {
     sequelize,

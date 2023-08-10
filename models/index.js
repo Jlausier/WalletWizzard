@@ -2,8 +2,20 @@ import User from "./User";
 import Income from "./Income";
 import Expense from "./Expense";
 import ExpenseType from "./ExpenseType";
+import ExpenseCategory from "./ExpenseCategory";
 import Goal from "./Goal";
-import FinanceCategory from "./FinanceCategory";
+import GoalCategory from "./GoalCategory";
+
+// ------------------------- Income Associations -------------------------
+
+Income.belongsTo(User, {
+  foreignKey: "user_id",
+  onDelete: "CASCADE",
+});
+
+User.hasMany(Income, {
+  foreignKey: "user_id",
+});
 
 // ------------------------- Expense Associations ------------------------
 
@@ -25,12 +37,12 @@ ExpenseType.hasMany(Expense, {
   foreignKey: "type_id",
 });
 
-Expense.belongsTo(FinanceCategory, {
+ExpenseType.belongsTo(ExpenseCategory, {
   foreignKey: "category_id",
   onDelete: "CASCADE",
 });
 
-FinanceCategory.hasMany(Expense, {
+ExpenseCategory.hasMany(ExpenseType, {
   foreignKey: "category_id",
 });
 
@@ -45,13 +57,23 @@ User.hasMany(Goal, {
   foreignKey: "user_id",
 });
 
-Goal.belongsTo(FinanceCategory, {
+Goal.belongsTo(GoalCategory, {
   foreignKey: "category_id",
   onDelete: "CASCADE",
 });
 
-FinanceCategory.hasMany(Goal, {
+GoalCategory.hasMany(Goal, {
   foreignKey: "category_id",
 });
 
-export {};
+// ------------------------------- Exports -------------------------------
+
+export {
+  User,
+  Income,
+  Expense,
+  ExpenseType,
+  ExpenseCategory,
+  Goal,
+  GoalCategory,
+};
