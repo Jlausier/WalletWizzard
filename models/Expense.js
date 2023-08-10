@@ -34,13 +34,6 @@ Expense.init(
         key: "id",
       },
     },
-    categoryId: {
-      type: DataTypes.UUID,
-      references: {
-        model: "finance_category",
-        key: "id",
-      },
-    },
   },
   {
     sequelize,

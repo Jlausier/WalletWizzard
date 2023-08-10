@@ -33,10 +33,17 @@ Goal.init(
       allowNull: false,
       defaultValue: false,
     },
+    userId: {
+      type: DataTypes.UUID,
+      references: {
+        model: "user",
+        key: "id",
+      },
+    },
     categoryId: {
       type: DataTypes.UUID,
       references: {
-        model: "finance_category",
+        model: "goal_category",
         key: "id",
       },
     },
@@ -48,3 +55,5 @@ Goal.init(
     modelName: "goal",
   }
 );
+
+export default Goal;
