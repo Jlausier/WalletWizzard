@@ -1,28 +1,34 @@
-// Get the modal element
-var modal = document.getElementById("myModal");
-    
-// Get the button that opens the modal
-var btn = document.getElementById("navAction");
+  
+   // Get references to the modal and the "Login" button
+   const loginModal = document.getElementById("loginModal");
+   const loginButton = document.getElementById("navAction");
+ 
+   // Add a click event listener to the "Login" button
+   loginButton.addEventListener("click", () => {
+     loginModal.classList.remove("hidden"); // Show the login modal
+   });
+ 
+   // Close the modal when the close button is clicked
+   const modalClosed = loginModal.querySelector(".modal-close");
+   modalClosed.addEventListener("click", () => {
+     loginModal.classList.add("hidden"); // Hide the login modal
+   });
 
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("modal-close")[0];
+  // Get references to the modal and the "Join Now" button
+  const modal = document.getElementById("myModal");
+  const joinNowButton = document.getElementById("joinNowButton");
 
-// When the user clicks the button, open the modal
-btn.addEventListener("click", function() {
-  modal.classList.remove("hidden");
-});
+  // Add a click event listener to the "Join Now" button
+  joinNowButton.addEventListener("click", () => {
+    modal.classList.remove("hidden"); // Show the modal
+  });
 
-// When the user clicks on <span> (x), close the modal
-span.addEventListener("click", function() {
-  modal.classList.add("hidden");
-});
+  // Close the modal when the close button is clicked
+  const modalClose = document.querySelector(".modal-close");
+  modalClose.addEventListener("click", () => {
+    modal.classList.add("hidden"); // Hide the modal
+  });
 
-// When the user clicks anywhere outside of the modal, close it
-window.addEventListener("click", function(event) {
-  if (event.target === modal) {
-    modal.classList.add("hidden");
-  }
-});
 var scrollpos = window.scrollY;
       var header = document.getElementById("header");
       var navcontent = document.getElementById("nav-content");
