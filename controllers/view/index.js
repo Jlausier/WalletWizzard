@@ -1,10 +1,10 @@
 import express from "express";
-import apiRouter from "./api";
-import dashboardRouter from "./dashboardRoutes";
+import homeRouter from "./homeRouter";
+import dashboardRouter from "./dashboard";
 
 const router = express.Router();
 
-router.use("/api", apiRouter);
+router.use(homeRouter);
 router.use("/dashboard", dashboardRouter);
 
 export default router;

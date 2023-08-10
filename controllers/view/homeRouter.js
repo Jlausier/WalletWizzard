@@ -1,8 +1,9 @@
 import express from "express";
-import userRouter from "./userRouter";
 
 const router = express.Router();
 
-router.use("/users", userRouter);
+router.get("/", (req, res) => {
+  res.render("homepage");
+});
 
 export default router;
