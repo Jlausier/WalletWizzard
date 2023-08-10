@@ -1,0 +1,47 @@
+[
+  {
+    "name": "Salary",
+    "amount": 5000.0,
+    "userId": "_john_id"
+  },
+  {
+    "name": "Freelance",
+    "amount": 800.0,
+    "userId": "_john_id"
+  },
+  {
+    "name": "Investments",
+    "amount": 300.0,
+    "userId": "_john_id"
+  },
+  {
+    "name": "Salary",
+    "amount": 4500.0,
+    "userId": "_jane_id"
+  },
+  {
+    "name": "Part-time Job",
+    "amount": 600.0,
+    "userId": "_jane_id"
+  },
+  {
+    "name": "Side Gig",
+    "amount": 200.0,
+    "userId": "_jane_id"
+  },
+  {
+    "name": "Salary",
+    "amount": 5200.0,
+    "userId": "_alice_id"
+  },
+  {
+    "name": "Consulting",
+    "amount": 1000.0,
+    "userId": "_alice_id"
+  },
+  {
+    "name": "Rental Income",
+    "amount": 400.0,
+    "userId": "_alice_id"
+  }
+]
