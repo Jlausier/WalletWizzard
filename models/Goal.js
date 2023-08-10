@@ -15,11 +15,6 @@ Goal.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    currentAmount: {
-      type: DataTypes.DECIMAL(20, 2),
-      allowNull: false,
-      defaultValue: 0,
-    },
     desiredAmount: {
       type: DataTypes.DECIMAL(20, 2),
       allowNull: false,
