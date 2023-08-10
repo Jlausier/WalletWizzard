@@ -53,6 +53,7 @@ User.init(
       },
     },
     sequelize,
+    underscored: true,
     freezeTableName: true,
     modelName: "user",
   }
