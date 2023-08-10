@@ -86,4 +86,5 @@ export {
   ExpenseCategory,
   Goal,
   GoalCategory,
+  GoalProgression,
 };
