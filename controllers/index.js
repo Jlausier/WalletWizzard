@@ -1,6 +1,6 @@
 import express from "express";
-import apiRouter from "./api";
-import dashboardRouter from "./dashboardRoutes";
+import apiRouter from "./api/index.js";
+import dashboardRouter from "./dashboardRoutes/index.js";
 
 const router = express.Router();
 
