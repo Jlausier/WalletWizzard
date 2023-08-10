@@ -1,5 +1,15 @@
 import express from "express";
-import withAuth from "../../utils/helpers.js";
+import withAuth from "../../utils/auth.js";
+import {
+  User,
+  Income,
+  Expense,
+  ExpenseType,
+  ExpenseCategory,
+  Goal,
+  GoalCategory,
+  GoalProgression,
+} from "../../models/index.js";
 
 const router = express.Router();
 
@@ -24,9 +34,41 @@ router.get("/budget", withAuth, async (req, res) => {
    * - Goal expense
    * - Income
    * - Expenses
-   *
-   * @TODO Render budget page
    */
+
+  try {
+    const budgetData = await User.findByPk(req.session.user_id, {
+      include: [
+        {
+          model: Income,
+          attributes: ["id", "name", "amount"],
+        },
+        {
+          model: Expense,
+          attributes: ["id", "name", "amount"],
+          include: [
+            {
+              model: ExpenseType,
+              attributes: ["id", "name"],
+              include: [{ model: ExpenseCategory }],
+            },
+          ],
+        },
+        {
+          model: Goal,
+          attributes: ["id", "name", "desiredAmount", "date"],
+          include: [
+            { model: GoalCategory },
+            { model: GoalProgression, attributes: ["id", "amount"] },
+          ],
+        },
+      ],
+    }).get({ plain: true });
+
+    res.render("budget", { budgetData });
+  } catch (err) {
+    res.status(400);
+  }
 });
 
 router.get("/goals", withAuth, async (req, res) => {
