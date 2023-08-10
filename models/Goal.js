@@ -2,9 +2,9 @@ const { Model, DataTypes } = require("sequelize");
 
 const sequelize = require("../config/connection");
 
-class Expense extends Model {}
+class Goal extends Model {}
 
-Expense.init(
+Goal.init(
   {
     id: {
       type: DataTypes.UUID,
@@ -16,23 +16,22 @@ Expense.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    amount: {
+    currentAmount: {
+      type: DataTypes.DECIMAL(20, 2),
+      allowNull: false,
+      defaultValue: 0,
+    },
+    desiredAmount: {
       type: DataTypes.DECIMAL(20, 2),
       allowNull: false,
     },
-    userId: {
-      type: DataTypes.UUID,
-      references: {
-        model: "user",
-        key: "id",
-      },
+    date: {
+      type: DataTypes.DATEONLY,
     },
-    typeId: {
-      type: DataTypes.UUID,
-      references: {
-        model: "expense_type",
-        key: "id",
-      },
+    reminder: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
     },
     categoryId: {
       type: DataTypes.UUID,
@@ -46,8 +45,6 @@ Expense.init(
     sequelize,
     underscored: true,
     freezeTableName: true,
-    modelName: "expense",
+    modelName: "goal",
   }
 );
-
-export default Expense;

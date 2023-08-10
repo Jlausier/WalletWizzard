@@ -2,9 +2,9 @@ const { Model, DataTypes } = require("sequelize");
 
 const sequelize = require("../config/connection.js");
 
-class ExpenseCategory extends Model {}
+class FinanceCategory extends Model {}
 
-ExpenseCategory.init(
+FinanceCategory.init(
   {
     id: {
       type: DataTypes.UUID,
@@ -22,8 +22,16 @@ ExpenseCategory.init(
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: "expense_category",
+    modelName: "finance_category",
   }
 );
 
-module.exports = ExpenseCategory;
+module.exports = FinanceCategory;
+
+/**
+ * Travel
+ * Savings
+ * Emergency
+ * Housing
+ * Investment
+ */
