@@ -1,0 +1,9 @@
+ 
+ .no-bullets-list {
+    display: flex;
+    justify-content: center;
+  }
+
+  .no-bullets-list span {
+    margin: 10px 50px; /* Add some spacing between the names */
+  }
