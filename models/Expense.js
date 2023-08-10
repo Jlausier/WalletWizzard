@@ -27,10 +27,17 @@ Expense.init(
         key: "id",
       },
     },
+    typeId: {
+      type: DataTypes.UUID,
+      references: {
+        model: "expense_type",
+        key: "id",
+      },
+    },
     categoryId: {
       type: DataTypes.UUID,
       references: {
-        model: "expense_category",
+        model: "finance_category",
         key: "id",
       },
     },
@@ -44,20 +51,3 @@ Expense.init(
 );
 
 export default Expense;
-
-/**
- * Housing
- * Utilities
- * Groceries / household essentials
- * Vehicle
- * Internet/cable/streaming
- * Phone
- * Debt payments
- * Subscriptions / memberships
- * Child care
- * Health care
- * Emergency
- * Travel
- * Dining
- * Entertainment
- */

@@ -33,10 +33,10 @@ Goal.init(
       allowNull: false,
       defaultValue: false,
     },
-    category_id: {
+    categoryId: {
       type: DataTypes.UUID,
       references: {
-        model: "goal_category",
+        model: "finance_category",
         key: "id",
       },
     },
