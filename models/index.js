@@ -67,6 +67,15 @@ GoalCategory.hasMany(Goal, {
   foreignKey: "category_id",
 });
 
+GoalProgression.belongsTo(Goal, {
+  foreignKey: "goal_id",
+  onDelete: "CASCADE",
+});
+
+Goal.hasMany(GoalProgression, {
+  foreignKey: "goal_id",
+});
+
 // ------------------------------- Exports -------------------------------
 
 export {
