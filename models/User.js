@@ -33,6 +33,10 @@ User.init(
         len: [8],
       },
     },
+    darkMode: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+    },
   },
   {
     hooks: {
