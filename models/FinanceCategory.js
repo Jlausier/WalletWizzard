@@ -1,6 +1,5 @@
-const { Model, DataTypes } = require("sequelize");
-
-const sequelize = require("../config/connection.js");
+import { Model, DataTypes } from "sequelize";
+import sequelize from "../config/connection.js";
 
 class FinanceCategory extends Model {}
 
@@ -26,7 +25,7 @@ FinanceCategory.init(
   }
 );
 
-module.exports = FinanceCategory;
+export default FinanceCategory;
 
 /**
  * Travel
