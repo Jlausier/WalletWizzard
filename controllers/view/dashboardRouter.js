@@ -1,5 +1,5 @@
 import express from "express";
-import withAuth from "../../utils/helpers.js";
+import withAuth from "../../utils/auth.js";
 
 const router = express.Router();
 
@@ -27,6 +27,11 @@ router.get("/budget", withAuth, async (req, res) => {
    *
    * @TODO Render budget page
    */
+
+  try {
+  } catch (err) {
+    res.status(400);
+  }
 });
 
 router.get("/goals", withAuth, async (req, res) => {

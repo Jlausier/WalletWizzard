@@ -7,6 +7,8 @@ import helpers from "./utils/helpers.js";
 import sequelize from "./config/connection.js";
 import sessionConnect from "connect-session-sequelize";
 
+import { __dirname } from "./utils/fsUtils.js";
+
 const SequelizeStore = sessionConnect(session.Store);
 
 const app = express();
