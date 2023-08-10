@@ -1,10 +1,11 @@
-import User from "./User";
-import Income from "./Income";
-import Expense from "./Expense";
-import ExpenseType from "./ExpenseType";
-import ExpenseCategory from "./ExpenseCategory";
-import Goal from "./Goal";
-import GoalCategory from "./GoalCategory";
+import User from "./User.js";
+import Income from "./Income.js";
+import Expense from "./Expense.js";
+import ExpenseType from "./ExpenseType.js";
+import ExpenseCategory from "./ExpenseCategory.js";
+import Goal from "./Goal.js";
+import GoalCategory from "./GoalCategory.js";
+import GoalProgression from "./GoalProgression.js";
 
 // ------------------------- Income Associations -------------------------
 
@@ -64,6 +65,15 @@ Goal.belongsTo(GoalCategory, {
 
 GoalCategory.hasMany(Goal, {
   foreignKey: "category_id",
+});
+
+GoalProgression.belongsTo(Goal, {
+  foreignKey: "goal_id",
+  onDelete: "CASCADE",
+});
+
+Goal.hasMany(GoalProgression, {
+  foreignKey: "goal_id",
 });
 
 // ------------------------------- Exports -------------------------------
