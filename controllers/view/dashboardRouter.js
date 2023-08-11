@@ -55,11 +55,11 @@ router.get("/overview", withAuth, async (req, res) => {
  * - 500 - Failure - could not fetch data
  *
  * @async
- * @method renderDashboardBudget
+ * @method renderBudget
  * @param {express.Request} req Express {@linkcode express.Request Request} object
  * @param {express.Response} res Express {@linkcode express.Response Response} object
  */
-const renderDashboardBudget = async (req, res) => {
+const renderBudget = async (req, res) => {
   try {
     const budgetData = await User.findByPk(req.session.user_id, {
       attributes: [],
@@ -99,7 +99,7 @@ const renderDashboardBudget = async (req, res) => {
 /**
  * @summary GET /dashboard/budget
  */
-router.get("/budget", withAuth, renderDashboardBudget);
+router.get("/budget", withAuth, renderBudget);
 
 // ================================ GOALS =======================================
 
@@ -118,11 +118,11 @@ router.get("/budget", withAuth, renderDashboardBudget);
  * - 500 - Failure - could not fetch data
  *
  * @async
- * @method renderDashboardGoals
+ * @method renderGoals
  * @param {express.Request} req Express {@linkcode express.Request Request} object
  * @param {express.Response} res Express {@linkcode express.Response Response} object
  */
-const renderDashboardGoals = async (req, res) => {
+const renderGoals = async (req, res) => {
   try {
     const goalsData = await User.findByPk(req.session.user_id, {
       attributes: ["id", "name", "desiredAmount", "date", "reminder"],
@@ -152,7 +152,7 @@ const renderDashboardGoals = async (req, res) => {
 /**
  * @summary GET /dashboard/goals
  */
-router.get("/goals", withAuth, renderDashboardGoals);
+router.get("/goals", withAuth, renderGoals);
 
 // ================================ STREAM ======================================
 
@@ -173,11 +173,11 @@ router.get("/goals", withAuth, renderDashboardGoals);
  * - 500 - Failure - could not fetch data
  *
  * @async
- * @method renderDashboardStream
+ * @method renderStream
  * @param {express.Request} req Express {@linkcode express.Request Request} object
  * @param {express.Response} res Express {@linkcode express.Response Response} object
  */
-const renderDashboardStream = async (req, res) => {
+const renderStream = async (req, res) => {
   try {
     const goalsData = await Goal.findAll({
       where: {
@@ -204,7 +204,7 @@ const renderDashboardStream = async (req, res) => {
 /**
  * @summary GET /dashboard/stream
  */
-router.get("/stream", withAuth, renderDashboardStream);
+router.get("/stream", withAuth, renderStream);
 
 // ================================ SETTINGS ====================================
 
