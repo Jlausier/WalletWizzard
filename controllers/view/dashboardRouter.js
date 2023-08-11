@@ -118,7 +118,7 @@ router.get("/budget", withAuth, renderDashboardBudget);
  * - 500 - Failure - could not fetch data
  *
  * @async
- * @method renderDashboardBudget
+ * @method renderDashboardGoals
  * @param {express.Request} req Express {@linkcode express.Request Request} object
  * @param {express.Response} res Express {@linkcode express.Response Response} object
  */
@@ -156,12 +156,28 @@ router.get("/goals", withAuth, renderDashboardGoals);
 
 // ================================ STREAM ======================================
 
-router.get("/stream", withAuth, async (req, res) => {
-  /**
-   * @TODO Get shared goals
-   * @TODO Render stream page
-   */
-
+/**
+ * @summary Render the dashboard stream page
+ *
+ * @description
+ * - Find all goals where:
+ *   - public: true
+ *   - complete: true
+ * - Get the goals data
+ *   - user name
+ *   - category name
+ *   - pregression SUM(amount)
+ *
+ * Status Codes:
+ * - 200 - Success - returns public, completed goals data
+ * - 500 - Failure - could not fetch data
+ *
+ * @async
+ * @method renderDashboardStream
+ * @param {express.Request} req Express {@linkcode express.Request Request} object
+ * @param {express.Response} res Express {@linkcode express.Response Response} object
+ */
+const renderDashboardStream = async (req, res) => {
   try {
     const goalsData = await Goal.findAll({
       where: {
@@ -183,7 +199,12 @@ router.get("/stream", withAuth, async (req, res) => {
   } catch (err) {
     res.status(500);
   }
-});
+};
+
+/**
+ * @summary GET /dashboard/stream
+ */
+router.get("/stream", withAuth, renderDashboardStream);
 
 // ================================ SETTINGS ====================================
 
