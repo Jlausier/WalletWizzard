@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Rent",
+    "amount": 1200.0
+  },
+  {
+    "name": "Groceries",
+    "amount": 300.0
+  },
+  {
+    "name": "Utilities",
+    "amount": 150.0
+  },
+  {
+    "name": "Dining Out",
+    "amount": 100.0
+  },
+  {
+    "name": "Entertainment",
+    "amount": 50.0
+  },
+  {
+    "name": "Rent",
+    "amount": 1300.0
+  },
+  {
+    "name": "Groceries",
+    "amount": 250.0
+  },
+  {
+    "name": "Utilities",
+    "amount": 120.0
+  },
+  {
+    "name": "Travel",
+    "amount": 200.0
+  },
+  {
+    "name": "Rent",
+    "amount": 1100.0
+  },
+  {
+    "name": "Groceries",
+    "amount": 350.0
+  },
+  {
+    "name": "Utilities",
+    "amount": 130.0
+  }
+]
