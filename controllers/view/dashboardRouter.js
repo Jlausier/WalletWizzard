@@ -11,6 +11,10 @@ import {
   GoalProgression,
 } from "../../models/index.js";
 
+/**
+ * @TODO Redirect when data is not correctly loaded
+ */
+
 const router = express.Router();
 
 router.get("/overview", withAuth, async (req, res) => {
@@ -38,6 +42,7 @@ router.get("/budget", withAuth, async (req, res) => {
 
   try {
     const budgetData = await User.findByPk(req.session.user_id, {
+      attributes: [],
       include: [
         {
           model: Income,
@@ -72,13 +77,30 @@ router.get("/budget", withAuth, async (req, res) => {
 });
 
 router.get("/goals", withAuth, async (req, res) => {
-  /**
-   * @TODO Get user's goal data
-   * - Goal array
-   *   - Include goal expenses
-   */
+  try {
+    const goalsData = await User.findByPk(req.session.user_id, {
+      attributes: ["id", "name", "desiredAmount", "date", "reminder"],
+      include: [
+        {
+          model: Goal,
+          attributes: [],
+          include: [
+            {
+              model: GoalCategory,
+            },
+            {
+              model: GoalProgression,
+              attributes: ["id", "amount"],
+            },
+          ],
+        },
+      ],
+    }).map((goal) => goal.get({ plain: true }));
 
-  res.render("goals");
+    res.render("goals", { goalsData });
+  } catch (err) {
+    res.status(400);
+  }
 });
 
 router.get("/stream", withAuth, async (req, res) => {
