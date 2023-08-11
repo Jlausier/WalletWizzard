@@ -76,9 +76,9 @@ router.get("/goals", withAuth, async (req, res) => {
    * @TODO Get user's goal data
    * - Goal array
    *   - Include goal expenses
-   *
-   * @TODO Render goals page
    */
+
+  res.render("goals");
 });
 
 router.get("/stream", withAuth, async (req, res) => {
