@@ -9,6 +9,7 @@ import {
   GoalCategory,
   GoalProgression,
   ExpenseCategory,
+  ExpenseType,
 } from "../models/index.js";
 
 const require = createRequire(import.meta.url); // construct the require method
@@ -19,6 +20,7 @@ const goalData = require("./goalData.json");
 const goalCategoryData = require("./goalCategoryData.json");
 const goalProgressionData = require("./goalProgressionData.json");
 const expenseData = require("./expenseData.json");
+const expenseTypeData = require("./expenseTypeData.json");
 const expenseCategoryData = require("./expenseCategoryData.json");
 
 const seedDatabase = async () => {
@@ -50,6 +52,11 @@ const seedDatabase = async () => {
   });
 
   await Expense.bulkCreate(expenseData, {
+    individualHooks: true,
+    returning: true,
+  });
+
+  await ExpenseType.bulkCreate(expenseTypeData, {
     individualHooks: true,
     returning: true,
   });

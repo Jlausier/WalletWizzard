@@ -1,0 +1,47 @@
+[
+    {
+       "name": "rent_or_mortgage" 
+    },
+    {
+        "name": "utilities" 
+     },
+     {
+        "name": "groceries" 
+     },
+     {
+        "name": "transportation" 
+     },
+     {
+        "name": "insurance" 
+     },
+     {
+        "name": "internet_and_cable_streaming_services" 
+     },
+     {
+        "name": "cell_phone" 
+     },
+     {
+        "name": "loans" 
+     },
+     {
+        "name": "entertainment" 
+     },
+     {
+        "name": "gym" 
+     },
+     {
+        "name": "health_and_wellness" 
+     },
+     {
+        "name": "clothing_and_personal_care" 
+     },
+     {
+        "name": "savings_and_investments" 
+     },
+     {
+        "name": "childcare_or_education" 
+     },
+     {
+        "name": "miscellaneous" 
+     }
+]
