@@ -71,14 +71,22 @@ const renderDashboardBudget = async (req, res) => {
     const budgetData = await User.findByPk(
       "051e9599-f542-433f-aae6-fe32cae09e63",
       {
+        // attributes: [
+        //   [Sequelize.fn("SUM", Sequelize.col("sum_incomes.amount")), "amount"],
+        //   [
+        //     Sequelize.fn(
+        //       "date_format",
+        //       Sequelize.col("sum_incomes.created_at"),
+        //       `%Y-%m`
+        //     ),
+        //     "month",
+        //   ],
+        // ],
         include: [
           {
             model: Income,
-            attributes: [
-              [Sequelize.fn("SUM", Sequelize.col("amount")), "amount"],
-              [getMonth, "month"],
-            ],
-            group: [getMonth],
+            // as: "sum_incomes",
+            // attributes: [],
           },
           // {
           //   model: Expense,
@@ -108,6 +116,8 @@ const renderDashboardBudget = async (req, res) => {
         nest: true,
       }
     );
+
+    console.log("Finished SQL execution");
 
     if (!budgetData) {
       res.status(400).json({ message: "Could not find budget data for user" });
