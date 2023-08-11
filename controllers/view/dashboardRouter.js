@@ -159,13 +159,24 @@ router.get("/goals", withAuth, renderDashboardGoals);
 router.get("/stream", withAuth, async (req, res) => {
   /**
    * @TODO Get shared goals
-   * - Goal name
-   * - Goal category
-   * - Timestamp reached
-   * - User name
-   *
    * @TODO Render stream page
    */
+
+  const goalsData = await Goal.findAll({
+    where: {
+      public: true,
+      complete: true,
+    },
+    attributes: ["id", "name", "desiredAmount", "dateCompleted"],
+    include: [
+      { model: User, include: ["name"] },
+      { model: GoalCategory, attributes: ["name"] },
+      {
+        model: GoalProgression,
+        attributes: [sequelize.fn("SUM", sequelize.col("amount"))],
+      },
+    ],
+  }).map((goal) => goal.get({ plain: true }));
 });
 
 // ================================ SETTINGS ====================================
