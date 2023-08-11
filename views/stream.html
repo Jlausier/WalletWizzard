@@ -8,19 +8,33 @@
     <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css"/>
     <style>
         .sidebar {
-            background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
+            background-color: #92918e;
+         
         }
-        .chart-area {
-            background-color: #f3f4f6;
+        .card{
+          color: violet;
+        
         }
+        .banner{
+            background: linear-gradient(90deg, #d53369 0%, #daae51 100%); 
+        }
+        .card-container{
+            background-color: #FCD4B0;
+        }
+        .body-container{
+            background-color: rgba(32, 32, 32, 0.068) ;
+            
+        }
+      
+       
     </style>
 </head>
-<body class="bg-gray-400">
+<body class="body-container">
    
     <div class="flex">
        
         <!-- Sidebar -->
-        <div class="sidebar w-1/4 h-screen text-white">
+        <div class="sidebar w-1/4 text-white ">
             <div class="p-4">
                 <!-- Logo -->
                 <div class="flex items-center justify-center mb-4">
@@ -38,21 +52,102 @@
                 </ul>
         </div>
         
-       
+       <section class=" ">
         <!-- Content -->
-        <div class="flex flex-col w-full" >
-            <div class="flex items-center justify-center mt-36">
-                <h2 class="text-lg font-semibold">Hello!</h2>
-            </div>
-            <div class="chart-area h-4/5  flex mt-40 ml-5 mr-5 mb-10">
-                <div class="w-3/5 pr-4">
-                    <h2 class="text-lg font-semibold mb-2">Large Chart</h2>
-                    <p>This is the content for the large chart.</p>
+         <div class="flex flex-col w-full" >
+            <section class="my-8 dark:bg-gray-800 dark:text-gray-100">
+                <div class="container flex flex-col items-center mx-auto mb-12 md:p-10 md:px-12">
+                    <h1 class="p-4 text-2xl font-semibold leadi text-center">See everyone achieve ther goals and let others know how your journey into the magic of saving is going!</h1>
                 </div>
-            </div>
-        </div>
+                <div class="container flex flex-col items-center justify-center mx-auto lg:flex-row lg:flex-wrap lg:justify-evenly lg:px-10">
+                    <div class="flex flex-col max-w-4/5 mx-4 my-6 shadow-lg">
+                         <!-- ... Card content ... -->
+                        <div class="px-4 py-12 rounded-t-lg sm:px-8 md:px-12  card-container">
+                            <p class="relative px-6 py-1 text-lg italic text-center dark:text-gray-100">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor" class="w-8 h-8  card">
+                                    <path d="M232,246.857V16H16V416H54.4ZM48,48H200V233.143L48,377.905Z"></path>
+                                    <path d="M280,416h38.4L496,246.857V16H280ZM312,48H464V233.143L312,377.905Z"></path>
+                                </svg>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatibus quibusdam, eligendi exercitationem molestias possimus facere.
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor" class="absolute right-0 w-8 h-8  card">
+                                    <path d="M280,185.143V416H496V16H457.6ZM464,384H312V198.857L464,54.1Z"></path>
+                                    <path d="M232,16H193.6L16,185.143V416H232ZM200,384H48V198.857L200,54.1Z"></path>
+                                </svg>
+                            </p>
+                        </div>
+                        <div class="flex flex-col items-center justify-center p-8 rounded-b-lg  banner dark:text-gray-900 card-container">
+                            <img src="./Taiga Aisaka.jpg" alt="" class="w-16 h-16 mb-2 -mt-16 bg-center bg-cover rounded-full dark:bg-gray-500 dark:bg-gray-700">
+                            <p class="text-xl font-semibold leadi">Taiga Aisaka</p>
+                            <p class="text-sm uppercase">Aliquam illum</p>
+                        </div>
+                         <!-- ... Card content ... -->
+                    </div>
+                     <!-- ... Card content ... -->
+                    <div class="flex flex-col max-w-4/5 mx-4 my-6 shadow-lg">
+                        <div class="px-4 py-12 rounded-t-lg sm:px-8 md:px-12 card-container">
+                            <p class="relative px-6 py-1 text-lg italic text-center dark:text-gray-100">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor" class="w-8 h-8  card">
+                                    <path d="M232,246.857V16H16V416H54.4ZM48,48H200V233.143L48,377.905Z"></path>
+                                    <path d="M280,416h38.4L496,246.857V16H280ZM312,48H464V233.143L312,377.905Z"></path>
+                                </svg>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatibus quibusdam, eligendi exercitationem molestias possimus facere.
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor" class="absolute right-0 w-8 h-8 card">
+                                    <path d="M280,185.143V416H496V16H457.6ZM464,384H312V198.857L464,54.1Z"></path>
+                                    <path d="M232,16H193.6L16,185.143V416H232ZM200,384H48V198.857L200,54.1Z"></path>
+                                </svg>
+                            </p>
+                        </div>
+                        <div class="flex flex-col items-center justify-center p-8 rounded-b-lg banner  card-container">
+                            <img src="./maka albarn.jpg" alt="" class="w-16 h-16 mb-2 -mt-16 bg-center bg-cover rounded-full dark:bg-gray-500 dark:bg-gray-700">
+                            <p class="text-xl font-semibold leadi">Maka Albarn</p>
+                            <p class="text-sm uppercase">Aliquam illum</p>
+                        </div>
+                    </div>
+                    <!-- ... Card content ... -->
+                    <div class="flex flex-col max-w-4/5 mx-4 my-6 shadow-lg">
+                        <div class="px-4 py-12 rounded-t-lg sm:px-8 md:px-12 card-container">
+                            <p class="relative px-6 py-1 text-lg italic text-center dark:text-gray-100">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor" class="w-8 h-8  card">
+                                    <path d="M232,246.857V16H16V416H54.4ZM48,48H200V233.143L48,377.905Z"></path>
+                                    <path d="M280,416h38.4L496,246.857V16H280ZM312,48H464V233.143L312,377.905Z"></path>
+                                </svg>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatibus quibusdam, eligendi exercitationem molestias possimus facere.
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor" class="absolute right-0 w-8 h-8  card">
+                                    <path d="M280,185.143V416H496V16H457.6ZM464,384H312V198.857L464,54.1Z"></path>
+                                    <path d="M232,16H193.6L16,185.143V416H232ZM200,384H48V198.857L200,54.1Z"></path>
+                                </svg>
+                            </p>
+                        </div>
+                        <div class="flex flex-col items-center justify-center p-8 rounded-b-lg  banner dark:text-gray-900">
+                            <img src="./Edward.jpg" alt="" class="w-16 h-16 mb-2 -mt-16 bg-center bg-cover rounded-full dark:bg-gray-500 dark:bg-gray-700">
+                            <p class="text-xl font-semibold leadi">Edward Elric</p>
+                            <p class="text-sm uppercase">Aliquam illum</p>
+                        </div>
+                    </div>
+                    <!-- ... Card content ... -->
+                    <div class="flex flex-col max-w-4/5 mx-4 my-6 shadow-lg">
+                        <div class="px-4 py-12 rounded-t-lg sm:px-8 md:px-12 card-container">
+                            <p class="relative px-6 py-1 text-lg italic text-center dark:text-gray-100">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor" class="w-8 h-8 d card">
+                                    <path d="M232,246.857V16H16V416H54.4ZM48,48H200V233.143L48,377.905Z"></path>
+                                    <path d="M280,416h38.4L496,246.857V16H280ZM312,48H464V233.143L312,377.905Z"></path>
+                                </svg>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatibus quibusdam, eligendi exercitationem molestias possimus facere.
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor" class="absolute right-0 w-8 h-8 card">
+                                    <path d="M280,185.143V416H496V16H457.6ZM464,384H312V198.857L464,54.1Z"></path>
+                                    <path d="M232,16H193.6L16,185.143V416H232ZM200,384H48V198.857L200,54.1Z"></path>
+                                </svg>
+                            </p>
+                        </div>
+                        <div class="flex flex-col items-center justify-center p-8 rounded-b-lg banner dark:text-gray-900">
+                            <img src="./gojo.jpg" alt="" class="w-16 h-16 mb-2 -mt-16 bg-center bg-cover rounded-full dark:bg-gray-500 dark:bg-gray-700">
+                            <p class="text-xl font-semibold leadi">Satoru Gojo</p>
+                            <p class="text-sm uppercase">Aliquam illum</p>
+                        </div>
+                    </div>
+                    <!-- ... Card content ... -->
+                </div>
+            </section>
+         </div>
+     </section>
     </div>
-   
+
 </body>
 </html>
     
