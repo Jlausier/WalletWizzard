@@ -10,6 +10,13 @@ import {
   GoalCategory,
   GoalProgression,
 } from "../../models/index.js";
+import { Sequelize } from "sequelize";
+
+const getMonth = Sequelize.fn(
+  "date_format",
+  Sequelize.col("created_at"),
+  `%Y-%m`
+);
 
 /**
  * @TODO Redirect when data is not correctly loaded
@@ -61,36 +68,54 @@ router.get("/overview", withAuth, async (req, res) => {
  */
 const renderDashboardBudget = async (req, res) => {
   try {
-    const budgetData = await User.findByPk(req.session.user_id, {
-      attributes: [],
-      include: [
-        {
-          model: Income,
-          attributes: ["id", "name", "amount"],
-        },
-        {
-          model: Expense,
-          attributes: ["id", "name", "amount"],
-          include: [
-            {
-              model: ExpenseType,
-              attributes: ["id", "name"],
-              include: [{ model: ExpenseCategory }],
-            },
-          ],
-        },
-        {
-          model: Goal,
-          attributes: ["id", "name", "desiredAmount", "date"],
-          include: [
-            { model: GoalCategory },
-            { model: GoalProgression, attributes: ["id", "amount"] },
-          ],
-        },
-      ],
-    }).get({ plain: true });
+    const budgetData = await User.findByPk(
+      "051e9599-f542-433f-aae6-fe32cae09e63",
+      {
+        include: [
+          {
+            model: Income,
+            attributes: [
+              [Sequelize.fn("SUM", Sequelize.col("amount")), "amount"],
+              [getMonth, "month"],
+            ],
+            group: [getMonth],
+          },
+          // {
+          //   model: Expense,
+          //   attributes: [
+          //     [Sequelize.fn("SUM", Sequelize.col("amount")), "amount"],
+          //     [getMonth, "month"],
+          //   ],
+          // include: [
+          //   {
+          //     model: ExpenseType,
+          //     attributes: ["name"],
+          //     include: [{ model: ExpenseCategory }],
+          //   },
+          // ],
+          //   group: [getMonth],
+          // },
+          // {
+          //   model: Goal,
+          //   attributes: ["name", "desiredAmount", "date"],
+          //   include: [
+          //     { model: GoalCategory },
+          //     { model: GoalProgression, attributes: ["amount", "created_at"] },
+          //   ],
+          // },
+        ],
+        raw: true,
+        nest: true,
+      }
+    );
 
-    res.render("budget", { budgetData });
+    if (!budgetData) {
+      res.status(400).json({ message: "Could not find budget data for user" });
+    }
+
+    console.log(budgetData);
+    res.status(200).json(budgetData);
+    // res.render("budget", { budgetData });
   } catch (err) {
     res.status(500);
   }
@@ -99,7 +124,7 @@ const renderDashboardBudget = async (req, res) => {
 /**
  * @summary GET /dashboard/budget
  */
-router.get("/budget", withAuth, renderDashboardBudget);
+router.get("/budget", renderDashboardBudget);
 
 // ================================ GOALS =======================================
 

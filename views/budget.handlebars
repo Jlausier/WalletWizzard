@@ -15,8 +15,14 @@
       <script>
         var ctx = document.getElementById("large-chart");
 
+        var numMonths = 6;
+
         var data = [];
-        var labels = {{}}
+        
+        var incomes = {{budgetData.incomes}};
+        var labels = incomes.map((i) => i.name)
+        {{#}}
+
 
       </script>
     </div>
