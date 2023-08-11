@@ -15,7 +15,13 @@ import {
  * @TODO Redirect when data is not correctly loaded
  */
 
+/**
+ * Express router for dashboard routes
+ * @const router
+ */
 const router = express.Router();
+
+// ================================ OVERVIEW ====================================
 
 router.get("/overview", withAuth, async (req, res) => {
   /**
@@ -32,14 +38,28 @@ router.get("/overview", withAuth, async (req, res) => {
    */
 });
 
-router.get("/budget", withAuth, async (req, res) => {
-  /**
-   * @TODO Get user's budget data
-   * - Goal expense
-   * - Income
-   * - Expenses
-   */
+// ================================ BUDGET ======================================
 
+/**
+ * @summary Render the dashboard budget page
+ *
+ * @description
+ * - Find the logged in user
+ * - Get their budget data
+ *   - Incomes array
+ *   - Expenses array
+ *   - Goals array
+ *
+ * Status Codes:
+ * - 200 - Success - returns budget data
+ * - 500 - Failure - could not fetch data
+ *
+ * @async
+ * @method renderDashboardBudget
+ * @param {express.Request} req Express {@linkcode express.Request Request} object
+ * @param {express.Response} res Express {@linkcode express.Response Response} object
+ */
+const renderDashboardBudget = async (req, res) => {
   try {
     const budgetData = await User.findByPk(req.session.user_id, {
       attributes: [],
@@ -72,11 +92,37 @@ router.get("/budget", withAuth, async (req, res) => {
 
     res.render("budget", { budgetData });
   } catch (err) {
-    res.status(400);
+    res.status(500);
   }
-});
+};
 
-router.get("/goals", withAuth, async (req, res) => {
+/**
+ * @summary GET /dashboard/budget
+ */
+router.get("/budget", withAuth, renderDashboardBudget);
+
+// ================================ GOALS =======================================
+
+/**
+ * @summary Render the dashboard goals page
+ *
+ * @description
+ * - Find the logged in user
+ * - Get their goals data
+ *   - Goals array
+ *     - Goal Category
+ *     - Goal Progression
+ *
+ * Status Codes:
+ * - 200 - Success - returns goals data
+ * - 500 - Failure - could not fetch data
+ *
+ * @async
+ * @method renderDashboardBudget
+ * @param {express.Request} req Express {@linkcode express.Request Request} object
+ * @param {express.Response} res Express {@linkcode express.Response Response} object
+ */
+const renderDashboardGoals = async (req, res) => {
   try {
     const goalsData = await User.findByPk(req.session.user_id, {
       attributes: ["id", "name", "desiredAmount", "date", "reminder"],
@@ -99,9 +145,16 @@ router.get("/goals", withAuth, async (req, res) => {
 
     res.render("goals", { goalsData });
   } catch (err) {
-    res.status(400);
+    res.status(500);
   }
-});
+};
+
+/**
+ * @summary GET /dashboard/goals
+ */
+router.get("/goals", withAuth, renderDashboardGoals);
+
+// ================================ STREAM ======================================
 
 router.get("/stream", withAuth, async (req, res) => {
   /**
@@ -114,6 +167,8 @@ router.get("/stream", withAuth, async (req, res) => {
    * @TODO Render stream page
    */
 });
+
+// ================================ SETTINGS ====================================
 
 router.get("/settings", withAuth, async (req, res) => {
   /**
