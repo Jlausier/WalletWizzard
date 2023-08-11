@@ -4,9 +4,9 @@ import { User } from "../../models/index.js";
 const router = express.Router();
 
 /**
- * POST /api/users/
- * @summary Create a new user and redirect to the overview page,
- *   otherwise return an error message and code.
+ * Create a new user and redirect to the overview page, otherwise return an error message and code.
+ *
+ * @summary POST /api/users/
  */
 router.post("/", async (req, res) => {
   try {
@@ -30,9 +30,9 @@ router.post("/", async (req, res) => {
 });
 
 /**
- * POST /api/users/login
- * @summary Login and redirect to the overview page,
- *   otherwise return an error message and code.
+ * Login and redirect to the overview page, otherwise return an error message and code.
+ *
+ * @summary POST /api/users/login
  */
 router.post("/login", async (req, res) => {
   try {
@@ -66,8 +66,9 @@ router.post("/login", async (req, res) => {
 });
 
 /**
- * POST /api/users/logout
- * @summary Logout and destroy the session
+ * Logout and destroy the session
+ *
+ * @summary POST /api/users/logout
  */
 router.post("/logout", (req, res) => {
   req.session.logged_in
