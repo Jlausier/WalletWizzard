@@ -1,13 +1,13 @@
 import { createRequire } from "module"; // Bring in the ability to create the 'require' method
 
-
-import sequelize from '../config/connection.js';
-import { User, Income } from '../models/index.js';
+import sequelize from "../config/connection.js";
+import { User, Income, Goal } from "../models/index.js";
 
 const require = createRequire(import.meta.url); // construct the require method
 
-const userData = require('./userData.json');
-const incomeData = require('./incomeData.json');
+const userData = require("./userData.json");
+const incomeData = require("./incomeData.json");
+const goalData = require("./goalData.json");
 
 const seedDatabase = async () => {
   await sequelize.sync({ force: true });
@@ -16,8 +16,13 @@ const seedDatabase = async () => {
     individualHooks: true,
     returning: true,
   });
-  
+
   await Income.bulkCreate(incomeData, {
+    individualHooks: true,
+    returning: true,
+  });
+
+  await Goal.bulkCreate(goalData, {
     individualHooks: true,
     returning: true,
   });
