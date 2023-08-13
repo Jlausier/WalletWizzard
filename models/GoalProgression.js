@@ -18,6 +18,10 @@ GoalProgression.init(
         min: 1,
       },
     },
+    scheduledDate: {
+      type: DataTypes.DATEONLY,
+      defaultValue: DataTypes.NOW,
+    },
     goalId: {
       type: DataTypes.UUID,
       references: {
