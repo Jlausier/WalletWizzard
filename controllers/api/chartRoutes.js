@@ -14,6 +14,8 @@ import {
 import {
   scheduledMonth,
   scheduledMonthAttr,
+  formattedMonth,
+  formattedMonthAttr,
   sumAmount,
   queryOptionsUser,
   testUserId,
@@ -48,13 +50,22 @@ const getIncomeData = async (req, res) => {
   try {
     const { sum, group_by } = req.query;
     const options = queryOptionsUser(req.session.userId || testUserId);
-    if (sum === "true") options.attributes.push(sumAmount);
+    console.log(sum && sum === "true" ? "Sum is true" : "Sum does not exist");
 
     switch (group_by) {
       case "month":
-        options.attributes.push(scheduledMonthAttr);
-        options.group = [scheduledMonth];
+        options.attributes.push(formattedMonthAttr);
+        options.group = [formattedMonth];
+        options.order = [[formattedMonth, "DESC"]];
         break;
+      default:
+        delete options.attributes;
+    }
+
+    if (sum && sum === "true") {
+      options.attributes
+        ? options.attributes.push(sumAmount)
+        : (options.attributes = sumAmount);
     }
 
     const incomeData = await Income.findAll(options);
@@ -117,16 +128,15 @@ const getExpenseData = async (req, res) => {
       case "month":
         options.attributes = [scheduledMonthAttr];
         options.group = [scheduledMonth];
+        options.order = [[scheduledMonth, "DESC"]];
         break;
       default:
         delete options.attributes;
+        options.order = [["scheduled_date", "DESC"]];
         break;
     }
 
-    if (group_by === "month") options.order = [[scheduledMonth, "DESC"]];
-    // else options.order = [["scheduled_date", "DESC"]];
-
-    if (sum === "true") {
+    if (sum && sum === "true") {
       options.attributes
         ? options.attributes.push(sumAmount)
         : (options.attributes = sumAmount);
