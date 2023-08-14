@@ -36,11 +36,11 @@ router.get("/overview", withAuth, async (req, res) => {
  * - 500 - Failure - could not fetch data
  *
  * @async
- * @method renderDashboardBudget
+ * @method renderBudget
  * @param {express.Request} req Express {@linkcode express.Request Request} object
  * @param {express.Response} res Express {@linkcode express.Response Response} object
  */
-const renderDashboardBudget = async (req, res) => {
+const renderBudget = async (req, res) => {
   try {
     res.render("budget");
   } catch (err) {
@@ -59,11 +59,11 @@ router.get("/budget", renderDashboardBudget);
  * @summary Render the dashboard goals page
  *
  * @async
- * @method renderDashboardBudget
+ * @method renderGoals
  * @param {express.Request} req Express {@linkcode express.Request Request} object
  * @param {express.Response} res Express {@linkcode express.Response Response} object
  */
-const renderDashboardGoals = async (req, res) => {
+const renderGoals = async (req, res) => {
   try {
     res.render("goals", { goalsData });
   } catch (err) {
@@ -74,7 +74,7 @@ const renderDashboardGoals = async (req, res) => {
 /**
  * @summary GET /dashboard/goals
  */
-router.get("/goals", withAuth, renderDashboardGoals);
+router.get("/goals", withAuth, renderGoals);
 
 // ================================ STREAM ======================================
 

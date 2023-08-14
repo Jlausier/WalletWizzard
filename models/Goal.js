@@ -27,6 +27,19 @@ Goal.init(
       allowNull: false,
       defaultValue: false,
     },
+    public: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true,
+    },
+    complete: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
+    dateCompleted: {
+      type: DataTypes.DATEONLY,
+    },
     userId: {
       type: DataTypes.UUID,
       references: {
