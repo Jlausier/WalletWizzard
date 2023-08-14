@@ -1,4 +1,5 @@
-import express, { query } from "express";
+import express from "express";
+import { Sequelize } from "sequelize";
 import withAuth from "../../utils/auth.js";
 import {
   User,
@@ -9,44 +10,13 @@ import {
   GoalCategory,
   GoalProgression,
 } from "../../models/index.js";
-import { Sequelize } from "sequelize";
 
-/**
- * @const scheduledMonth Formats the `scheduled_date` column of a table
- */
-const scheduledMonth = Sequelize.fn(
-  "date_format",
-  Sequelize.col("scheduled_date"),
-  `%Y-%m`
-);
-
-const scheduledMonthAttr = [scheduledMonth, "month"];
-
-/**
- * @const sumAmount Sequelize aggregate function to sum a numeric amount
- */
-const sumAmount = [Sequelize.fn("SUM", Sequelize.col("amount")), "sum"];
-
-/** @const user_id Test {@linkcode User} UUID string */
-const user_id = "3c198ba1-c44f-4cb4-aad4-8351a98de927";
-
-/**
- * Get the sequelize options for the summation of a monetary amount
- *
- * @param {string} userId {@linkcode User} UUID string
- * @returns {Object} Sequelize `findAll` options
- */
-// const getSumOptions = (userId, sortByData, sortByName) => {
-//   return {
-//     where: { userId },
-//     attributes: [
-//       sumAmount,
-//       sortByName === sortByData ? sortByData : [sortByData, sortByName],
-//     ],
-//     group: [sortByData],
-//     raw: true,
-//   };
-// };
+import {
+  scheduledMonth,
+  scheduledMonthAttr,
+  sumAmount,
+  testUserId,
+} from "../../utils/query.js";
 
 /**
  * Express router for chart routes
@@ -72,7 +42,7 @@ const router = express.Router();
 const getIncomeData = async (req, res) => {
   try {
     const incomeData = await Income.findAll({
-      where: { userId: user_id },
+      where: { userId: testUserId },
       attributes: [
         [Sequelize.fn("SUM", Sequelize.col("amount")), "sum"],
         [scheduledMonth, "month"],
@@ -114,15 +84,17 @@ router.get("/income", getIncomeData);
 const getExpenseData = async (req, res) => {
   // Construct query options
   try {
+    const { sum, group_by } = req.query;
+
     const queryOptions = {
-      where: { userId: req.session.userId || user_id },
+      where: { userId: req.session.userId || testUserId },
       raw: true,
       attributes: [],
     };
 
-    if (req.query.sum === "true") queryOptions.attributes.push(sumAmount);
+    if (sum === "true") queryOptions.attributes.push(sumAmount);
 
-    switch (req.query.group_by) {
+    switch (group_by) {
       case "type":
         queryOptions.include = [
           {
@@ -181,7 +153,7 @@ router.get("/expense", getExpenseData);
  */
 const getGoalsData = async (req, res) => {
   try {
-    const goalsData = await Goal.findAll(getSumOptions(user_id));
+    const goalsData = await Goal.findAll(getSumOptions(testUserId));
 
     if (!goalsData) {
       res.status(400).json({ message: "Could not find income data for user" });
