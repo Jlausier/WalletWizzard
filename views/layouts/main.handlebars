@@ -22,12 +22,28 @@
         #myDropdown{
             position: fixed;
         }
+
+        .graph-one {
+            height: 36rem;
+        }
+
+        .graph-two {
+            height: 14rem;
+        }
+
+        .graph-three {
+            height: 19rem;
+        }
+
+        .graph-four {
+            height: 16rem;
+        }
        
     </style>
 </head>
 <body class=" bg-gray-800 font-sans leading-normal tracking-normal mt-12">
 
-    <header>
+    {{!-- <header>
         <!--Nav-->
         
         <nav aria-label="menu nav" class=" flex flex-wrap items-center pt-2 md:pt-1 pb-1 px-1 mt-0 h-auto ">
@@ -44,14 +60,14 @@
             </div>
 
         </nav>
-    </header>
+    </header> --}}
     
     <main>
     
         <div class=" flex flex-col md:flex-row">
-            <nav class=" w-full md:w-72">
+            <nav class=" w-full md:w-80">
                     
-                    <div class=" md:mt-12 md:w-64 md:fixed md:left-0 md:top-0 content-center md:content-start text-left justify-between">
+                    <div class=" md:mt-12 md:w-80 md:fixed md:left-0 md:top-0 content-center md:content-start text-left justify-between">
                         <!-- Logo -->
                         <div class="p-4 flex items-center justify-center mb-4">
                             <img src="../../public/images/wizard-hat.png" alt="Logo">
@@ -85,7 +101,7 @@
                     </div>
     
             </nav>
-        <div class="flex flex-col w-full m-5" >
+        <div class=" flex flex-col w-full" >
             {{{ body }}}
         </div>
         </div>

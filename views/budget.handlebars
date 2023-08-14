@@ -1,21 +1,21 @@
-    <section>
-        <div id="main" class="main-content flex-1 bg-gray-700 mt-12 md:mt-2 pb-24 md:pb-5 rounded-2xl bg-gray-700">
+     <section>
+        <div id="main" class=" main-content flex-1 bg-gray-700 mx-10 mb-10 pb-24 md:pb-5 rounded-2xl bg-gray-700">
 
             {{!-- Title Container --}}
             <div class=" rounded-t-3xl p-4 text-4xl text-white">
-                <h1 class="font-bold pl-2">Overview</h1>
+                <h1 class="font-bold pl-2">Budget</h1>
             </div>
 
            {{!-- Content Container --}}
-            <div class=" flex flex-col  mt-2 bg-gray-700">
+            <div class=" p-6 flex mt-2 bg-gray-700">
 
-                {{!-- top portion --}}
-                <div class=" flex">
+                {{!-- left portion --}}
+                <div class="flex flex-col w-2/3">
                     {{!-- Content Card 1 --}}
-                    <div class=" w-2/3 p-6">
-                        <div class=" bg-gray-800 border-transparent rounded-lg shadow-xl">
+                    <div class="  p-6  flex">
+                        <div class=" bg-gray-800 border-transparent rounded-lg shadow-xl graph-one w-full">
                             <div class=" sidebar text-center uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
-                                <h class=" font-bold uppercase text-gray-600">Graph</h>
+                                <h class=" font-bold uppercase text-gray-600">Income</h>
                             </div>
                             <div class=" p-5">
                                 {{> income-chart}}
@@ -23,49 +23,48 @@
                         </div>
                     </div>
 
-                    {{!-- side portion --}}
-                    <div class="flex flex-col w-1/3">
-
-                        {{!-- Content Card 2 --}}
-                        <div class="  p-6">
-                            <div class=" bg-gray-800 border-transparent rounded-lg shadow-xl">
-                                <div class=" sidebar text-center uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
-                                    <h class=" font-bold uppercase text-gray-600">Graph</h>
-                                </div>
-                                <div class=" p-5">
-                                    {{> income-chart}}
-                                </div>
+                    {{!-- Content Card 2 --}}
+                    <div class=" p-6  flex">
+                        <div class=" bg-gray-800 border-transparent rounded-lg shadow-xl graph-one w-full">
+                            <div class=" sidebar text-center uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
+                                <h class=" font-bold uppercase text-gray-600">Expenses</h>
+                            </div>
+                            <div class=" p-5">
+                                {{> income-chart}}
                             </div>
                         </div>
-
-                        {{!-- Content Card 3 --}}
-                        <div class="p-6">
-                            <div class=" bg-gray-800 border-transparent rounded-lg shadow-xl">
-                                <div class=" sidebar text-center uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
-                                    <h class=" font-bold uppercase text-gray-600">Graph</h>
-                                </div>
-                                <div class=" p-5">
-                                    {{> income-chart}}
-                                </div>
-                            </div>
-                        </div>
-
-                          {{!-- side portion closer--}}  
                     </div>
 
-                    {{!-- top portion closer --}}
+                    {{!-- Content Card 3 --}}
+                    <div class=" p-6 flex">
+                        <div class=" bg-gray-800 border-transparent rounded-lg shadow-xl graph-one w-full">
+                            <div class=" sidebar text-center uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
+                                <h class=" font-bold uppercase text-gray-600">Goals</h>
+                            </div>
+                            <div class=" p-5">
+                                {{> income-chart}}
+                            </div>
+                        </div>
+                    </div>
+
+                    {{!-- left portion closer --}}
                 </div>
 
-                {{!-- Content Card 4 --}}
-                <div class=" w-full p-6">
-                    <div class=" bg-gray-800 border-transparent rounded-lg shadow-xl">
-                        <div class=" sidebar text-center uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
-                            <h class=" font-bold uppercase text-gray-600">Graph</h>
-                        </div>
-                        <div class=" p-5">
-                            {{> income-chart}}
+                {{!- Right Side }}
+                <div class="flex w-1/3">
+                    {{!-- Content Card 4 --}}
+                    <div class="flex w-full p-6">
+                        <div class=" bg-gray-800 border-transparent rounded-lg shadow-xl graph-four w-full">
+                            <div class=" sidebar text-center uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
+                                <h class=" font-bold uppercase text-gray-600">Display Net</h>
+                            </div>
+                            <div class=" p-5">
+                                {{> income-chart}}
+                            </div>
                         </div>
                     </div>
+                
+                    {{!- Right Side Closer }}
                 </div>
 
                 {{!-- Content Container Closer --}}
