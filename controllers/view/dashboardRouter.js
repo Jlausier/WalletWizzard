@@ -66,7 +66,17 @@ router.get("/overview", withAuth, async (req, res) => {
  */
 const renderBudget = async (req, res) => {
   try {
-    res.render("budget");
+    const incomeConfig = await findOrCreateConfig(
+      "income",
+      req.session.userId || testUserId
+    );
+
+    const expenseConfig = await findOrCreateConfig(
+      "expense",
+      req.session.userId || testUserId
+    );
+
+    res.render("budget", { incomeConfig, expenseConfig });
   } catch (err) {
     res.status(500);
   }
@@ -89,6 +99,11 @@ router.get("/budget", renderBudget);
  */
 const renderGoals = async (req, res) => {
   try {
+    const goalConfig = await findOrCreateConfig(
+      "goal",
+      req.session.userId || testUserId
+    );
+
     res.render("goals", { goalsData });
   } catch (err) {
     res.status(500);
