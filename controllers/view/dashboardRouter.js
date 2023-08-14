@@ -51,7 +51,7 @@ const renderBudget = async (req, res) => {
 /**
  * @summary GET /dashboard/budget
  */
-router.get("/budget", renderDashboardBudget);
+router.get("/budget", renderBudget);
 
 // ================================ GOALS =======================================
 

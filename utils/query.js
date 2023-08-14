@@ -10,11 +10,19 @@ export const scheduledMonth = Sequelize.fn(
 /** @const scheduledMonthAttr Sequelize query attribute for scheduled month */
 export const scheduledMonthAttr = [scheduledMonth, "month"];
 
+export const formattedMonth = Sequelize.fn(
+  "date_format",
+  Sequelize.col("scheduled_date"),
+  `%b %y`
+);
+
+export const formattedMonthAttr = [formattedMonth, "label"];
+
 /** @const sumAmount Sequelize aggregate function to sum a numeric amount */
 export const sumAmount = [Sequelize.fn("SUM", Sequelize.col("amount")), "sum"];
 
 /** @const testUserId Test {@linkcode User} UUID string */
-export const testUserId = "3c198ba1-c44f-4cb4-aad4-8351a98de927";
+export const testUserId = "65051d46-76e1-43a0-8bda-484ae4229c4f";
 
 /**
  * Returns query options for finding objects associated with a user
