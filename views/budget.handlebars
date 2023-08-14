@@ -1,168 +1,120 @@
      <section>
-        <div id="main" class=" main-content flex-1 bg-gray-700 mx-10 mb-10 pb-24 md:pb-5 rounded-2xl bg-gray-700">
+        <div id="main" class=" main-content flex-1 bg-gray-700 mx-10 mb-10 p-12 rounded-2xl bg-gray-700">
 
             {{!-- Title Container --}}
-                <h1 class=" rounded-t-3xl pl-12 pt-12 text-5xl text-gray-100">Budget</h1>
+                <h1 class=" rounded-t-3xl text-5xl text-gray-100">Goals</h1>
 
            {{!-- Content Container --}}
-            <div class=" p-6 flex bg-gray-700">
+            <div class=" pt-6 flex flex-col bg-gray-700">
+                <div class="flex justify-end">
+                    <a class="sidebar px-5 py-2 rounded text-gray-100 drop-shadow-lg">
+                        Add New
+                    </a>
+                </div>
 
-                {{!-- left portion --}}
-                <div class=" flex flex-col w-2/3">
+                {{!-- card container --}}
+                <div class=" flex flex-col w-full">
 
                     {{!-- Content Card 1 --}}
-                    <div class="  p-6  flex">
+                    <div class=" pt-6  flex">
                         <div class=" bg-gray-800 rounded-lg shadow-xl w-full">
-                            <div class="p-6 flex justify-between">
-                                <h3 class="tracking-wider uppercase text-left text-gray-200">Income</h3>
-                                    <a class="rounded text-gray-800 text-2xl sidebar w-8 h-8 flex justify-center items-center">
-                                        <div>+</div>
-                                    </a>
-                            </div>                            
-                           <div class=" p-6">
-                                {{!-- Move this code into the partial --}}
-                                <div>
-                                    <table class="table-fixed w-full">
-                                        <thead>
-                                            <tr class=" text-left text-gray-500 w-1/5">
-                                                <th>Date</th>
-                                                <th class="w-3/5">Expense</th>
-                                                <th class="text-right">Amount</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr class="border-t-2 border-gray-700 text-left text-gray-300 w-1/5">
-                                                <td>08/20/2023</td>
-                                                <td class=" w-3/5">Paycheck</td>
-                                                <td class="text-right">$1,000.00</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                            <div class="p-6 flex justify-between text-gray-200">
+                                <div class="flex flex-col items-start">
+                                    <div class="px-3 py-1 mb-2 border border-gray-400 text-gray-400 rounded-full text-xl">$325 Left</div>
+                                    <h3 class="tracking-wider text-left text-3xl">New Dog</h3>
                                 </div>
+                                <a class="text-gray-400">Edit</a>
+                            </div>
+                            <div class=" p-6">
+
+                                {{!- This is just a mock-up. Delete once the partial is in}}
+                                <div class="w-full flex justify-between pb-2 text-gray-500">
+                                    <div>06/27/2023</div>
+                                    <div>12/20/2023</div>
+                                </div>
+                                <div class="rounded-full h-3 bg-gray-700">
+                                    <div class="rounded-full h-3 sidebar w-2/5"></div>
+                                </div>
+                                <div class="w-full flex justify-between pt-2 text-gray-500">
+                                    <div>$0</div>
+                                    <div>$500</div>
+                                </div>
+                                
 
                                 {{!-- Remove this comment and replace it with the correct partial name --}}
-                                {{!- {{> income-table}}
-
+                                {{!- {{> goal-progress-bar}}
                             </div>
+                            
                         </div>
                     </div>
 
                     {{!-- Content Card 2 --}}
-                    <div class=" p-6  flex">
+                    <div class=" pt-6  flex">
                         <div class=" bg-gray-800 rounded-lg shadow-xl w-full">
-                            <div class="p-6 flex justify-between">
-                                <h3 class="tracking-wider uppercase text-left text-gray-200">Expenses</h3>
-                                    <a class="rounded text-gray-800 text-2xl sidebar w-8 h-8 flex justify-center items-center">
-                                        <div>+</div>
-                                    </a>
+                            <div class="p-6 flex justify-between text-gray-200">
+                                <div class="flex flex-col items-start">
+                                    <div class="px-3 py-1 mb-2 border border-gray-400 text-gray-400 rounded-full text-xl">$250 Left</div>
+                                    <h3 class="tracking-wider text-left text-3xl">Winter Vacation</h3>
                                 </div>
+                                <a class="text-gray-400">Edit</a>
+                            </div>
                             <div class=" p-6">
-                                {{!-- Move this code into the partial --}}
-                                <div>
-                                    <table class="table-fixed w-full">
-                                        <thead>
-                                            <tr class=" text-left text-gray-500 w-1/5">
-                                                <th>Date</th>
-                                                <th class=" w-3/5">Expense</th>
-                                                <th class="text-right">Amount</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr class="border-t-2 border-gray-700 text-left text-gray-300 w-1/5">
-                                                <td>08/09/2023</td>
-                                                <td class=" w-3/5">Internet</td>
-                                                <td class="text-right">$78.00</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+
+                                {{!- This is just a mock-up. Delete once the partial is in}}
+                                <div class="w-full flex justify-between pb-2 text-gray-500">
+                                    <div>07/08/2023</div>
+                                    <div>10/24/2023</div>
                                 </div>
+                                <div class="rounded-full h-3 bg-gray-700">
+                                    <div class="rounded-full h-3 sidebar w-3/4"></div>
+                                </div>
+                                <div class="w-full flex justify-between pt-2 text-gray-500">
+                                    <div>$0</div>
+                                    <div>$1,000</div>
+                                </div>
+                                
 
                                 {{!-- Remove this comment and replace it with the correct partial name --}}
-                                {{!- {{> income-table}}
-
+                                {{!- {{> goal-progress-bar}}
                             </div>
+                            
                         </div>
                     </div>
 
-                    {{!-- Content Card 3 --}}
-                    <div class=" p-6 flex">
-                        <div class=" bg-gray-800 border-transparent rounded-lg shadow-xl w-full">
-                           <div class="p-6 flex justify-between">
-                                <h3 class="tracking-wider uppercase text-left text-gray-200">Goals</h3>
-                                    <a class="rounded text-gray-800 text-2xl sidebar w-8 h-8 flex justify-center items-center">
-                                        <div>+</div>
-                                    </a>
+                   {{!-- Content Card 3 --}}
+                    <div class=" pt-6  flex">
+                        <div class=" bg-gray-800 rounded-lg shadow-xl w-full">
+                            <div class="p-6 flex justify-between text-gray-200">
+                                <div class="flex flex-col items-start">
+                                    <div class="px-3 py-1 mb-2 border border-gray-400 text-gray-400 rounded-full text-xl">$15 Left</div>
+                                    <h3 class="tracking-wider text-left text-3xl">Minecraft Expansion Pack</h3>
                                 </div>
+                                <a class="text-gray-400">Edit</a>
+                            </div>
                             <div class=" p-6">
-                                {{!-- Move this code into the partial --}}
-                                <div>
-                                    <table class="table-fixed w-full">
-                                        <thead>
-                                            <tr class=" text-left text-gray-500 w-1/5">
-                                                <th>Date</th>
-                                                <th class=" w-3/5">Expense</th>
-                                                <th class="text-right">Amount</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr class="border-t-2 border-gray-700 text-left text-gray-300 w-1/5">
-                                                <td>08/20/2023</td>
-                                                <td class=" w-3/5">Vacation</td>
-                                                <td class="text-right">$50.00</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+
+                                {{!- This is just a mock-up. Delete once the partial is in}}
+                                <div class="w-full flex justify-between pb-2 text-gray-500">
+                                    <div>08/02/2023</div>
+                                    <div>09/17/2023</div>
                                 </div>
+                                <div class="rounded-full h-3 bg-gray-700">
+                                    <div class="rounded-full h-3 sidebar w-3/5"></div>
+                                </div>
+                                <div class="w-full flex justify-between pt-2 text-gray-500">
+                                    <div>$0</div>
+                                    <div>$40</div>
+                                </div>
+                                
 
                                 {{!-- Remove this comment and replace it with the correct partial name --}}
-                                {{!- {{> income-table}}
-
+                                {{!- {{> goal-progress-bar}}
                             </div>
+                            
                         </div>
                     </div>
 
                     {{!-- left portion closer --}}
-                </div>
-
-                {{!- Right Side }}
-                <div class="fixed right-16 top-56 w-1/4">
-                    {{!-- Content Card 4 --}}
-                     <div class=" p-6 flex w-full h-80">
-                        <div class=" bg-gray-800 border-transparent rounded-lg shadow-xl w-full">
-                            <h3 class="p-6 tracking-wider uppercase text-left text-gray-200">Your Budget</h3>
-                                <div class=" p-6">
-                                    {{!-- Move this code into the partial --}}
-                                    <div>
-                                        <table class="table-fixed w-full">
-                                            <tbody>
-                                                <tr class="pb-5 text-left text-gray-400 w-1/5">
-                                                    <td class="py-2 w-3/5">Income</td>
-                                                    <td class="text-right">$1,000.00</td>
-                                                </tr>
-                                                <tr class="pb-2 text-left text-gray-400 w-1/5">
-                                                    <td class="py-2 w-3/5">Expenses</td>
-                                                    <td class="text-right">$78.00</td>
-                                                </tr>
-                                                <tr class=" text-left text-gray-400 w-1/5">
-                                                    <td class="py-2 w-3/5">Goals</td>
-                                                    <td class="text-right">$50.00</td>
-                                                </tr>
-                                                <tr class=" border-t-2 border-gray-700 text-left text-gray-300 w-1/5">
-                                                    <td class="py-2 w-3/5">Income</td>
-                                                    <td class="text-right">$1,000.00</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-
-                                    {{!-- Remove this comment and replace it with the correct partial name --}}
-                                    {{!- {{> income-table}}
-
-                                </div>
-                        </div>
-                    </div>
-                
-                    {{!- Right Side Closer }}
                 </div>
 
                 {{!-- Content Container Closer --}}
