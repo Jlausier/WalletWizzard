@@ -1,11 +1,13 @@
 import express from "express";
 import { Sequelize } from "sequelize";
+import { User } from "../../models/index.js";
 import withAuth from "../../utils/auth.js";
-import { User, UserConfig } from "../../models/index.js";
-import { testUserId } from "../../utils/query.js";
+
+import { findOrCreateConfig, testUserId } from "../../utils/query.js";
 
 /**
  * @TODO Redirect when config is not correctly loaded
+ * @TODO Load settings page
  */
 
 /**
@@ -13,19 +15,6 @@ import { testUserId } from "../../utils/query.js";
  * @const router
  */
 const router = express.Router();
-
-const findOrCreateConfig = (type, userId) => {
-  return UserConfig.findOrCreate({
-    where: {
-      userId,
-      type,
-    },
-    defaults: {
-      userId,
-      type,
-    },
-  });
-};
 
 // ================================ OVERVIEW ====================================
 
@@ -47,7 +36,9 @@ router.get("/overview", withAuth, async (req, res) => {
     );
 
     res.render("overview", { incomeConfig, expenseConfig, goalConfig });
-  } catch (err) {}
+  } catch (err) {
+    res.status(500);
+  }
 });
 
 // ================================ BUDGET ======================================
