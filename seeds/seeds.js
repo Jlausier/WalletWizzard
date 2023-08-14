@@ -8,7 +8,7 @@ import {
   Expense,
   GoalCategory,
   GoalProgression,
-  ExpenseCategory,
+  // ExpenseCategory,
   ExpenseType,
 } from "../models/index.js";
 
@@ -64,18 +64,19 @@ const seedDatabase = async () => {
     }
   );
 
-  const expenseCategories = await ExpenseCategory.bulkCreate(
-    expenseCategoryData,
-    {
-      individualHooks: true,
-      returning: true,
-    }
-  );
+  // const expenseCategories = await ExpenseCategory.bulkCreate(
+  //   expenseCategoryData,
+  //   {
+  //     individualHooks: true,
+  //     returning: true,
+  //   }
+  // );
 
   const expenseTypes = await ExpenseType.bulkCreate(
     expenseTypeData.map((et) => ({
       ...et,
-      categoryId: expenseCategories[0].id,
+      // categoryId: expenseCategories[0].id,
+      category: "essential",
     })),
     {
       individualHooks: true,

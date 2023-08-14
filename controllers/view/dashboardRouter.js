@@ -5,7 +5,6 @@ import {
   Income,
   Expense,
   ExpenseType,
-  ExpenseCategory,
   Goal,
   GoalCategory,
   GoalProgression,
@@ -14,7 +13,7 @@ import { Sequelize } from "sequelize";
 
 const getMonth = Sequelize.fn(
   "date_format",
-  Sequelize.col("created_at"),
+  Sequelize.col("scheduled_date"),
   `%Y-%m`
 );
 
@@ -67,69 +66,36 @@ router.get("/overview", withAuth, async (req, res) => {
  * @param {express.Response} res Express {@linkcode express.Response Response} object
  */
 const renderDashboardBudget = async (req, res) => {
-  // res.render("budget");
+  const user_id = "4a1389b9-b5ea-40d8-9db4-4e8262893ad5";
 
   console.log("received render dashboard request");
 
   try {
-    const budgetData = await User.findByPk(
-      "051e9599-f542-433f-aae6-fe32cae09e63",
-      {
-        attributes: [],
-        // attributes: [
-        //   [Sequelize.fn("SUM", Sequelize.col("sum_incomes.amount")), "amount"],
-        //   [
-        //     Sequelize.fn(
-        //       "date_format",
-        //       Sequelize.col("sum_incomes.created_at"),
-        //       `%Y-%m`
-        //     ),
-        //     "month",
-        //   ],
-        // ],
-        include: [
-          {
-            model: Income,
-          },
-          {
-            model: Expense,
-            // attributes: [
-            //   [Sequelize.fn("SUM", Sequelize.col("amount")), "amount"],
-            //   [getMonth, "month"],
-            // ],
-            // include: [
-            //   {
-            //     model: ExpenseType,
-            //     attributes: ["name"],
-            //     include: [{ model: ExpenseCategory }],
-            //     raw: true,
-            //   },
-            // ],
-            // group: [getMonth],
-            // raw: true,
-          },
-          {
-            model: Goal,
-            attributes: ["name", "desiredAmount", "date"],
-            include: [
-              { model: GoalCategory },
-              { model: GoalProgression, attributes: ["amount", "created_at"] },
-            ],
-          },
-        ],
-        // raw: true,
-        // nest: true,
-      }
-    );
+    const incomeData = await Income.findAll({
+      where: {
+        userId: user_id,
+      },
+      attributes: [
+        [Sequelize.fn("SUM", Sequelize.col("amount")), "sum"],
+        [getMonth, "month"],
+      ],
+      group: [getMonth],
+      raw: true,
+    });
 
-    console.log("Finished SQL execution");
+    const expenseData = await Expense.findAll({
+      where: {
+        userId: user_id,
+      },
+      attributes: [
+        [Sequelize.fn("SUM", Sequelize.col("amount")), "sum"],
+        [getMonth, "month"],
+      ],
+      group: [getMonth],
+      raw: true,
+    });
 
-    if (!budgetData) {
-      res.status(400).json({ message: "Could not find budget data for user" });
-    }
-
-    res.status(200).json(budgetData);
-    // res.render("budget", { budgetData });
+    res.status(200).json({ incomeData, expenseData });
   } catch (err) {
     res.status(500);
   }
