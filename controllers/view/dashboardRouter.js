@@ -1,11 +1,13 @@
 import express from "express";
 import { Sequelize } from "sequelize";
-import withAuth from "../../utils/auth.js";
 import { User } from "../../models/index.js";
-import { testUserId } from "../../utils/query.js";
+import withAuth from "../../utils/auth.js";
+
+import { findOrCreateConfig, testUserId } from "../../utils/query.js";
 
 /**
  * @TODO Redirect when config is not correctly loaded
+ * @TODO Load settings page
  */
 
 /**
@@ -17,13 +19,26 @@ const router = express.Router();
 // ================================ OVERVIEW ====================================
 
 router.get("/overview", withAuth, async (req, res) => {
-  /**
-   * @TODO Get user's expense config
-   * @TODO Get user's income config
-   * @TODO Get user's goals config
-   */
+  try {
+    const incomeConfig = await findOrCreateConfig(
+      "income",
+      req.session.userId || testUserId
+    );
 
-  res.render("overview");
+    const expenseConfig = await findOrCreateConfig(
+      "expense",
+      req.session.userId || testUserId
+    );
+
+    const goalConfig = await findOrCreateConfig(
+      "goal",
+      req.session.userId || testUserId
+    );
+
+    res.render("overview", { incomeConfig, expenseConfig, goalConfig });
+  } catch (err) {
+    res.status(500);
+  }
 });
 
 // ================================ BUDGET ======================================
@@ -42,7 +57,17 @@ router.get("/overview", withAuth, async (req, res) => {
  */
 const renderBudget = async (req, res) => {
   try {
-    res.render("budget");
+    const incomeConfig = await findOrCreateConfig(
+      "income",
+      req.session.userId || testUserId
+    );
+
+    const expenseConfig = await findOrCreateConfig(
+      "expense",
+      req.session.userId || testUserId
+    );
+
+    res.render("budget", { incomeConfig, expenseConfig });
   } catch (err) {
     res.status(500);
   }
@@ -51,7 +76,7 @@ const renderBudget = async (req, res) => {
 /**
  * @summary GET /dashboard/budget
  */
-router.get("/budget", renderDashboardBudget);
+router.get("/budget", renderBudget);
 
 // ================================ GOALS =======================================
 
@@ -65,6 +90,11 @@ router.get("/budget", renderDashboardBudget);
  */
 const renderGoals = async (req, res) => {
   try {
+    const goalConfig = await findOrCreateConfig(
+      "goal",
+      req.session.userId || testUserId
+    );
+
     res.render("goals", { goalsData });
   } catch (err) {
     res.status(500);

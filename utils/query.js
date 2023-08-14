@@ -1,4 +1,18 @@
 import { Sequelize } from "sequelize";
+import { UserConfig } from "../models/index.js";
+
+export const findOrCreateConfig = (type, userId) => {
+  return UserConfig.findOrCreate({
+    where: {
+      userId,
+      type,
+    },
+    defaults: {
+      userId,
+      type,
+    },
+  });
+};
 
 /** @const scheduledMonth Formats the `scheduled_date` column of a table */
 export const scheduledMonth = Sequelize.fn(
