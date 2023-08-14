@@ -13,15 +13,26 @@
         .chart-area {
             background-color: #f3f4f6;
         }
+        .dropdown-background{
+            background-color: grey;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+        }
+        .main-content{
+            width: 82vw;
+        }
+        #myDropdown{
+            position: fixed;
+        }
+       
     </style>
 </head>
 <body class="bg-gray-800 font-sans leading-normal tracking-normal mt-12">
 
     <header>
-        <!--Nav-->
-        
-        <nav aria-label="menu nav" class=" pt-2 md:pt-1 pb-1 px-1 mt-0 h-auto fixed w-full z-20 top-0">
-    
+        <!-- Nav -->
+        <nav aria-label="menu nav" class="pt-2 md:pt-1 pb-1 px-1 mt-0 h-auto ">
             <div class="flex flex-wrap items-center">
                 <div class="flex flex-shrink md:w-1/3 justify-center md:justify-start text-white">
                     <a href="#" aria-label="Home">
@@ -30,23 +41,20 @@
                 </div>
                 <div class="flex w-full pt-2 content-center justify-between md:w-1/3 md:justify-end">
                     <ul class="list-reset flex justify-between flex-1 md:flex-none items-center">
-                        <li class="flex-1 md:flex-none md:mr-3">
-                            <div class="relative inline-block">
-                                <button onclick="toggleDD('myDropdown')" class="drop-button text-white py-2 px-2"> <span class="pr-2"><i class="em em-robot_face"></i></span> Hi, User <svg class="h-3 fill-current inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg></button>
-                                <div id="myDropdown" class="dropdownlist absolute bg-gray-800 text-white right-0 mt-3 p-3 overflow-auto z-30 invisible">
-                                    <input type="text" class="drop-search p-2 text-gray-600" placeholder="Search.." id="myInput" onkeyup="filterDD('myDropdown','myInput')">
-                                    <a href="#" class="p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"><i class="fa fa-user fa-fw"></i> Profile</a>
-                                    <a href="#" class="p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"><i class="fa fa-cog fa-fw"></i> Settings</a>
-                                    <div class="border border-gray-800"></div>
-                                    <a href="#" class="p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"><i class="fas fa-sign-out-alt fa-fw"></i> Log Out</a>
-                                </div>
+                        <li class="flex-1 md:flex-none md:mr-3 relative">
+                            <button onclick="toggleDD('myDropdown')" class="drop-button text-black py-2 px-2 dropdown-background"> <span class="pr-2"><i class="em em-robot_face"></i></span> Hi, User <svg class="h-3 fill-current inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg></button>
+                            <div id="myDropdown" class="dropdownlist absolute bg-gray-800 text-white right-0 mt-3 p-3 overflow-auto z-30 invisible">
+                                <input type="text" class="drop-search p-2 text-gray-600" placeholder="Search.." id="myInput" onkeyup="filterDD('myDropdown','myInput')">
+                                <a href="#" class="p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"><i class="fa fa-user fa-fw"></i> Profile</a>
+                                <a href="#" class="p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"><i class="fa fa-cog fa-fw"></i> Settings</a>
+                                <div class="border border-gray-800"></div>
+                                <a href="#" class="p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"><i class="fas fa-sign-out-alt fa-fw"></i> Log Out</a>
                             </div>
                         </li>
                     </ul>
                 </div>
             </div>
-    
         </nav>
     </header>
     
@@ -93,12 +101,12 @@
     
                 </div>
             </nav>
-            <section>
-                <div id="main" class="main-content flex-1 bg-gray-100 mt-12 md:mt-2 pb-24 md:pb-5">
-                        <section>
-                            <div id="main" class="main-content flex-1 bg-gray-100 mt-12 md:mt-2 pb-24 md:pb-5">
-                                <div class="bg-gray-800 pt-3">
-                                    <div class="rounded-tl-3xl sidebar p-4 shadow text-2xl text-white">
+            <section >
+                <div id="main" class="main-content flex-1 bg-gray-700 mt-12 md:mt-2 pb-24 md:pb-5 rounded-2xl">
+                        <section >
+                            <div id="main" class="main-content flex-1 bg-gray-700 mt-12 md:mt-2 pb-24 md:pb-5 ">
+                                <div class="bg-gray-700 pt-3 rounded-2xl">
+                                    <div class=" p-4 shadow text-4xl text-white  ">
                                         <h1 class="font-bold pl-2">Settings</h1>
                                     </div>
                                 </div>
@@ -107,9 +115,9 @@
                                         <div class="bg-white border-transparent rounded-lg shadow-xl">
                                             <!-- Change Email -->
                                             <div class="sidebar text-center uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
-                                                <h2 class="font-bold uppercase text-gray-600">Change Email</h2>
+                                                <h2 class="font-bold uppercase text-white">Change Email</h2>
                                             </div>
-                                            <div class="p-5">
+                                            <div class="p-5 bg-gray-800 text-white text-center">
                                                 <!-- Add your email change input elements here -->
                                                 <label for="new-email">New Email:</label>
                                                 <input type="email" id="new-email">
@@ -121,9 +129,9 @@
                                         <div class="bg-white border-transparent rounded-lg shadow-xl">
                                             <!-- Change Password -->
                                             <div class="sidebar text-center uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
-                                                <h2 class="font-bold uppercase text-gray-600">Change Password</h2>
+                                                <h2 class="font-bold uppercase text-white">Change Password</h2>
                                             </div>
-                                            <div class="p-5">
+                                            <div class="p-5 bg-gray-800 text-white text-center">
                                                 <!-- Add your password change input elements here -->
                                                 <label for="new-password">New Password:</label>
                                                 <input type="password" id="new-password">
@@ -135,9 +143,9 @@
                                         <div class="bg-white border-transparent rounded-lg shadow-xl">
                                             <!-- Update Profile Picture -->
                                             <div class="sidebar text-center uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
-                                                <h2 class="font-bold uppercase text-gray-600">Update Profile Picture</h2>
+                                                <h2 class="font-bold uppercase text-white">Update Profile Picture</h2>
                                             </div>
-                                            <div class="p-5">
+                                            <div class="p-5 bg-gray-800 text-white text-center">
                                                 <!-- Add your profile picture update input elements here -->
                                                 <input type="file" accept="image/*" id="profile-picture">
                                                 <button onclick="updateProfilePicture()">Upload</button>
@@ -146,6 +154,8 @@
                                     </div>
                                 </div>
                             </div>  
+                        </section>
+                </div>
             </section>
         </div>
         <script>
