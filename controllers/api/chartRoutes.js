@@ -15,6 +15,7 @@ import {
   scheduledMonth,
   scheduledMonthAttr,
   sumAmount,
+  queryOptionsUser,
   testUserId,
 } from "../../utils/query.js";
 
@@ -41,15 +42,18 @@ const router = express.Router();
  */
 const getIncomeData = async (req, res) => {
   try {
-    const incomeData = await Income.findAll({
-      where: { userId: testUserId },
-      attributes: [
-        [Sequelize.fn("SUM", Sequelize.col("amount")), "sum"],
-        [scheduledMonth, "month"],
-      ],
-      group: [scheduledMonth],
-      raw: true,
-    });
+    const { sum, group_by } = req.query;
+    const options = queryOptionsUser(req.session.userId || testUserId);
+    if (sum === "true") options.attributes.push(sumAmount);
+
+    switch (group_by) {
+      case "month":
+        options.attributes.push(scheduledMonthAttr);
+        options.group = [scheduledMonth];
+        break;
+    }
+
+    const incomeData = await Income.findAll(options);
 
     if (!incomeData) {
       res.status(400).json({ message: "Could not find income data for user" });
@@ -85,41 +89,46 @@ const getExpenseData = async (req, res) => {
   // Construct query options
   try {
     const { sum, group_by } = req.query;
-
-    const queryOptions = {
-      where: { userId: req.session.userId || testUserId },
-      raw: true,
-      attributes: [],
-    };
-
-    if (sum === "true") queryOptions.attributes.push(sumAmount);
+    const options = queryOptionsUser(req.session.userId || testUserId);
 
     switch (group_by) {
       case "type":
-        queryOptions.include = [
+        options.include = [
           {
             model: ExpenseType,
             attributes: ["name"],
           },
         ];
-        queryOptions.group = ["expense_type.name"];
+        options.group = ["expense_type.name"];
         break;
       case "category":
-        queryOptions.include = [
+        options.include = [
           {
             model: ExpenseType,
             attributes: ["category"],
           },
         ];
-        queryOptions.group = ["expense_type.category"];
+        options.group = ["expense_type.category"];
         break;
       case "month":
-        queryOptions.attributes.push(scheduledMonthAttr);
-        queryOptions.group = [scheduledMonth];
+        options.attributes = [scheduledMonthAttr];
+        options.group = [scheduledMonth];
+        break;
+      default:
+        delete options.attributes;
         break;
     }
 
-    const expenseData = await Expense.findAll(queryOptions);
+    if (group_by === "month") options.order = [[scheduledMonth, "DESC"]];
+    // else options.order = [["scheduled_date", "DESC"]];
+
+    if (sum === "true") {
+      options.attributes
+        ? options.attributes.push(sumAmount)
+        : (options.attributes = sumAmount);
+    }
+
+    const expenseData = await Expense.findAll(options);
 
     if (!expenseData) {
       res.status(400).json({ message: "Could not find income data for user" });
@@ -142,6 +151,12 @@ router.get("/expense", getExpenseData);
  * @summary Get the goals chart data
  *
  * @description
+ *
+ * - Find the logged in user
+ * - Get goals data array
+ *   - Goal Category
+ *   - Goal Progression
+ *
  * Status Codes:
  * - 200 - Success - returns goals data
  * - 500 - Failure - could not fetch data

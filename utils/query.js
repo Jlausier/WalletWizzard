@@ -15,3 +15,17 @@ export const sumAmount = [Sequelize.fn("SUM", Sequelize.col("amount")), "sum"];
 
 /** @const testUserId Test {@linkcode User} UUID string */
 export const testUserId = "3c198ba1-c44f-4cb4-aad4-8351a98de927";
+
+/**
+ * Returns query options for finding objects associated with a user
+ *
+ * @param {string} userId
+ * @returns {Object}
+ */
+export const queryOptionsUser = (userId) => {
+  return {
+    where: { userId },
+    raw: true,
+    attributes: [],
+  };
+};

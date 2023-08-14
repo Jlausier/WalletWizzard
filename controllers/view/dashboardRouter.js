@@ -1,24 +1,11 @@
 import express from "express";
-import withAuth from "../../utils/auth.js";
-import {
-  User,
-  Income,
-  Expense,
-  ExpenseType,
-  Goal,
-  GoalCategory,
-  GoalProgression,
-} from "../../models/index.js";
 import { Sequelize } from "sequelize";
-
-const getMonth = Sequelize.fn(
-  "date_format",
-  Sequelize.col("scheduled_date"),
-  `%Y-%m`
-);
+import withAuth from "../../utils/auth.js";
+import { User } from "../../models/index.js";
+import { testUserId } from "../../utils/query.js";
 
 /**
- * @TODO Redirect when data is not correctly loaded
+ * @TODO Redirect when config is not correctly loaded
  */
 
 /**
@@ -31,30 +18,18 @@ const router = express.Router();
 
 router.get("/overview", withAuth, async (req, res) => {
   /**
-   * @TODO Get user's budget tracker
-   * @TODO Get user's goals progress
-   * @TODO Get user's monthly
-   *
-   * @TODO All expenses
-   * - Essential
-   * - Savings
-   * - Fun stuff
-   *
-   * @TODO Render overview page
+   * @TODO Get user's expense config
+   * @TODO Get user's income config
+   * @TODO Get user's goals config
    */
+
+  res.render("overview");
 });
 
 // ================================ BUDGET ======================================
 
 /**
  * @summary Render the dashboard budget page
- *
- * @description
- * - Find the logged in user
- * - Get their budget data
- *   - Incomes array
- *   - Expenses array
- *   - Goals array
  *
  * Status Codes:
  * - 200 - Success - returns budget data
@@ -66,36 +41,8 @@ router.get("/overview", withAuth, async (req, res) => {
  * @param {express.Response} res Express {@linkcode express.Response Response} object
  */
 const renderDashboardBudget = async (req, res) => {
-  const user_id = "4a1389b9-b5ea-40d8-9db4-4e8262893ad5";
-
-  console.log("received render dashboard request");
-
   try {
-    const incomeData = await Income.findAll({
-      where: {
-        userId: user_id,
-      },
-      attributes: [
-        [Sequelize.fn("SUM", Sequelize.col("amount")), "sum"],
-        [getMonth, "month"],
-      ],
-      group: [getMonth],
-      raw: true,
-    });
-
-    const expenseData = await Expense.findAll({
-      where: {
-        userId: user_id,
-      },
-      attributes: [
-        [Sequelize.fn("SUM", Sequelize.col("amount")), "sum"],
-        [getMonth, "month"],
-      ],
-      group: [getMonth],
-      raw: true,
-    });
-
-    res.status(200).json({ incomeData, expenseData });
+    res.render("budget");
   } catch (err) {
     res.status(500);
   }
@@ -111,17 +58,6 @@ router.get("/budget", renderDashboardBudget);
 /**
  * @summary Render the dashboard goals page
  *
- * @description
- * - Find the logged in user
- * - Get their goals data
- *   - Goals array
- *     - Goal Category
- *     - Goal Progression
- *
- * Status Codes:
- * - 200 - Success - returns goals data
- * - 500 - Failure - could not fetch data
- *
  * @async
  * @method renderDashboardBudget
  * @param {express.Request} req Express {@linkcode express.Request Request} object
@@ -129,25 +65,6 @@ router.get("/budget", renderDashboardBudget);
  */
 const renderDashboardGoals = async (req, res) => {
   try {
-    const goalsData = await User.findByPk(req.session.user_id, {
-      attributes: ["id", "name", "desiredAmount", "date", "reminder"],
-      include: [
-        {
-          model: Goal,
-          attributes: [],
-          include: [
-            {
-              model: GoalCategory,
-            },
-            {
-              model: GoalProgression,
-              attributes: ["id", "amount"],
-            },
-          ],
-        },
-      ],
-    }).map((goal) => goal.get({ plain: true }));
-
     res.render("goals", { goalsData });
   } catch (err) {
     res.status(500);
@@ -162,15 +79,11 @@ router.get("/goals", withAuth, renderDashboardGoals);
 // ================================ STREAM ======================================
 
 router.get("/stream", withAuth, async (req, res) => {
-  /**
-   * @TODO Get shared goals
-   * - Goal name
-   * - Goal category
-   * - Timestamp reached
-   * - User name
-   *
-   * @TODO Render stream page
-   */
+  try {
+    res.render("stream");
+  } catch (err) {
+    res.status(500);
+  }
 });
 
 // ================================ SETTINGS ====================================
