@@ -10,39 +10,67 @@
             <div class=" p-6 flex mt-2 bg-gray-700">
 
                 {{!-- left portion --}}
-                <div class="flex flex-col w-2/3">
+                <div class=" flex flex-col w-2/3">
+
                     {{!-- Content Card 1 --}}
                     <div class="  p-6  flex">
-                        <div class=" bg-gray-800 border-transparent rounded-lg shadow-xl graph-one w-full">
-                            <div class=" sidebar text-center uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
-                                <h class=" font-bold uppercase text-gray-600">Income</h>
+                        <div class=" bg-gray-800 border-transparent rounded-lg shadow-xl w-full">
+                            <div class=" text-left  text-gray-800   p-2">
+                                <h class="tracking-wider  uppercase text-gray-400">Income</h>
                             </div>
                             <div class=" p-5">
-                                {{> income-chart}}
+
                             </div>
                         </div>
                     </div>
 
                     {{!-- Content Card 2 --}}
                     <div class=" p-6  flex">
-                        <div class=" bg-gray-800 border-transparent rounded-lg shadow-xl graph-one w-full">
-                            <div class=" sidebar text-center uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
-                                <h class=" font-bold uppercase text-gray-600">Expenses</h>
-                            </div>
+                        <div class=" justify-between bg-gray-800 border-transparent rounded-lg shadow-xl w-full">
+                               <div class="p-3 flex justify-between">
+                                    <div class="text-left  text-gray-800">
+                                        <h class="tracking-wider uppercase text-gray-400">Expenses</h>
+                                    </div>
+                                    <a class="rounded text-2xl sidebar w-10 h-10 flex justify-center items-center">
+                                        <div>+</div>
+                                    </a>
+                                </div>
                             <div class=" p-5">
-                                {{> income-chart}}
+                                {{!-- Move this code into the partial --}}
+                                <div>
+                                    <table class="table-fixed w-full">
+                                        <thead>
+                                            <tr class=" text-left text-gray-400 w-1/5">
+                                                <th class=" ">Date</th>
+                                                <th class=" w-3/5">Income</th>
+                                                <th class=" ">Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class=" text-left text-gray-200 w-1/5">
+                                                <td class="">07/20/2023</td>
+                                                <td class="">Paycheck</td>
+                                                <td class="">$1,000.00</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                {{!-- Remove this comment and replace it with the correct partial name --}}
+                                {{!- {{> income-table}}
+
                             </div>
                         </div>
                     </div>
 
                     {{!-- Content Card 3 --}}
                     <div class=" p-6 flex">
-                        <div class=" bg-gray-800 border-transparent rounded-lg shadow-xl graph-one w-full">
-                            <div class=" sidebar text-center uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
-                                <h class=" font-bold uppercase text-gray-600">Goals</h>
+                        <div class=" bg-gray-800 border-transparent rounded-lg shadow-xl w-full">
+                            <div class="  text-left  text-gray-800 p-2">
+                                <h class="tracking-wider  uppercase text-gray-400">Goals</h>
                             </div>
                             <div class=" p-5">
-                                {{> income-chart}}
+
                             </div>
                         </div>
                     </div>
