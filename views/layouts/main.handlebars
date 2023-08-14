@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Dashboard</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css"/>
     <style>
         .sidebar {
@@ -14,35 +13,130 @@
         .chart-area {
             background-color: #f3f4f6;
         }
+        .dropdown-background{
+            background-color: grey;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+        }
+        #myDropdown{
+            position: fixed;
+        }
+
+        .graph-one {
+            height: 36rem;
+        }
+
+        .graph-two {
+            height: 14rem;
+        }
+
+        .graph-three {
+            height: 19rem;
+        }
+
+        .graph-four {
+            height: 16rem;
+        }
+       
     </style>
 </head>
-<body class="bg-gray-400">
-    <div class="flex">
-        <!-- Sidebar -->
-        <div class="sidebar w-1/4 h-screen text-white">
-            <div class="p-4">
-                <!-- Logo -->
-                <div class="flex items-center justify-center mb-4">
-                    <img src="./chicken.png" alt="Logo">
-                </div>
-                <h2 class="text-2xl font-semibold">Dashboard</h2>
-            </div>
-            <ul class="p-2">
-                <li class="mb-2"><a href="#" class="block p-2 hover:bg-white hover:text-black transition">Overview</a></li>
-                <li class="mb-2"><a href="#" class="block p-2 hover:bg-white hover:text-black transition">Goals</a></li>
-                <li class="mb-2"><a href="#" class="block p-2 hover:bg-white hover:text-black transition">Budget</a></li>
-                <li class="mb-2"><a href="#" class="block p-2 hover:bg-white hover:text-black transition">Steam</a></li>
-                <li class="mb-2"><a href="#" class="block p-2 hover:bg-white hover:text-black transition">Settings</a></li>
-                <li class="mb-2 mt-48"><a class="block p-2">Hello Eric!</a></li>
-            </ul>
-        </div>
+<body class=" bg-gray-800 font-sans leading-normal tracking-normal mt-12">
+
+    {{!-- <header>
+        <!--Nav-->
         
-        <!-- Content -->
-        <div class="flex flex-col w-full" >
+        <nav aria-label="menu nav" class=" flex flex-wrap items-center pt-2 md:pt-1 pb-1 px-1 mt-0 h-auto ">
+
+            <button onclick="toggleDD('myDropdown')" class=" rounded drop-button text-white py-2 px-2  dropdown-background"> <span class="pr-2"><i class="em em-robot_face"></i></span> Hi, User <svg class="h-3 fill-current inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg></button>
+                
+            <div id="myDropdown" class="dropdownlist absolute bg-gray-800 text-white right-0 mt-3 p-3 overflow-auto z-30 invisible">
+                <input type="text" class="drop-search p-2 text-gray-600" placeholder="Search.." id="myInput" onkeyup="filterDD('myDropdown','myInput')">
+                <a href="#" class="p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"><i class="fa fa-user fa-fw"></i> Profile</a>
+                <a href="#" class="p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"><i class="fa fa-cog fa-fw"></i> Settings</a>
+                <div class="border border-gray-800"></div>
+                <a href="#" class="p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"><i class="fas fa-sign-out-alt fa-fw"></i> Log Out</a>
+            </div>
+
+        </nav>
+    </header> --}}
+    
+    <main>
+    
+        <div class=" flex flex-col md:flex-row">
+            <nav class=" w-full md:w-80">
+                    
+                    <div class=" md:mt-12 md:w-80 md:fixed md:left-0 md:top-0 content-center md:content-start text-left justify-between">
+                        <!-- Logo -->
+                        <div class="p-4 flex items-center justify-center mb-4">
+                            <img src="../../public/images/wizard-hat.png" alt="Logo">
+                        </div>
+                        <div class="m-3 p-3 md:py-3 px-1 md:px-2 text-center md:text-left">
+                            {{!-- <h2 class="text-2xl text-white font-semibold">Dashboard</h2> --}}
+                            <ul class="list-reset flex flex-row md:flex-col">
+                                <li class="mr-3 flex-1">
+                                    <a href="#" class="block py-1 md:py-3 pl-1 align-middle text-white no-underline hover:text-white border-b-2  border-pink-500">
+                                        <i class="fas fa-tasks pr-0 md:pr-3"></i><span class="pb-1 md:pb-0 text-xs md:text-base text-gray-400 md:text-gray-200 block md:inline-block">Overview</span>
+                                    </a>
+                                </li>
+                                <li class="mr-3 flex-1">
+                                    <a href="#" class="block py-1 md:py-3 pl-1 align-middle text-white no-underline hover:text-white border-b-2 border-gray-800 hover:border-purple-500">
+                                        <i class="fa fa-envelope pr-0 md:pr-3"></i><span class="pb-1 md:pb-0 text-xs md:text-base text-gray-400 md:text-gray-200 block md:inline-block">Goals</span>
+                                    </a>
+                                </li>
+                                <li class="mr-3 flex-1">
+                                    <a href="#" class="block py-1 md:py-3 pl-1 align-middle text-white no-underline hover:text-white border-b-2 border-gray-800 hover:border-blue-600">
+                                        <i class="fas fa-chart-area pr-0 md:pr-3 text-blue-600"></i><span class="pb-1 md:pb-0 text-xs md:text-base text-white md:text-white block md:inline-block">Budget</span>
+                                    </a>
+                                </li>
+                                <li class="mr-3 flex-1">
+                                    <a href="#" class="block py-1 md:py-3 pl-0 md:pl-1 align-middle text-white no-underline hover:text-white border-b-2 border-gray-800 hover:border-red-500">
+                                        <i class="fa fa-wallet pr-0 md:pr-3"></i><span class="pb-1 md:pb-0 text-xs md:text-base text-gray-400 md:text-gray-200 block md:inline-block">Stream</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                    </div>
+    
+            </nav>
+        <div class=" flex flex-col w-full" >
             {{{ body }}}
         </div>
-    
-    </div>
-</div>
-</body>
+        </div>
+        <script>
+    /*Toggle dropdown list*/
+    function toggleDD(myDropMenu) {
+        document.getElementById(myDropMenu).classList.toggle("invisible");
+    }
+    /*Filter dropdown options*/
+    function filterDD(myDropMenu, myDropMenuSearch) {
+        var input, filter, ul, li, a, i;
+        input = document.getElementById(myDropMenuSearch);
+        filter = input.value.toUpperCase();
+        div = document.getElementById(myDropMenu);
+        a = div.getElementsByTagName("a");
+        for (i = 0; i < a.length; i++) {
+            if (a[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                a[i].style.display = "";
+            } else {
+                a[i].style.display = "none";
+            }
+        }
+    }
+    // Close the dropdown menu if the user clicks outside of it
+    window.onclick = function(event) {
+        if (!event.target.matches('.drop-button') && !event.target.matches('.drop-search')) {
+            var dropdowns = document.getElementsByClassName("dropdownlist");
+            for (var i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (!openDropdown.classList.contains('invisible')) {
+                    openDropdown.classList.add('invisible');
+                }
+            }
+        }
+    }
+</script>
+    </main>
 </html>

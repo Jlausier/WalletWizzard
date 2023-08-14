@@ -1,0 +1,100 @@
+     <section>
+        <div id="main" class=" main-content flex-1 bg-gray-700 mx-10 mb-10 pb-24 md:pb-5 rounded-2xl bg-gray-700">
+
+            {{!-- Title Container --}}
+                <h1 class=" rounded-t-3xl pl-12 pt-12 text-5xl text-gray-100">Budget</h1>
+
+           {{!-- Content Container --}}
+            <div class=" p-6 flex bg-gray-700">
+
+                {{!-- left portion --}}
+                <div class=" flex flex-col w-2/3">
+
+                    {{!-- Content Card 1 --}}
+                    <div class="  p-6  flex">
+                        <div class=" bg-gray-800 rounded-lg shadow-xl w-full">
+                            <div class="p-4 pt-6 flex justify-between">
+                                <h3 class="tracking-wider uppercase text-left text-gray-200">Income</h3>
+                                    <a class="rounded text-2xl sidebar w-8 h-8 flex justify-center items-center">
+                                        <div>+</div>
+                                    </a>
+                                </div>                            <div class=" p-5">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    {{!-- Content Card 2 --}}
+                    <div class=" p-6  flex">
+                        <div class=" bg-gray-800 rounded-lg shadow-xl w-full">
+                            <div class="p-4 pt-6 flex justify-between">
+                                <h3 class="tracking-wider uppercase text-left text-gray-200">Expenses</h3>
+                                    <a class="rounded text-2xl sidebar w-8 h-8 flex justify-center items-center">
+                                        <div>+</div>
+                                    </a>
+                                </div>
+                            <div class=" p-5">
+                                {{!-- Move this code into the partial --}}
+                                <div>
+                                    <table class="table-fixed w-full">
+                                        <thead>
+                                            <tr class=" text-left text-gray-400 w-1/5">
+                                                <th class=" ">Date</th>
+                                                <th class=" w-3/5">Income</th>
+                                                <th class=" ">Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class=" text-left text-gray-200 w-1/5">
+                                                <td class="">07/20/2023</td>
+                                                <td class="">Paycheck</td>
+                                                <td class="">$1,000.00</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                {{!-- Remove this comment and replace it with the correct partial name --}}
+                                {{!- {{> income-table}}
+
+                            </div>
+                        </div>
+                    </div>
+
+                    {{!-- Content Card 3 --}}
+                    <div class=" p-6 flex">
+                        <div class=" bg-gray-800 border-transparent rounded-lg shadow-xl w-full">
+                            <div class="  text-left  text-gray-800 p-2">
+                                <h class="tracking-wider  uppercase text-gray-400">Goals</h>
+                            </div>
+                            <div class=" p-5">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    {{!-- left portion closer --}}
+                </div>
+
+                {{!- Right Side }}
+                <div class="flex w-1/3">
+                    {{!-- Content Card 4 --}}
+                    <div class="flex w-full p-6">
+                        <div class=" bg-gray-800 border-transparent rounded-lg shadow-xl graph-four w-full">
+                            <div class=" sidebar text-center uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
+                                <h class=" font-bold uppercase text-gray-600">Display Net</h>
+                            </div>
+                            <div class=" p-5">
+                                {{> income-chart}}
+                            </div>
+                        </div>
+                    </div>
+                
+                    {{!- Right Side Closer }}
+                </div>
+
+                {{!-- Content Container Closer --}}
+            </div>
+
+        </div>
+    </section>
