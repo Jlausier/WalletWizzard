@@ -1,10 +1,20 @@
 import User from "./User.js";
+import UserConfig from "./UserConfig.js";
 import Income from "./Income.js";
 import Expense from "./Expense.js";
 import ExpenseType from "./ExpenseType.js";
 import Goal from "./Goal.js";
 import GoalCategory from "./GoalCategory.js";
 import GoalProgression from "./GoalProgression.js";
+
+// ------------------------- Config Associations -------------------------
+
+UserConfig.belongsTo(User, {
+  foreignKey: "user_id",
+  onDelete: "CASCADE",
+});
+
+User.hasMany(UserConfig);
 
 // ------------------------- Income Associations -------------------------
 
