@@ -1,47 +1,62 @@
 [
-    {
-       "name": "rent_or_mortgage" 
-    },
-    {
-        "name": "utilities" 
-     },
-     {
-        "name": "groceries" 
-     },
-     {
-        "name": "transportation" 
-     },
-     {
-        "name": "insurance" 
-     },
-     {
-        "name": "internet_and_cable_streaming_services" 
-     },
-     {
-        "name": "cell_phone" 
-     },
-     {
-        "name": "loans" 
-     },
-     {
-        "name": "entertainment" 
-     },
-     {
-        "name": "gym" 
-     },
-     {
-        "name": "health_and_wellness" 
-     },
-     {
-        "name": "clothing_and_personal_care" 
-     },
-     {
-        "name": "savings_and_investments" 
-     },
-     {
-        "name": "childcare_or_education" 
-     },
-     {
-        "name": "miscellaneous" 
-     }
+  {
+    "name": "rent_or_mortgage",
+    "category": "essential"
+  },
+  {
+    "name": "utilities",
+    "category": "essential"
+  },
+  {
+    "name": "groceries",
+    "category": "essential"
+  },
+  {
+    "name": "transportation",
+    "category": "essential"
+  },
+  {
+    "name": "insurance",
+    "category": "essential"
+  },
+  {
+    "name": "internet_and_cable_streaming_services",
+    "category": "essential"
+  },
+  {
+    "name": "cell_phone",
+    "category": "essential"
+  },
+  {
+    "name": "loans",
+    "category": "essential"
+  },
+  {
+    "name": "entertainment",
+    "category": "nonessential"
+  },
+  {
+    "name": "gym",
+    "category": "nonessential"
+  },
+  {
+    "name": "health_and_wellness",
+    "category": "nonessential"
+  },
+  {
+    "name": "clothing_and_personal_care",
+    "category": "nonessential"
+  },
+  {
+    "name": "savings_and_investments",
+    "category": "savings"
+  },
+  {
+    "name": "childcare_or_education",
+    "category": "essential"
+  },
+  {
+    "name": "miscellaneous",
+    "category": "nonessential"
+  }
 ]

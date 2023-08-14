@@ -8,7 +8,6 @@ import {
   Expense,
   GoalCategory,
   GoalProgression,
-  ExpenseCategory,
   ExpenseType,
 } from "../models/index.js";
 
@@ -21,50 +20,64 @@ const goalCategoryData = require("./goalCategoryData.json");
 const goalProgressionData = require("./goalProgressionData.json");
 const expenseData = require("./expenseData.json");
 const expenseTypeData = require("./expenseTypeData.json");
-const expenseCategoryData = require("./expenseCategoryData.json");
 
 const seedDatabase = async () => {
   await sequelize.sync({ force: true });
 
-  await User.bulkCreate(userData, {
+  const users = await User.bulkCreate(userData, {
     individualHooks: true,
     returning: true,
   });
 
-  await Income.bulkCreate(incomeData, {
+  await Income.bulkCreate(
+    incomeData.map((i) => ({ ...i, userId: users[0].id })),
+    {
+      individualHooks: true,
+      returning: true,
+    }
+  );
+
+  const goalCategories = await GoalCategory.bulkCreate(goalCategoryData, {
     individualHooks: true,
     returning: true,
   });
 
-  await Goal.bulkCreate(goalData, {
+  const goals = await Goal.bulkCreate(
+    goalData.map((g) => ({
+      ...g,
+      userId: users[0].id,
+      categoryId: goalCategories[0].id,
+    })),
+    {
+      individualHooks: true,
+      returning: true,
+    }
+  );
+
+  await GoalProgression.bulkCreate(
+    goalProgressionData.map((gp) => ({ ...gp, goalId: goals[0].id })),
+    {
+      individualHooks: true,
+      returning: true,
+    }
+  );
+
+  const expenseTypes = await ExpenseType.bulkCreate(expenseTypeData, {
     individualHooks: true,
     returning: true,
   });
 
-  await GoalCategory.bulkCreate(goalCategoryData, {
-    individualHooks: true,
-    returning: true,
-  });
-
-  await GoalProgression.bulkCreate(goalProgressionData, {
-    individualHooks: true,
-    returning: true,
-  });
-
-  await Expense.bulkCreate(expenseData, {
-    individualHooks: true,
-    returning: true,
-  });
-
-  await ExpenseType.bulkCreate(expenseTypeData, {
-    individualHooks: true,
-    returning: true,
-  });
-
-  await ExpenseCategory.bulkCreate(expenseCategoryData, {
-    individualHooks: true,
-    returning: true,
-  });
+  await Expense.bulkCreate(
+    expenseData.map((e) => ({
+      ...e,
+      userId: users[0].id,
+      typeId: expenseTypes[0].id,
+    })),
+    {
+      individualHooks: true,
+      returning: true,
+    }
+  );
 
   process.exit(0);
 };

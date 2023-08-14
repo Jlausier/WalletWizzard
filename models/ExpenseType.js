@@ -15,12 +15,9 @@ ExpenseType.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    categoryId: {
-      type: DataTypes.UUID,
-      references: {
-        model: "expense_category",
-        key: "id",
-      },
+    category: {
+      type: DataTypes.ENUM("savings", "essential", "nonessential"),
+      allowNull: false,
     },
   },
   {

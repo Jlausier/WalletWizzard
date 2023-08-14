@@ -19,6 +19,10 @@ Income.init(
       type: DataTypes.DECIMAL(20, 2),
       allowNull: false,
     },
+    scheduledDate: {
+      type: DataTypes.DATEONLY,
+      defaultValue: DataTypes.NOW,
+    },
     userId: {
       type: DataTypes.UUID,
       references: {

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css"/>
+    <style>
+        .sidebar {
+            background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
+        }
+        .chart-area {
+            background-color: #f3f4f6;
+        }
+    </style>
+</head>
+<body class="bg-gray-400">
+    <div class="flex">
+        <!-- Sidebar -->
+        <div class="sidebar w-1/4 h-screen text-white">
+            <div class="p-4">
+                <!-- Logo -->
+                <div class="flex items-center justify-center mb-4">
+                    <img src="./chicken.png" alt="Logo">
+                </div>
+                <h2 class="text-2xl font-semibold">Dashboard</h2>
+            </div>
+            <ul class="p-2">
+                <li class="mb-2"><a href="#" class="block p-2 hover:bg-white hover:text-black transition">Overview</a></li>
+                <li class="mb-2"><a href="#" class="block p-2 hover:bg-white hover:text-black transition">Goals</a></li>
+                <li class="mb-2"><a href="#" class="block p-2 hover:bg-white hover:text-black transition">Budget</a></li>
+                <li class="mb-2"><a href="#" class="block p-2 hover:bg-white hover:text-black transition">Steam</a></li>
+                <li class="mb-2"><a href="#" class="block p-2 hover:bg-white hover:text-black transition">Settings</a></li>
+                <li class="mb-2 mt-48"><a class="block p-2">Hello Eric!</a></li>
+            </ul>
+        </div>
+        
+        <!-- Content -->
+        <div class="flex flex-col w-full" >
+            {{{ body }}}
+        </div>
+    
+    </div>
+</div>
+</body>
+</html>

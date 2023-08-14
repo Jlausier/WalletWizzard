@@ -1,18 +1,11 @@
 import express from "express";
+import { Sequelize } from "sequelize";
 import withAuth from "../../utils/auth.js";
-import {
-  User,
-  Income,
-  Expense,
-  ExpenseType,
-  ExpenseCategory,
-  Goal,
-  GoalCategory,
-  GoalProgression,
-} from "../../models/index.js";
+import { User } from "../../models/index.js";
+import { testUserId } from "../../utils/query.js";
 
 /**
- * @TODO Redirect when data is not correctly loaded
+ * @TODO Redirect when config is not correctly loaded
  */
 
 /**
@@ -25,30 +18,18 @@ const router = express.Router();
 
 router.get("/overview", withAuth, async (req, res) => {
   /**
-   * @TODO Get user's budget tracker
-   * @TODO Get user's goals progress
-   * @TODO Get user's monthly
-   *
-   * @TODO All expenses
-   * - Essential
-   * - Savings
-   * - Fun stuff
-   *
-   * @TODO Render overview page
+   * @TODO Get user's expense config
+   * @TODO Get user's income config
+   * @TODO Get user's goals config
    */
+
+  res.render("overview");
 });
 
 // ================================ BUDGET ======================================
 
 /**
  * @summary Render the dashboard budget page
- *
- * @description
- * - Find the logged in user
- * - Get their budget data
- *   - Incomes array
- *   - Expenses array
- *   - Goals array
  *
  * Status Codes:
  * - 200 - Success - returns budget data
@@ -61,36 +42,7 @@ router.get("/overview", withAuth, async (req, res) => {
  */
 const renderBudget = async (req, res) => {
   try {
-    const budgetData = await User.findByPk(req.session.user_id, {
-      attributes: [],
-      include: [
-        {
-          model: Income,
-          attributes: ["id", "name", "amount"],
-        },
-        {
-          model: Expense,
-          attributes: ["id", "name", "amount"],
-          include: [
-            {
-              model: ExpenseType,
-              attributes: ["id", "name"],
-              include: [{ model: ExpenseCategory }],
-            },
-          ],
-        },
-        {
-          model: Goal,
-          attributes: ["id", "name", "desiredAmount", "date"],
-          include: [
-            { model: GoalCategory },
-            { model: GoalProgression, attributes: ["id", "amount"] },
-          ],
-        },
-      ],
-    }).get({ plain: true });
-
-    res.render("budget", { budgetData });
+    res.render("budget");
   } catch (err) {
     res.status(500);
   }
@@ -99,23 +51,12 @@ const renderBudget = async (req, res) => {
 /**
  * @summary GET /dashboard/budget
  */
-router.get("/budget", withAuth, renderBudget);
+router.get("/budget", renderDashboardBudget);
 
 // ================================ GOALS =======================================
 
 /**
  * @summary Render the dashboard goals page
- *
- * @description
- * - Find the logged in user
- * - Get their goals data
- *   - Goals array
- *     - Goal Category
- *     - Goal Progression
- *
- * Status Codes:
- * - 200 - Success - returns goals data
- * - 500 - Failure - could not fetch data
  *
  * @async
  * @method renderGoals
@@ -124,25 +65,6 @@ router.get("/budget", withAuth, renderBudget);
  */
 const renderGoals = async (req, res) => {
   try {
-    const goalsData = await User.findByPk(req.session.user_id, {
-      attributes: ["id", "name", "desiredAmount", "date", "reminder"],
-      include: [
-        {
-          model: Goal,
-          attributes: [],
-          include: [
-            {
-              model: GoalCategory,
-            },
-            {
-              model: GoalProgression,
-              attributes: ["id", "amount"],
-            },
-          ],
-        },
-      ],
-    }).map((goal) => goal.get({ plain: true }));
-
     res.render("goals", { goalsData });
   } catch (err) {
     res.status(500);
@@ -156,55 +78,13 @@ router.get("/goals", withAuth, renderGoals);
 
 // ================================ STREAM ======================================
 
-/**
- * @summary Render the dashboard stream page
- *
- * @description
- * - Find all goals where:
- *   - public: true
- *   - complete: true
- * - Get the goals data
- *   - user name
- *   - category name
- *   - pregression SUM(amount)
- *
- * Status Codes:
- * - 200 - Success - returns public, completed goals data
- * - 500 - Failure - could not fetch data
- *
- * @async
- * @method renderStream
- * @param {express.Request} req Express {@linkcode express.Request Request} object
- * @param {express.Response} res Express {@linkcode express.Response Response} object
- */
-const renderStream = async (req, res) => {
+router.get("/stream", withAuth, async (req, res) => {
   try {
-    const goalsData = await Goal.findAll({
-      where: {
-        public: true,
-        complete: true,
-      },
-      attributes: ["id", "name", "desiredAmount", "dateCompleted"],
-      include: [
-        { model: User, include: ["name"] },
-        { model: GoalCategory, attributes: ["name"] },
-        {
-          model: GoalProgression,
-          attributes: [sequelize.fn("SUM", sequelize.col("amount"))],
-        },
-      ],
-    }).map((goal) => goal.get({ plain: true }));
-
-    res.render("stream", { goalsData });
+    res.render("stream");
   } catch (err) {
     res.status(500);
   }
-};
-
-/**
- * @summary GET /dashboard/stream
- */
-router.get("/stream", withAuth, renderStream);
+});
 
 // ================================ SETTINGS ====================================
 
