@@ -10,7 +10,6 @@ import {
   GoalProgression,
 } from "../../models/index.js";
 import { Sequelize } from "sequelize";
-import sequelize from "../../config/connection.js";
 
 /**
  * @const scheduledMonth Formats the `scheduled_date` column of a table
@@ -29,7 +28,7 @@ const scheduledMonthAttr = [scheduledMonth, "month"];
 const sumAmount = [Sequelize.fn("SUM", Sequelize.col("amount")), "sum"];
 
 /** @const user_id Test {@linkcode User} UUID string */
-const user_id = "d71cca46-de0d-432d-a212-aae063bfccb5";
+const user_id = "3c198ba1-c44f-4cb4-aad4-8351a98de927";
 
 /**
  * Get the sequelize options for the summation of a monetary amount
@@ -113,24 +112,18 @@ router.get("/income", getIncomeData);
  * @param {express.Response} res Express {@linkcode express.Response Response} object
  */
 const getExpenseData = async (req, res) => {
-  /**
-   * @TODO Query params
-   * - num months
-   * - expense type
-   * - expense category
-   */
-
+  // Construct query options
   try {
     const queryOptions = {
       where: { userId: req.session.userId || user_id },
       raw: true,
+      attributes: [],
     };
 
-    const sort = req.query.sort_by || "month";
-    // Construct query options
-    switch (sort) {
+    if (req.query.sum === "true") queryOptions.attributes.push(sumAmount);
+
+    switch (req.query.group_by) {
       case "type":
-        queryOptions.attributes = [sumAmount];
         queryOptions.include = [
           {
             model: ExpenseType,
@@ -140,7 +133,6 @@ const getExpenseData = async (req, res) => {
         queryOptions.group = ["expense_type.name"];
         break;
       case "category":
-        queryOptions.attributes = [sumAmount];
         queryOptions.include = [
           {
             model: ExpenseType,
@@ -150,8 +142,7 @@ const getExpenseData = async (req, res) => {
         queryOptions.group = ["expense_type.category"];
         break;
       case "month":
-      default:
-        queryOptions.attributes = [scheduledMonthAttr, sumAmount];
+        queryOptions.attributes.push(scheduledMonthAttr);
         queryOptions.group = [scheduledMonth];
         break;
     }

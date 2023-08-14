@@ -8,7 +8,6 @@ import {
   Expense,
   GoalCategory,
   GoalProgression,
-  // ExpenseCategory,
   ExpenseType,
 } from "../models/index.js";
 
@@ -21,7 +20,6 @@ const goalCategoryData = require("./goalCategoryData.json");
 const goalProgressionData = require("./goalProgressionData.json");
 const expenseData = require("./expenseData.json");
 const expenseTypeData = require("./expenseTypeData.json");
-const expenseCategoryData = require("./expenseCategoryData.json");
 
 const seedDatabase = async () => {
   await sequelize.sync({ force: true });
@@ -64,25 +62,10 @@ const seedDatabase = async () => {
     }
   );
 
-  // const expenseCategories = await ExpenseCategory.bulkCreate(
-  //   expenseCategoryData,
-  //   {
-  //     individualHooks: true,
-  //     returning: true,
-  //   }
-  // );
-
-  const expenseTypes = await ExpenseType.bulkCreate(
-    expenseTypeData.map((et) => ({
-      ...et,
-      // categoryId: expenseCategories[0].id,
-      category: "essential",
-    })),
-    {
-      individualHooks: true,
-      returning: true,
-    }
-  );
+  const expenseTypes = await ExpenseType.bulkCreate(expenseTypeData, {
+    individualHooks: true,
+    returning: true,
+  });
 
   await Expense.bulkCreate(
     expenseData.map((e) => ({

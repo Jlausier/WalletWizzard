@@ -2,7 +2,6 @@ import User from "./User.js";
 import Income from "./Income.js";
 import Expense from "./Expense.js";
 import ExpenseType from "./ExpenseType.js";
-// import ExpenseCategory from "./ExpenseCategory.js";
 import Goal from "./Goal.js";
 import GoalCategory from "./GoalCategory.js";
 import GoalProgression from "./GoalProgression.js";
