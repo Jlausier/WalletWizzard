@@ -36,7 +36,7 @@ export const formattedMonthAttr = [formattedMonth, "label"];
 export const sumAmount = [Sequelize.fn("SUM", Sequelize.col("amount")), "sum"];
 
 /** @const testUserId Test {@linkcode User} UUID string */
-export const testUserId = "65051d46-76e1-43a0-8bda-484ae4229c4f";
+export const testUserId = "7f95751e-e2a9-4aeb-a866-801c0902ca21";
 
 /**
  * Returns query options for finding objects associated with a user
