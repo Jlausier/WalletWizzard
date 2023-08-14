@@ -11,6 +11,10 @@ UserConfig.init(
       allowNull: false,
       primaryKey: true,
     },
+    type: {
+      type: DataTypes.ENUM("income", "expense", "goal"),
+      allowNull: false,
+    },
     sum: {
       type: DataTypes.BOOLEAN,
       defaultValue: true,
@@ -24,7 +28,7 @@ UserConfig.init(
       defaultValue: 1,
     },
     group: {
-      type: DataTypes.ENUM("month", "category", "type"),
+      type: DataTypes.ENUM("month", "category", "type", "none"),
       defaultValue: "month",
     },
     userId: {

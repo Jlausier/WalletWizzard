@@ -75,10 +75,10 @@ Goal.hasMany(GoalProgression);
 
 export {
   User,
+  UserConfig,
   Income,
   Expense,
   ExpenseType,
-  // ExpenseCategory,
   Goal,
   GoalCategory,
   GoalProgression,

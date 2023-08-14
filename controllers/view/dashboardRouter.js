@@ -1,7 +1,7 @@
 import express from "express";
 import { Sequelize } from "sequelize";
 import withAuth from "../../utils/auth.js";
-import { User } from "../../models/index.js";
+import { User, UserConfig } from "../../models/index.js";
 import { testUserId } from "../../utils/query.js";
 
 /**
@@ -14,16 +14,40 @@ import { testUserId } from "../../utils/query.js";
  */
 const router = express.Router();
 
+const findOrCreateConfig = (type, userId) => {
+  return UserConfig.findOrCreate({
+    where: {
+      userId,
+      type,
+    },
+    defaults: {
+      userId,
+      type,
+    },
+  });
+};
+
 // ================================ OVERVIEW ====================================
 
 router.get("/overview", withAuth, async (req, res) => {
-  /**
-   * @TODO Get user's expense config
-   * @TODO Get user's income config
-   * @TODO Get user's goals config
-   */
+  try {
+    const incomeConfig = await findOrCreateConfig(
+      "income",
+      req.session.userId || testUserId
+    );
 
-  res.render("overview");
+    const expenseConfig = await findOrCreateConfig(
+      "expense",
+      req.session.userId || testUserId
+    );
+
+    const goalConfig = await findOrCreateConfig(
+      "goal",
+      req.session.userId || testUserId
+    );
+
+    res.render("overview", { incomeConfig, expenseConfig, goalConfig });
+  } catch (err) {}
 });
 
 // ================================ BUDGET ======================================
