@@ -74,7 +74,11 @@ const getIncomeData = async (req, res) => {
       res.status(400).json({ message: "Could not find income data for user" });
     }
 
-    res.status(200).json(incomeData);
+    const labels = incomeData.map((d) => d.label);
+    let data = [];
+    if (sum && sum === "true") data = incomeData.map((d) => d.sum);
+
+    res.status(200).json({ labels, data });
   } catch (err) {
     res.status(500);
   }
