@@ -21,14 +21,14 @@ const router = express.Router();
 
 // ================================ OVERVIEW ====================================
 
-router.get("/overview", withAuth, async (req, res) => {
+router.get("/overview", async (req, res) => {
   try {
     /**
      * @TODO Get overview data
      */
     res.render("overview");
   } catch (err) {
-    res.status(500).json({ message: "" });
+    res.status(500).json(err);
   }
 });
 
@@ -68,7 +68,6 @@ const renderBudget = async (req, res) => {
       goalData: processedGoalData,
     });
   } catch (err) {
-    console.error(err);
     res.status(500).json(err);
   }
 };
@@ -127,6 +126,12 @@ router.get("/settings", withAuth, async (req, res) => {
    *
    * @TODO Render settings page
    */
+});
+
+// ================================ SPLASH PAGE =================================
+
+router.get("/", (req, res) => {
+  res.render("homepage");
 });
 
 export default router;
