@@ -5,11 +5,11 @@ import withAuth from "../../utils/auth.js";
 import {
   getGoalsOptions,
   processGoalData,
-  findOrCreateConfig,
   testUserId,
 } from "../../utils/query.js";
 
 /**
+ * @TODO Render error page instead of sending 500 status
  * @TODO Load settings page
  */
 
@@ -23,6 +23,9 @@ const router = express.Router();
 
 router.get("/overview", withAuth, async (req, res) => {
   try {
+    /**
+     * @TODO Get overview data
+     */
     res.render("overview");
   } catch (err) {
     res.status(500).json({ message: "" });
