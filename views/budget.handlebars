@@ -15,14 +15,14 @@
                         <div class=" bg-gray-800 rounded-lg shadow-xl w-full">
                             <div class="p-6 flex justify-between">
                                 <h3 class="tracking-wider uppercase text-left text-gray-200">Income</h3>
-                                    <a class="rounded text-gray-800 text-2xl sidebar w-8 h-8 flex justify-center items-center">
+                                    <a class="rounded text-gray-800 text-2xl sidebar w-8 h-8 flex justify-center items-center income-btn">
                                         <div>+</div>
                                     </a>
                             </div>                            
                            <div class=" p-6">
                                 {{!-- Move this code into the partial --}}
                                 <div>
-                                    <table class="table-fixed w-full">
+                                    <table id="incomeTable"  class="table-fixed w-full">
                                         <thead>
                                             <tr class=" text-left text-gray-500 w-1/5">
                                                 <th>Date</th>
@@ -35,6 +35,9 @@
                                                 <td>08/20/2023</td>
                                                 <td class=" w-3/5">Paycheck</td>
                                                 <td class="text-right">$1,000.00</td>
+                                                <td class="text-right">
+                                                    <button class="delete-button text-red-600">Delete</button>
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -52,14 +55,14 @@
                         <div class=" bg-gray-800 rounded-lg shadow-xl w-full">
                             <div class="p-6 flex justify-between">
                                 <h3 class="tracking-wider uppercase text-left text-gray-200">Expenses</h3>
-                                    <a class="rounded text-gray-800 text-2xl sidebar w-8 h-8 flex justify-center items-center">
+                                    <a class="rounded text-gray-800 text-2xl sidebar w-8 h-8 flex justify-center items-center expense-btn">
                                         <div>+</div>
                                     </a>
                                 </div>
                             <div class=" p-6">
                                 {{!-- Move this code into the partial --}}
                                 <div>
-                                    <table class="table-fixed w-full">
+                                    <table id="expenseTable" class="table-fixed w-full">
                                         <thead>
                                             <tr class=" text-left text-gray-500 w-1/5">
                                                 <th>Date</th>
@@ -89,14 +92,14 @@
                         <div class=" bg-gray-800 border-transparent rounded-lg shadow-xl w-full">
                            <div class="p-6 flex justify-between">
                                 <h3 class="tracking-wider uppercase text-left text-gray-200">Goals</h3>
-                                    <a class="rounded text-gray-800 text-2xl sidebar w-8 h-8 flex justify-center items-center">
+                                    <a class="rounded text-gray-800 text-2xl sidebar w-8 h-8 flex justify-center items-center  expense-btn">
                                         <div>+</div>
                                     </a>
                                 </div>
                             <div class=" p-6">
                                 {{!-- Move this code into the partial --}}
                                 <div>
-                                    <table class="table-fixed w-full">
+                                    <table id="expenseTable" class="table-fixed w-full">
                                         <thead>
                                             <tr class=" text-left text-gray-500 w-1/5">
                                                 <th>Date</th>
@@ -167,6 +170,18 @@
 
                 {{!-- Content Container Closer --}}
             </div>
-
+           <!-- Modal for adding new entry -->
+                <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                    <div class="bg-white p-8 rounded-lg shadow-lg">
+                        <h2 class="text-lg font-semibold mb-4">Add New Entry</h2>
+                        <input type="text" id="entryName" class="mb-4 p-2 border rounded" placeholder="Name">
+                        <input type="text" id="entryMonth" class="mb-4 p-2 border rounded" placeholder="Month">
+                        <input type="text" id="entryAmount" class="mb-4 p-2 border rounded" placeholder="Amount">
+                        <button id="addEntryBtn" class="bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded">Add</button>
+                    </div>
+                </div>
+    
         </div>
     </section>
+
+    

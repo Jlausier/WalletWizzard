@@ -27,9 +27,10 @@ document.addEventListener("DOMContentLoaded", function () {
         if (name && month && amount) {
             const newRow = document.createElement("tr");
             newRow.innerHTML = `
-                <td class="border px-4 py-2">${name}</td>
+                
                 <td class="border px-4 py-2">${month}</td>
-                <td class="border px-4 py-2">${amount}</td>
+                <td class="w-3/5">${name}</td>
+                <td class="text-right">${amount}</td>
                 <td class="text-4xl py-2"><button class="text-red-500 ml-4 delete-entry">-</button></td>
             `;
 
