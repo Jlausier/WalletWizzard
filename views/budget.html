@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Dashboard</title>
     <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
     <style>
         .sidebar {
             background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
@@ -22,6 +24,9 @@
         #myDropdown{
             position: fixed;
         }
+      .table-container{
+        min-height: 400px;
+      }
        
     </style>
 </head>
@@ -46,7 +51,7 @@
                                     <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg></button>
                                 <div id="myDropdown" class="dropdownlist absolute bg-gray-800 text-white right-0 mt-3 p-3 overflow-auto z-30 invisible">
                                     <input type="text" class="drop-search p-2 text-gray-600" placeholder="Search.." id="myInput" onkeyup="filterDD('myDropdown','myInput')">
-                                    <a href="#" class="p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"><i class="fa fa-user fa-fw"></i> Profile</a>
+                                    <a href="#" id="profileLink"class="p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"><i class="fa fa-user fa-fw"></i> Profile</a>
                                     <a href="#" class="p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"><i class="fa fa-cog fa-fw"></i> Settings</a>
                                     <div class="border border-gray-800"></div>
                                     <a href="#" class="p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"><i class="fas fa-sign-out-alt fa-fw"></i> Log Out</a>
@@ -155,101 +160,145 @@
                         <!--/Graph Card-->
                     </div>
     
-                    <div class="w-full md:w-1/2 xl:w-1/3 p-6">
-                        <!--Graph Card-->
-                        <div class="bg-gray-800 border-transparent rounded-lg shadow-xl">
-                            <div class="sidebar text-center uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
-                                <h2 class="font-bold uppercase text-gray-600">Graph</h2>
-                            </div>
-                            <div class="p-5">
-                                <canvas id="chartjs-0" class="chartjs" width="undefined" height="undefined"></canvas>
-                                <script>
-                                    new Chart(document.getElementById("chartjs-0"), {
-                                        "type": "line",
-                                        "data": {
-                                            "labels": ["January", "February", "March", "April", "May", "June", "July"],
-                                            "datasets": [{
-                                                "label": "Views",
-                                                "data": [65, 59, 80, 81, 56, 55, 40],
-                                                "fill": false,
-                                                "borderColor": "rgb(75, 192, 192)",
-                                                "lineTension": 0.1
-                                            }]
-                                        },
-                                        "options": {}
-                                    });
-                                </script>
-                            </div>
-                        </div>
-                        <!--/Graph Card-->
-                    </div>
     
-                    <div class="w-full md:w-1/2 xl:w-1/3 p-6">
-                        <!--Graph Card-->
-                        <div class="bg-gray-800 border-transparent rounded-lg shadow-xl">
-                            <div class="sidebar text-center uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
-                                <h2 class="font-bold uppercase text-gray-600">Graph</h2>
-                            </div>
-                            <div class="p-5">
-                                <canvas id="chartjs-1" class="chartjs" width="undefined" height="undefined"></canvas>
-                                <script>
-                                    new Chart(document.getElementById("chartjs-1"), {
-                                        "type": "bar",
-                                        "data": {
-                                            "labels": ["January", "February", "March", "April", "May", "June", "July"],
-                                            "datasets": [{
-                                                "label": "Likes",
-                                                "data": [65, 59, 80, 81, 56, 55, 40],
-                                                "fill": false,
-                                                "backgroundColor": ["rgba(255, 99, 132, 0.2)", "rgba(255, 159, 64, 0.2)", "rgba(255, 205, 86, 0.2)", "rgba(75, 192, 192, 0.2)", "rgba(54, 162, 235, 0.2)", "rgba(153, 102, 255, 0.2)", "rgba(201, 203, 207, 0.2)"],
-                                                "borderColor": ["rgb(255, 99, 132)", "rgb(255, 159, 64)", "rgb(255, 205, 86)", "rgb(75, 192, 192)", "rgb(54, 162, 235)", "rgb(153, 102, 255)", "rgb(201, 203, 207)"],
-                                                "borderWidth": 1
-                                            }]
-                                        },
-                                        "options": {
-                                            "scales": {
-                                                "yAxes": [{
-                                                    "ticks": {
-                                                        "beginAtZero": true
-                                                    }
-                                                }]
-                                            }
-                                        }
-                                    });
-                                </script>
-                            </div>
-                        </div>
-                        <!--/Graph Card-->
-                    </div>
+                 
+                       <!-- Table for Income -->
+    <div class="w-full md:w-1/2 xl:w-1/3 p-6 table-container">
+        <div class="bg-gray-800 border-transparent rounded-lg shadow-xl">
+            <div class="sidebar text-center uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
+                <h2 class="font-bold uppercase text-white ml-36">Income Table
+                <button  class="bg-green-500 hover:bg-green-600 text-white px-3 py-3 rounded ml-36 income-btn">
+                    <i class="fas fa-plus"></i>
+                </button></h2></h2>
+            </div>
+            <div class="p-5">
+                <table id="incomeTable" class="table-auto w-full text-white ">
+                    <thead>
+                        <tr>
+                            <th class="px-4 py-2">Name</th>
+                            <th class="px-4 py-2">Month</th>
+                            <th class="px-4 py-2">Amount</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody >
+                        <tr>
+                            <td class="border px-4 py-2">Paycheck</td>
+                            <td class="border px-4 py-2">January</td>
+                            <td class="border px-4 py-2">$1000</td>
+                            <td class=" text-4xl  py-2"><button class="text-red-500 ml-4">-</button></td>
+                        </tr>
+                        <tr>
+                            <td class="border px-4 py-2">Paycheck</td>
+                            <td class="border px-4 py-2">January</td>
+                            <td class="border px-4 py-2">$1000</td>
+                            <td class=" text-4xl  py-2"><button class="text-red-500 ml-4">-</button></td>
+                        </tr>
+                        
+                        <!-- ... Add more rows for each month's income ... -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table for Expenses -->
+    <div class="w-full md:w-1/2 xl:w-1/3 p-6 table-container ">
+        <div class="bg-gray-800 border-transparent rounded-lg shadow-xl">
+            <div class="sidebar text-center uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
+                <h2 class="font-bold uppercase text-white ml-36">Expenses Table  
+                <button  class="bg-green-500 hover:bg-green-600 text-white px-3 py-3 rounded ml-36 expense-btn">
+                    <i class="fas fa-plus"></i>
+                </button></h2>
+               
+            </div>
+            <div class="p-5">
+                <table id="expenseTable" class="table-auto w-full text-white ">
+                    <thead>
+                        <tr>
+                            <th class="px-4 py-2">Name</th>
+                            <th class="px-4 py-2">Month</th>
+                            <th class="px-4 py-2">Amount</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody >
+                        <tr>
+                            <td class="border px-4 py-2">Rent</td>
+                            <td class="border px-4 py-2">January</td>
+                            <td class="border px-4 py-2">$500</td>
+                            <td class="text-4xl py-2"><button class="text-red-500 ml-4">-</button></td>
+                        </tr>
+                        <!-- ... Add more rows for each month's expenses ... -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Modal for adding new entry -->
+<div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-lg">
+        <h2 class="text-lg font-semibold mb-4">Add New Entry</h2>
+        <input type="text" id="entryName" class="mb-4 p-2 border rounded" placeholder="Name">
+        <input type="text" id="entryMonth" class="mb-4 p-2 border rounded" placeholder="Month">
+        <input type="text" id="entryAmount" class="mb-4 p-2 border rounded" placeholder="Amount">
+        <button id="addEntryBtn" class="bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded">Add</button>
+    </div>
+</div>
     
-                    <div class="w-full md:w-1/2 xl:w-1/3 p-6">
-                        <!--Graph Card-->
-                        <div class="bg-gray-800 border-transparent rounded-lg shadow-xl">
-                            <div class="sidebar text-center uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
-                                <h5 class="font-bold uppercase text-gray-600">Graph</h5>
-                            </div>
-                            <div class="p-5"><canvas id="chartjs-4" class="chartjs" width="undefined" height="undefined"></canvas>
-                                <script>
-                                    new Chart(document.getElementById("chartjs-4"), {
-                                        "type": "doughnut",
-                                        "data": {
-                                            "labels": ["P1", "P2", "P3"],
-                                            "datasets": [{
-                                                "label": "Issues",
-                                                "data": [300, 50, 100],
-                                                "backgroundColor": ["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 205, 86)"]
-                                            }]
-                                        }
-                                    });
-                                </script>
-                            </div>
-                        </div>
-                        <!--/Graph Card-->
+    <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+        <!--Graph Card-->
+        <div class="bg-gray-800 border-transparent rounded-lg shadow-xl">
+            <div class="sidebar text-center uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
+                <h2 class="font-bold uppercase text-gray-600">Graph</h2>
+            </div>
+            <div class="p-5">
+                <canvas id="chartjs-0" class="chartjs" width="undefined" height="undefined"></canvas>
+                <script>
+                    new Chart(document.getElementById("chartjs-0"), {
+                        "type": "line",
+                        "data": {
+                            "labels": ["January", "February", "March", "April", "May", "June", "July"],
+                            "datasets": [{
+                                "label": "Views",
+                                "data": [65, 59, 80, 81, 56, 55, 40],
+                                "fill": false,
+                                "borderColor": "rgb(75, 192, 192)",
+                                "lineTension": 0.1
+                            }]
+                        },
+                        "options": {}
+                    });
+                </script>
+            </div>
+        </div>
+        <!--/Graph Card-->
+    </div>
+    <!--/Profile Model-->
+    <div id="profileModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center ">
+        <div id="profilePicture" class="bg-white p-8 rounded-lg shadow-lg">
+            <h2 class="text-lg font-semibold mb-4">Profile Information</h2>
+            <div class="mb-4">
+                <img  src="../public/images/gojo.jpg" alt="Profile Picture" class="rounded-full h-20 w-20 mx-auto">
+            </div>
+            <div class="mb-2">
+                <span class="font-semibold">Test Name:</span> <span id="firstName"></span>
+            </div>
+            <div class="mb-2">
+                <span class="font-semibold">Last Name:</span> <span id="lastName"></span>
+            </div>
+            <div class="mb-2">
+                <span class="font-semibold">Username:</span> <span id="username"></span>
+            </div>
+            <div class="mb-2">
+                <span class="font-semibold">Email:</span> <span id="email"></span>
+            </div>
+            <button id="closeModalBtn" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-2 rounded">Close</button>
+        </div>
+    </div>
+
+</div>
                     </div>
-                  
-    
-                    </div>
-                </div>
             </section>
         </div>
         <script>
@@ -285,5 +334,5 @@
         }
     }
 </script>
-    </main>
+<script src="../public/js/money.js"></script>
 </html>

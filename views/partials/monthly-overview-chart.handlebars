@@ -1,0 +1,10 @@
+<div id="monthly-chart-container" class="w-full relative">
+  <canvas id="myChart" width="400" height="400"></canvas>
+<script>
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const chart = new Chart(ctx, {
+        type: '{{chartType}}',
+        data: {{{chartData}}}
+    });
+</script>
+</div>

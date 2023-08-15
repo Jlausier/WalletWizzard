@@ -6,7 +6,8 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "seeds": "node seeds/seeds.js"
+    "seeds": "node seeds/seeds.js",
+    "start": "node app.js"
   },
   "author": "multiple",
   "license": "MIT",
@@ -22,5 +23,8 @@
     "model": "^6.0.1",
     "mysql2": "^3.6.0",
     "sequelize": "^6.32.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
   }
 }
