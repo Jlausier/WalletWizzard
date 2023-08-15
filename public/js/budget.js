@@ -135,4 +135,48 @@ function formatDate(dateString) {
             editModal.classList.add("hidden");
         });
     }
-});
+    // After inserting the new row in the addEntryBtn event listener
+// Store the entry data in Session Storage
+const entryData = {
+    entryMonth: entryMonth,
+    entryName: entryName,
+    entryAmount: entryAmount
+};
+const entries = JSON.parse(sessionStorage.getItem('entries')) || [];
+entries.push(entryData);
+sessionStorage.setItem('entries', JSON.stringify(entries));
+      // Retrieve stored entry data from Session Storage and populate the table
+      const storedEntries = JSON.parse(sessionStorage.getItem('entries')) || [];
+      const tableBody = document.getElementById("incomeTable").getElementsByTagName("tbody")[0];
+  
+      storedEntries.forEach(entryData => {
+          const newRow = tableBody.insertRow(-1);
+          const cell1 = newRow.insertCell(0);
+          cell1.classList.add("border-t-2", "border-gray-700", "text-left", "text-gray-300", "w-1/5");
+          cell1.innerText = formatDate(entryData.entryMonth);
+  
+          const cell2 = newRow.insertCell(1);
+          cell2.classList.add("border-t-2", "border-gray-700", "text-left", "text-gray-300", "w-3/5");
+          cell2.innerText = entryData.entryName;
+  
+          const cell3 = newRow.insertCell(2);
+          cell3.classList.add("border-t-2", "border-gray-700", "text-left", "text-gray-300", "w-1/5");
+          cell3.innerText = "$" + parseFloat(entryData.entryAmount).toFixed(2);
+  
+          const cell4 = newRow.insertCell(3);
+          cell4.classList.add("border-t-2", "border-gray-700", "text-right");
+          const editButton = document.createElement("button");
+          editButton.classList.add("edit-button", "text-blue-600");
+          editButton.innerText = "Edit";
+          cell4.appendChild(editButton);
+  
+          const deleteButton = document.createElement("button");
+          deleteButton.classList.add("delete-button", "text-red-600");
+          deleteButton.innerText = "Delete";
+          cell4.appendChild(deleteButton);
+  
+          // Add event listeners for edit and delete buttons
+          editButton.addEventListener("click", () => openEditModal(editButton));
+          deleteButton.addEventListener("click", () => handleDelete(deleteButton));
+      });
+  });
