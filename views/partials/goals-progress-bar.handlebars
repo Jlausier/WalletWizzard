@@ -1,66 +1,36 @@
-<div id="goals-progress-bar-chart-container" class="w-full relative">
-  <h2 class="text-lg font-semibold mb-2">Income Chart</h2>
-  <canvas id="income-chart" class="w-full"></canvas>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-    function displayChart(data, labels) {
+{{!-- Card Body --}}
+<div class=" bg-gray-800 rounded-lg shadow-xl w-full">
 
-      const ctx = document.getElementById("income-chart").getContext("2d");
+    {{!-- Card Header Info (Money Left, Title, Contribute Button, and Edit) --}}
+    <div class="p-6 flex justify-between text-gray-200">
+        {{!-- Left Side Header --}}
+        <div class="flex flex-col items-start">
+                  {{!--    vvv   id to connect the remaining money left for the goal --}}
+            <div id="goalAmounttLeft" class="px-3 py-1 mb-2  bg-gray-700 border-gray-400 text-gray-300 rounded-full text-xl">$325 Left</div>
+                                                    {{!--      vvv     I added this for the name, change if it isn't correct  --}}
+            <h3 class="tracking-wider text-left text-3xl">{{goalName}}</h3>
+        </div>
 
-      const incomeChart = new Chart(ctx, {
-        type: "line",
-        data: {
-          labels: labels,
-          datasets: [
-            {
-              label: "Income",
-              data,
-              borderColor: "#007bff",
-              fill: false,
-            },
-          ],
-        },
-        options: {
-          maintainAspectRatio: false,
-          scales: {
-            y: {
-              stacked: true,
-              grid: {
-                display: true,
-              },
-            },
-          },
-        },
-      });
-    }
+        <div class="flex flex-col items-end">
+            <a class="mb-2 px-4 py-2 sidebar  rounded">Contribute to Goal</a>
+            {{!--    vvv   id to connect Edit Button --}}                                                     {{!--    vvv   id to connect Delete Button --}}
+            <a id="goalsEdit" class="mb-2 text-gray-400">Edit</a><span class="mb-2 text-gray-400"> | </span><a id="goalsDelete" class="mb-2 text-gray-400">Delete</a>
+        </div>
 
-    async function fetchIncomeData() {
-      /**
-      * @TODO Get config data from the page / handlebars data
-      */
-
-      const url = "/api/income?sum=true&group_by=month";
-
-      const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (response.ok) {
-        const responseData = await response.json();
-
-        const data = responseData.map((r) => r.sum);
-        const labels = responseData.map((r) => r.label);
-        displayChart(data, labels);
-      } else {
-        // Load error message into chart container
-        alert("Unable to get income data");
-      }
-    }
-
-    fetchIncomeData();
-});
-  </script>
+    </div>
+    {{!-- Chart Portion --}}
+    <div class=" p-6">
+        <div id="income-chart-container" class="w-full relative">
+            <canvas id="myChart" width="400" height="400"></canvas>
+          <script>
+              const ctx = document.getElementById('myChart').getContext('2d');
+              const chart = new Chart(ctx, {
+                  type: '{{chartType}}',
+                  data: {{{chartData}}}
+              });
+          </script>
+        </div>
+    </div>
+    
 </div>
+
