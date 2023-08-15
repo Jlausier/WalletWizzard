@@ -28,7 +28,7 @@ UserConfig.init(
       defaultValue: 1,
     },
     group: {
-      type: DataTypes.ENUM("month", "category", "type", "none"),
+      type: DataTypes.ENUM("month", "category", "type", "table", "none"),
       defaultValue: "month",
     },
     userId: {

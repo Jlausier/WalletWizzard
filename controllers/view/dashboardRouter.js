@@ -37,7 +37,7 @@ router.get("/overview", withAuth, async (req, res) => {
 
     res.render("overview", { incomeConfig, expenseConfig, goalConfig });
   } catch (err) {
-    res.status(500);
+    res.status(500).json({ message: "" });
   }
 });
 
@@ -69,7 +69,7 @@ const renderBudget = async (req, res) => {
 
     res.render("budget", { incomeConfig, expenseConfig });
   } catch (err) {
-    res.status(500);
+    res.status(500).json({ message: "" });
   }
 };
 
@@ -97,7 +97,7 @@ const renderGoals = async (req, res) => {
 
     res.render("goals", { goalsData });
   } catch (err) {
-    res.status(500);
+    res.status(500).json({ message: "" });
   }
 };
 
@@ -112,7 +112,7 @@ router.get("/stream", withAuth, async (req, res) => {
   try {
     res.render("stream");
   } catch (err) {
-    res.status(500);
+    res.status(500).json({ message: "" });
   }
 });
 
