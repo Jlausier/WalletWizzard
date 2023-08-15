@@ -1,6 +1,12 @@
 import express from "express";
 import { Sequelize } from "sequelize";
-import { User } from "../../models/index.js";
+import {
+  Income,
+  Expense,
+  Goal,
+  GoalProgression,
+  User,
+} from "../../models/index.js";
 import withAuth from "../../utils/auth.js";
 
 import { findOrCreateConfig, testUserId } from "../../utils/query.js";
@@ -57,19 +63,49 @@ router.get("/overview", withAuth, async (req, res) => {
  */
 const renderBudget = async (req, res) => {
   try {
-    const incomeConfig = await findOrCreateConfig(
-      "income",
-      req.session.userId || testUserId
-    );
+    const options = {
+      where: { userId: req.session.userId || testUserId },
+      attributes: ["scheduled_date", "amount", "name"],
+      raw: true,
+    };
 
-    const expenseConfig = await findOrCreateConfig(
-      "expense",
-      req.session.userId || testUserId
-    );
+    const incomeData = await Income.findAll(options);
 
-    res.render("budget", { incomeConfig, expenseConfig });
+    const expenseData = await Expense.findAll(options);
+    const goalData = await Goal.findAll({
+      where: { userId: req.session.userId || testUserId },
+      include: [
+        {
+          model: GoalProgression,
+          attributes: [],
+        },
+      ],
+      attributes: [
+        [
+          Sequelize.fn("SUM", Sequelize.col("goal_progressions.amount")),
+          "amount",
+        ],
+        "id",
+        "name",
+        "date",
+      ],
+      group: ["goal.id", "goal.name", "goal.date"],
+    });
+
+    const processedGoalData = goalData.map((data) => {
+      const values = data.dataValues;
+      if (!values.amount) values.amount = "0.00";
+      return values;
+    });
+
+    res.render("budget", {
+      incomeData,
+      expenseData,
+      goalData: processedGoalData,
+    });
   } catch (err) {
-    res.status(500).json({ message: "" });
+    console.error(err);
+    res.status(500).json({ message: err });
   }
 };
 
