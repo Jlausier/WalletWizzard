@@ -1,18 +1,15 @@
 import express from "express";
-import { Sequelize } from "sequelize";
-import {
-  Income,
-  Expense,
-  Goal,
-  GoalProgression,
-  User,
-} from "../../models/index.js";
+import { Income, Expense, Goal, User } from "../../models/index.js";
 import withAuth from "../../utils/auth.js";
 
-import { findOrCreateConfig, testUserId } from "../../utils/query.js";
+import {
+  getGoalsOptions,
+  processGoalData,
+  findOrCreateConfig,
+  testUserId,
+} from "../../utils/query.js";
 
 /**
- * @TODO Redirect when config is not correctly loaded
  * @TODO Load settings page
  */
 
@@ -26,22 +23,7 @@ const router = express.Router();
 
 router.get("/overview", withAuth, async (req, res) => {
   try {
-    const incomeConfig = await findOrCreateConfig(
-      "income",
-      req.session.userId || testUserId
-    );
-
-    const expenseConfig = await findOrCreateConfig(
-      "expense",
-      req.session.userId || testUserId
-    );
-
-    const goalConfig = await findOrCreateConfig(
-      "goal",
-      req.session.userId || testUserId
-    );
-
-    res.render("overview", { incomeConfig, expenseConfig, goalConfig });
+    res.render("overview");
   } catch (err) {
     res.status(500).json({ message: "" });
   }
@@ -71,34 +53,18 @@ const renderBudget = async (req, res) => {
 
     const incomeData = await Income.findAll(options);
     const expenseData = await Expense.findAll(options);
-    const goalData = await Goal.findAll({
-      where: { userId: req.session.userId || testUserId },
-      include: [
-        {
-          model: GoalProgression,
-          attributes: [],
-        },
-      ],
-      attributes: [
-        [
-          Sequelize.fn("SUM", Sequelize.col("goal_progressions.amount")),
-          "amount",
-        ],
-        "id",
-        "name",
-        "date",
-      ],
-      group: ["goal.id", "goal.name", "goal.date"],
-    });
+
+    const goalsOptions = getGoalsOptions(req.session.userId || testUserId);
+    const goalData = await Goal.findAll(goalsOptions);
+
+    const processedGoalData = processGoalData(goalData);
+
+    console.log(processedGoalData);
 
     res.render("budget", {
       incomeData,
       expenseData,
-      goalData: goalData.map((data) => {
-        const values = data.dataValues;
-        if (!values.amount) values.amount = "0.00";
-        return values;
-      }),
+      goalData: processedGoalData,
     });
   } catch (err) {
     console.error(err);
@@ -123,14 +89,15 @@ router.get("/budget", renderBudget);
  */
 const renderGoals = async (req, res) => {
   try {
-    const goalConfig = await findOrCreateConfig(
-      "goal",
-      req.session.userId || testUserId
-    );
+    const goalsOptions = getGoalsOptions(req.session.userId || testUserId);
+    const goalData = await Goal.findAll(goalsOptions);
+    const processedGoalData = processGoalData(goalData);
 
-    res.render("goals", { goalsData });
+    console.log(processedGoalData);
+
+    res.render("goals", processedGoalData);
   } catch (err) {
-    res.status(500).json({ message: "" });
+    res.status(500).json(err);
   }
 };
 

@@ -1,5 +1,5 @@
 import { Sequelize } from "sequelize";
-import { UserConfig } from "../models/index.js";
+import { UserConfig, GoalProgression } from "../models/index.js";
 
 /**
  * Find or create a config object for a user
@@ -63,4 +63,58 @@ export const queryOptionsUser = (userId) => {
     where: { userId },
     raw: true,
   };
+};
+
+// ====================================================
+
+export const getGoalsOptions = (userId) => {
+  return {
+    where: { userId },
+    include: [
+      {
+        model: GoalProgression,
+        attributes: [],
+      },
+    ],
+    attributes: [
+      [
+        Sequelize.fn("SUM", Sequelize.col("goal_progressions.amount")),
+        "amount",
+      ],
+      "id",
+      "name",
+      "desired_amount",
+      [
+        Sequelize.fn(
+          "date_format",
+          Sequelize.col("goal.created_at"),
+          `%c-%d-%Y`
+        ),
+        "start",
+      ],
+      [
+        Sequelize.fn("date_format", Sequelize.col("goal.date"), `%c-%d-%Y`),
+        "end",
+      ],
+    ],
+    group: ["goal.id", "goal.name", "goal.desired_amount"],
+  };
+};
+
+export const processGoalData = (goalData) => {
+  return goalData.map((data) => {
+    const values = data.dataValues;
+    const amountInt = parseInt(!values.amount ? "0.00" : values.amount);
+    const desiredAmountInt = parseInt(values.desired_amount);
+
+    const processed = {
+      name: values.name,
+      start: values.start,
+      end: values.end,
+      dataset: [amountInt, desiredAmountInt],
+      complete: amountInt > desiredAmountInt,
+    };
+
+    return processed;
+  });
 };
