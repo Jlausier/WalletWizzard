@@ -1,6 +1,8 @@
 import { Sequelize } from "sequelize";
 import { UserConfig, GoalProgression } from "../models/index.js";
 
+export const sumData = (prev, curr) => prev + parseFloat(curr.amount);
+
 /**
  * Find or create a config object for a user
  *
@@ -8,20 +10,20 @@ import { UserConfig, GoalProgression } from "../models/index.js";
  * @param {string} userId User ID string
  * @returns {UserConfig} User config object
  */
-export const findOrCreateConfig = async (type, userId) => {
-  const res = await UserConfig.findOrCreate({
-    where: {
-      userId,
-      type,
-    },
-    defaults: {
-      userId,
-      type,
-    },
-  });
+// export const findOrCreateConfig = async (type, userId) => {
+//   const res = await UserConfig.findOrCreate({
+//     where: {
+//       userId,
+//       type,
+//     },
+//     defaults: {
+//       userId,
+//       type,
+//     },
+//   });
 
-  return res;
-};
+//   return res;
+// };
 
 /** @const scheduledMonth Formats the `scheduled_date` column of a table */
 export const scheduledMonth = Sequelize.fn(
@@ -44,10 +46,21 @@ export const formattedMonth = Sequelize.fn(
 export const formattedMonthAttr = [formattedMonth, "month"];
 
 /** @const sumAmount Sequelize aggregate function to sum a numeric amount */
-export const sumAmount = [Sequelize.fn("SUM", Sequelize.col("amount")), "sum"];
+export const sumAmount = (tableName) => [
+  Sequelize.fn("SUM", Sequelize.col(`${tableName}.amount`)),
+  "sum",
+];
 
 /** @const tableAttributes Sequelize query attributes for budget table */
 export const tableAttributes = ["scheduled_date", "amount", "name"];
+
+export const getTableOptions = (userId) => {
+  return {
+    where: { userId: userId || testUserId },
+    attributes: tableAttributes,
+    raw: true,
+  };
+};
 
 /** @const testUserId Test {@linkcode User} UUID string */
 export const testUserId = "65051d46-76e1-43a0-8bda-484ae4229c4f";
@@ -60,7 +73,7 @@ export const testUserId = "65051d46-76e1-43a0-8bda-484ae4229c4f";
  */
 export const queryOptionsUser = (userId) => {
   return {
-    where: { userId },
+    where: { userId: userId || testUserId },
     raw: true,
   };
 };
@@ -69,7 +82,7 @@ export const queryOptionsUser = (userId) => {
 
 export const getGoalsOptions = (userId) => {
   return {
-    where: { userId },
+    where: { userId: userId || testUserId },
     include: [
       {
         model: GoalProgression,
@@ -104,15 +117,17 @@ export const getGoalsOptions = (userId) => {
 export const processGoalData = (goalData) => {
   return goalData.map((data) => {
     const values = data.dataValues;
-    const amountInt = parseInt(!values.amount ? "0.00" : values.amount);
-    const desiredAmountInt = parseInt(values.desired_amount);
+    const amountInt = parseFloat(!values.amount ? "0.00" : values.amount);
+    const desiredAmountInt = parseFloat(values.desired_amount);
+    const complete = amountInt > desiredAmountInt;
 
     const processed = {
       name: values.name,
       start: values.start,
       end: values.end,
       dataset: [amountInt, desiredAmountInt],
-      complete: amountInt > desiredAmountInt,
+      complete,
+      remaining: complete ? 0 : desiredAmountInt - amountInt,
     };
 
     return processed;

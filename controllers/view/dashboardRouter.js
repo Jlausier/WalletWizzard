@@ -3,9 +3,10 @@ import { Income, Expense, Goal } from "../../models/index.js";
 import withAuth from "../../utils/auth.js";
 
 import {
+  getTableOptions,
   getGoalsOptions,
   processGoalData,
-  testUserId,
+  sumData,
 } from "../../utils/query.js";
 
 /**
@@ -48,19 +49,33 @@ router.get("/overview", async (req, res) => {
  */
 const renderBudget = async (req, res) => {
   try {
-    const options = {
-      where: { userId: req.session.userId || testUserId },
-      attributes: ["scheduled_date", "amount", "name"],
-      raw: true,
-    };
+    const options = getTableOptions(req.session.userId);
+    console.log(options);
 
     const incomeData = await Income.findAll(options);
+    console.log();
     const expenseData = await Expense.findAll(options);
 
-    const goalsOptions = getGoalsOptions(req.session.userId || testUserId);
+    const goalsOptions = getGoalsOptions(req.session.userId);
+    console.log(goalsOptions);
     const goalData = await Goal.findAll(goalsOptions);
-
     const processedGoalData = processGoalData(goalData);
+
+    /**
+     * @TODO Breakdown goals by amount remaining and months remaining.
+     *   If there is no scheduled date then set a default monthly amount
+     */
+
+    const netData = {
+      income: incomeData.reduce(sumData, 0),
+      expenses: expenseData.reduce(sumData, 0),
+      goals: processedGoalData.reduce(
+        (prev, curr) => prev + parseFloat(curr.remaining),
+        0
+      ),
+    };
+
+    console.log(netData);
 
     res.render("budget", {
       incomeData,
@@ -89,7 +104,7 @@ router.get("/budget", renderBudget);
  */
 const renderGoals = async (req, res) => {
   try {
-    const goalsOptions = getGoalsOptions(req.session.userId || testUserId);
+    const goalsOptions = getGoalsOptions(req.session.userId);
     const goalData = await Goal.findAll(goalsOptions);
     const processedGoalData = processGoalData(goalData);
 
