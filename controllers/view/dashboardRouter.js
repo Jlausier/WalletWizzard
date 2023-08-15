@@ -1,5 +1,5 @@
 import express from "express";
-import { Income, Expense, Goal, User } from "../../models/index.js";
+import { Income, Expense, Goal } from "../../models/index.js";
 import withAuth from "../../utils/auth.js";
 
 import {
