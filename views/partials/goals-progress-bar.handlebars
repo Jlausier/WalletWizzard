@@ -1,0 +1,66 @@
+<div id="goals-progress-bar-chart-container" class="w-full relative">
+  <h2 class="text-lg font-semibold mb-2">Income Chart</h2>
+  <canvas id="income-chart" class="w-full"></canvas>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+    function displayChart(data, labels) {
+
+      const ctx = document.getElementById("income-chart").getContext("2d");
+
+      const incomeChart = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: "Income",
+              data,
+              borderColor: "#007bff",
+              fill: false,
+            },
+          ],
+        },
+        options: {
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              stacked: true,
+              grid: {
+                display: true,
+              },
+            },
+          },
+        },
+      });
+    }
+
+    async function fetchIncomeData() {
+      /**
+      * @TODO Get config data from the page / handlebars data
+      */
+
+      const url = "/api/income?sum=true&group_by=month";
+
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        const responseData = await response.json();
+
+        const data = responseData.map((r) => r.sum);
+        const labels = responseData.map((r) => r.label);
+        displayChart(data, labels);
+      } else {
+        // Load error message into chart container
+        alert("Unable to get income data");
+      }
+    }
+
+    fetchIncomeData();
+});
+  </script>
+</div>
