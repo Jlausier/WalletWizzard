@@ -106,10 +106,14 @@ const renderBudget = async (req, res) => {
       netData: {
         income: incomeData.reduce(sumData, 0),
         expenses: expenseData.reduce(sumData, 0),
-        goals: processedGoalData.reduce(
-          (prev, curr) => prev + parseFloat(curr.remaining),
-          0
-        ),
+        goals: processedGoalData.reduce((prev, curr) => {
+          if (curr.end) {
+            let monthsBetween =
+              (new Date(curr.end) - Date.now()) / (1000 * 60 * 60 * 24 * 30);
+            return prev + parseFloat(curr.remaining) / monthsBetween;
+          }
+          return prev;
+        }, 0),
       },
     });
   } catch (err) {
