@@ -1,16 +1,25 @@
 
-  document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
     const modal = document.getElementById("modal");
-    const incomeBtn = document.querySelector(".income-btn");
-    const expenseBtn = document.querySelector(".expense-btn");
     const addEntryBtn = document.getElementById("addEntryBtn");
 
-    incomeBtn.addEventListener("click", () => openModal("income"));
-    expenseBtn.addEventListener("click", () => openModal("expense"));
+    // Delegate event handling for income and expense buttons
+    document.addEventListener("click", function (event) {
+        if (event.target.classList.contains("income-btn")) {
+            openModal("income");
+        }
+        if (event.target.classList.contains("expense-btn")) {
+            openModal("expense");
+        }
+        // Handle delete button clicks here
+        if (event.target.classList.contains("delete-button")) {
+            handleDelete(event.target);
+        }
+    });
 
-    function openModal(type) {
-      modal.classList.remove("hidden");
-      document.getElementById("entryType").value = type;
+     function openModal(type) {
+        modal.classList.remove("hidden");
+        document.getElementById("entryType").value = type;
     }
 
     addEntryBtn.addEventListener("click", () => {
@@ -43,13 +52,11 @@
         alert("Please fill in all fields.");
       }
     });
-
-    document.addEventListener("click", function (event) {
-      if (event.target.classList.contains("delete-button")) {
-        const row = event.target.parentNode.parentNode;
+  function handleDelete(deleteButton) {
+        const row = deleteButton.parentNode.parentNode;
         const table = row.parentNode.parentNode;
         table.deleteRow(row.rowIndex);
-      }
-    });
+    }
+  
   });
 
