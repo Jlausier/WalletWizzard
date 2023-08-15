@@ -1,5 +1,6 @@
 import express from "express";
-import { Income, Expense, Goal } from "../../models/index.js";
+import { Sequelize } from "sequelize";
+import { Income, Expense, Goal, ExpenseType } from "../../models/index.js";
 import withAuth from "../../utils/auth.js";
 
 import {
@@ -7,6 +8,7 @@ import {
   getGoalsOptions,
   processGoalData,
   sumData,
+  testUserId,
 } from "../../utils/query.js";
 
 /**
@@ -26,8 +28,39 @@ router.get("/overview", async (req, res) => {
   try {
     /**
      * @TODO Get overview data
+     *
+     * - Get expenses broken down by category type
      */
-    res.render("overview");
+
+    const expenseData = await Expense.findAll({
+      where: { userId: req.session.userId || testUserId },
+      include: [{ model: ExpenseType, attributes: [] }],
+      attributes: [
+        [Sequelize.fn("SUM", Sequelize.col("amount")), "amount"],
+        [Sequelize.col("expense_type.category"), "category"],
+      ],
+      group: [Sequelize.col("expense_type.category")],
+      raw: true,
+    });
+
+    const totalAmount = expenseData.reduce(sumData, 0);
+
+    const percentageData = expenseData.map(({ amount, category }) => {
+      return {
+        category,
+        percentage: Math.round((amount / totalAmount) * 100, "nearest"),
+      };
+    });
+
+    console.log(totalAmount);
+    console.log(percentageData);
+
+    res.render("overview", {
+      expenseData: {
+        totalAmount,
+        percentageData,
+      },
+    });
   } catch (err) {
     res.status(500).json(err);
   }
@@ -66,21 +99,18 @@ const renderBudget = async (req, res) => {
      *   If there is no scheduled date then set a default monthly amount
      */
 
-    const netData = {
-      income: incomeData.reduce(sumData, 0),
-      expenses: expenseData.reduce(sumData, 0),
-      goals: processedGoalData.reduce(
-        (prev, curr) => prev + parseFloat(curr.remaining),
-        0
-      ),
-    };
-
-    console.log(netData);
-
     res.render("budget", {
       incomeData,
       expenseData,
       goalData: processedGoalData,
+      netData: {
+        income: incomeData.reduce(sumData, 0),
+        expenses: expenseData.reduce(sumData, 0),
+        goals: processedGoalData.reduce(
+          (prev, curr) => prev + parseFloat(curr.remaining),
+          0
+        ),
+      },
     });
   } catch (err) {
     res.status(500).json(err);
