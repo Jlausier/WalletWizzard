@@ -70,7 +70,6 @@ const renderBudget = async (req, res) => {
     };
 
     const incomeData = await Income.findAll(options);
-
     const expenseData = await Expense.findAll(options);
     const goalData = await Goal.findAll({
       where: { userId: req.session.userId || testUserId },
@@ -92,20 +91,18 @@ const renderBudget = async (req, res) => {
       group: ["goal.id", "goal.name", "goal.date"],
     });
 
-    const processedGoalData = goalData.map((data) => {
-      const values = data.dataValues;
-      if (!values.amount) values.amount = "0.00";
-      return values;
-    });
-
     res.render("budget", {
       incomeData,
       expenseData,
-      goalData: processedGoalData,
+      goalData: goalData.map((data) => {
+        const values = data.dataValues;
+        if (!values.amount) values.amount = "0.00";
+        return values;
+      }),
     });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: err });
+    res.status(500).json(err);
   }
 };
 
