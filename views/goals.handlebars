@@ -15,85 +15,12 @@
                 {{!-- card container --}}
                 <div class=" flex flex-col w-full">
 
-                    {{!-- Content Card 1 --}}
-                    <div class=" pt-6  flex">
-                        {{!-- partial goes here --}}
-                        
-                    </div>
+                        {{!-- Content Card --}}
 
-                    {{!-- Content Card 2 --}}
-                    <div class=" pt-6  flex">
-                        <div class=" bg-gray-800 rounded-lg shadow-xl w-full">
-                            <div class="p-6 flex justify-between text-gray-200">
-                                <div class="flex flex-col items-start">
-                                    <div class="px-3 py-1 mb-2  bg-gray-700 border-gray-400 text-gray-300 rounded-full text-xl">$250 Left</div>
-                                    <h3 class="tracking-wider text-left text-3xl">Winter Vacation</h3>
-                                </div>
-                                <div class="flex flex-col items-end">
-                                    <a class="mb-2 px-4 py-2 sidebar  rounded">Contribute to Goal</a>
-                                    <a class="mb-2 text-gray-400">Edit</a>
-                                </div>
-                            </div>
-                            <div class=" p-6">
+                        {{#each goal}}
+                        {{>goals-progress-bar goal=.}}
+                        {{/each}}
 
-                                {{!- This is just a mock-up. Delete once the partial is in}}
-                                <div class="w-full flex justify-between pb-2 text-gray-500">
-                                    <div>07/08/2023</div>
-                                    <div>10/24/2023</div>
-                                </div>
-                                <div class="rounded-full h-3 bg-gray-700">
-                                    <div class="rounded-full h-3 sidebar w-3/4"></div>
-                                </div>
-                                <div class="w-full flex justify-between pt-2 text-gray-500">
-                                    <div>$0</div>
-                                    <div>$1,000</div>
-                                </div>
-                                
-
-                                {{!-- Remove this comment and replace it with the correct partial name --}}
-                                {{!- {{> goal-progress-bar}}
-                            </div>
-                            
-                        </div>
-                    </div>
-
-                   {{!-- Content Card 3 --}}
-                    <div class=" pt-6  flex">
-                        <div class=" bg-gray-800 rounded-lg shadow-xl w-full">
-                            <div class="p-6 flex justify-between text-gray-200">
-                                <div class="flex flex-col items-start">
-                                    <div class="px-3 py-1 mb-2  bg-gray-700 border-gray-400 text-gray-300 rounded-full text-xl">$15 Left</div>
-                                    <h3 class="tracking-wider text-left text-3xl">Minecraft Expansion Pack</h3>
-                                </div>
-                                <div class="flex flex-col items-end">
-                                    <a class="mb-2 px-4 py-2 sidebar  rounded">Contribute to Goal</a>
-                                    <a class="mb-2 text-gray-400">Edit</a>
-                                </div>
-                            </div>
-                            <div class=" p-6">
-
-                                {{!- This is just a mock-up. Delete once the partial is in}}
-                                <div class="w-full flex justify-between pb-2 text-gray-500">
-                                    <div>08/02/2023</div>
-                                    <div>09/17/2023</div>
-                                </div>
-                                <div class="rounded-full h-3 bg-gray-700">
-                                    <div class="rounded-full h-3 sidebar w-3/5"></div>
-                                </div>
-                                <div class="w-full flex justify-between pt-2 text-gray-500">
-                                    <div>$0</div>
-                                    <div>$40</div>
-                                </div>
-                                
-
-                                {{!-- Remove this comment and replace it with the correct partial name --}}
-                                {{!- {{> goal-progress-bar}}
-                            </div>
-                            
-                        </div>
-                    </div>
-
-                    {{!-- left portion closer --}}
                 </div>
 
                 {{!-- Content Container Closer --}}
