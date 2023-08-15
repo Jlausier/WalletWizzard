@@ -17,8 +17,8 @@
                     <div class=" bg-gray-800 rounded-lg shadow-xl w-full">
                         <div class="p-6 flex justify-between">
                             <h3 class="tracking-wider uppercase text-left text-gray-200">Income</h3>
-                                <button class="rounded text-gray-800 text-2xl sidebar w-8 h-8 flex justify-center items-center income-btn">
-                                    <i class="fas fa-plus"></i>
+                                <button class="rounded text-gray-800 text-2xl sidebar w-8 h-8 flex justify-center items-center ">
+                                    <i class="fas fa-plus income-btn"></i>
                                 </button>
                         </div>                            
                        <div class=" p-6">
@@ -38,6 +38,7 @@
                                             <td class=" w-3/5">Paycheck</td>
                                             <td class="text-right">$1,000.00</td>
                                             <td class="text-right">
+                                                <button class="fas fa-edit edit-button">Edit</button>
                                                 <button class="delete-button text-red-600">Delete</button>
                                             </td>
                                         </tr>
@@ -78,6 +79,7 @@
                                             <td class=" w-3/5">Internet</td>
                                             <td class="text-right">$78.00</td>
                                              <td class="text-right">
+                                                <button class="fas fa-edit edit-button">Edit</button>
                                                 <button class="delete-button text-red-600">Delete</button>
                                             </td>
                                         </tr>
@@ -118,6 +120,7 @@
                                             <td class=" w-3/5">Vacation</td>
                                             <td class="text-right">$50.00</td>
                                              <td class="text-right">
+                                                <button class="fas fa-edit edit-button">Edit</button>
                                                 <button class="delete-button text-red-600">Delete</button>
                                             </td>
                                         </tr>
@@ -184,12 +187,25 @@
 </section>
 <!-- Modal for adding new entry -->
             <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                <div class="bg-white p-8 rounded-lg shadow-lg">
-                    <h2 class="text-lg font-semibold mb-4">Add New Entry</h2>
-                    <input type="text" id="entryName" class="mb-4 p-2 border rounded" placeholder="Name">
-                    <input type="text" id="entryMonth" class="mb-4 p-2 border rounded" placeholder="Month">
-                    <input type="text" id="entryAmount" class="mb-4 p-2 border rounded" placeholder="Amount">
-                    <button id="addEntryBtn" class="bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded">Add</button>
-                </div>
-            </div>
-<script src="../public/js/budget.js"></script>
+    <div class="bg-white p-8 rounded-lg shadow-lg">
+        <h2 class="text-lg font-semibold mb-4">Add New Entry</h2>
+        <input type="hidden" id="entryType" /> <!-- Add this line -->
+        <input type="text" id="entryName" class="mb-4 p-2 border rounded" placeholder="Name">
+        <input type="text" id="entryMonth" class="mb-4 p-2 border rounded" placeholder="Month">
+        <input type="text" id="entryAmount" class="mb-4 p-2 border rounded" placeholder="Amount">
+        <button id="addEntryBtn" class="bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded">Add</button>
+        <button id="cancelBtn" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-2 rounded ml-2">Cancel</button>
+    </div>
+</div>
+<!-- Edit Modal -->
+<div id="editModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-lg">
+        <h2 class="text-lg font-semibold mb-4">Edit Entry</h2>
+        <input type="text" id="editEntryName" class="mb-4 p-2 border rounded" placeholder="Name">
+        <input type="text" id="editEntryMonth" class="mb-4 p-2 border rounded" placeholder="Month">
+        <input type="text" id="editEntryAmount" class="mb-4 p-2 border rounded" placeholder="Amount">
+        <button id="updateEntryBtn" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded">Update</button>
+        <button id="cancelEditBtn" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-2 rounded ml-2">Cancel</button>
+    </div>
+</div>
+<script src="/js/budget.js"></script>
