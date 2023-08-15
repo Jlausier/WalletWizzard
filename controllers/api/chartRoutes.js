@@ -18,6 +18,7 @@ import {
   formattedMonthAttr,
   sumAmount,
   queryOptionsUser,
+  tableAttributes,
   testUserId,
 } from "../../utils/query.js";
 
@@ -34,6 +35,61 @@ const router = express.Router();
 // ================================ INCOME ======================================
 
 /**
+ * @summary Get the income sums chart data
+ *
+ * @description
+ * Status Codes:
+ * - 200 - Success - returns income sums data
+ * - 500 - Failure - could not fetch data
+ *
+ * @async
+ * @method getIncomeData
+ * @param {express.Request} req Express {@linkcode express.Request Request} object
+ * @param {express.Response} res Express {@linkcode express.Response Response} object
+ */
+const getIncomeSums = async (req, res) => {
+  try {
+    const group_by = req.query.group_by || "none";
+    const options = queryOptionsUser(req.session.userId || testUserId);
+
+    options.attributes = [sumAmount];
+    options.order = [[formattedMonth, "DESC"]];
+
+    switch (group_by) {
+      case "month":
+        options.attributes.push(formattedMonthAttr);
+        options.group = [formattedMonth];
+        break;
+    }
+
+    const incomeData = await Income.findAll(options);
+
+    if (!incomeData || incomeData.length === 0) {
+      res.status(400).json({ message: "Could not find income data for user" });
+      return;
+    }
+
+    switch (group_by) {
+      case "month":
+        res.status(200).json({
+          labels: incomeData.map((d) => d.month),
+          data: incomeData.map((d) => d.sum),
+        });
+        return;
+      default:
+        res.status(200).json({ total: incomeData[0].sum });
+    }
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+/**
+ * @summary GET /api/income/sum
+ */
+router.get("/income/sum", getIncomeSums);
+
+/**
  * @summary Get the income chart data
  *
  * @description
@@ -48,9 +104,9 @@ const router = express.Router();
  */
 const getIncomeData = async (req, res) => {
   try {
-    const { sum, group_by } = req.query;
+    const group_by = req.query.group_by || "none";
     const options = queryOptionsUser(req.session.userId || testUserId);
-    console.log(sum && sum === "true" ? "Sum is true" : "Sum does not exist");
+    options.attributes = tableAttributes;
 
     switch (group_by) {
       case "month":
@@ -58,25 +114,18 @@ const getIncomeData = async (req, res) => {
         options.group = [formattedMonth];
         options.order = [[formattedMonth, "DESC"]];
         break;
-      default:
-        delete options.attributes;
-    }
-
-    if (sum && sum === "true") {
-      options.attributes
-        ? options.attributes.push(sumAmount)
-        : (options.attributes = sumAmount);
     }
 
     const incomeData = await Income.findAll(options);
 
-    if (!incomeData) {
+    if (!incomeData || incomeData.length === 0) {
       res.status(400).json({ message: "Could not find income data for user" });
+      return;
     }
 
     res.status(200).json(incomeData);
   } catch (err) {
-    res.status(500);
+    res.status(500).json({ message: "Server error" });
   }
 };
 
@@ -150,7 +199,7 @@ const getExpenseData = async (req, res) => {
 
     res.status(200).json(expenseData);
   } catch (err) {
-    res.status(500);
+    res.status(500).json({ message: "Server error" });
   }
 };
 
@@ -190,7 +239,7 @@ const getGoalsData = async (req, res) => {
 
     res.status(200).json(goalsData);
   } catch (err) {
-    res.status(500);
+    res.status(500).json({ message: "Server error" });
   }
 };
 
