@@ -34,6 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const entryName = document.getElementById("entryName").value;
         const entryMonth = document.getElementById("entryMonth").value;
         const entryAmount = document.getElementById("entryAmount").value;
+        
 
          // Validate the format of the entryMonth using a regular expression
     const datePattern = /^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/\d{4}$/;
@@ -85,6 +86,7 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
             alert("Please fill in all fields.");
         }
+        updateBudgetTable();
     });
        // Handle cancel button click
         cancelBtn.addEventListener("click", () => {
@@ -96,6 +98,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const row = deleteButton.parentNode.parentNode;
         const table = row.parentNode.parentNode;
         table.deleteRow(row.rowIndex);
+        updateBudgetTable();
     }
 
 // Function to format the date as MM/DD/YYYY
@@ -106,7 +109,7 @@ function formatDate(dateString) {
 // Function to open the edit modal with pre-filled values
     function openEditModal(editButton) {
         const row = editButton.parentNode.parentNode;
-        const date = row.cells[0].innerText;
+        const date = row.cells[0].querySelector(".date-cell").innerText;
         const name = row.cells[1].innerText;
         const amount = parseFloat(row.cells[2].innerText.replace("$", ""));
 
@@ -142,6 +145,7 @@ const entryData = {
     entryName: entryName,
     entryAmount: entryAmount
 };
+
 const entries = JSON.parse(sessionStorage.getItem('entries')) || [];
 entries.push(entryData);
 sessionStorage.setItem('entries', JSON.stringify(entries));
@@ -179,4 +183,45 @@ sessionStorage.setItem('entries', JSON.stringify(entries));
           editButton.addEventListener("click", () => openEditModal(editButton));
           deleteButton.addEventListener("click", () => handleDelete(deleteButton));
       });
-  });
+  
+          // Function to update the Your Budget table
+    function updateBudgetTable() {
+        const incomeTable = document.getElementById("incomeTable");
+        const expenseTable = document.getElementById("expenseTable");
+        const goalTable = document.getElementById("goalTable");
+        const budgetTable = document.getElementById("budgetTable");
+
+        const incomeTotal = calculateTotal(incomeTable);
+        const expensesTotal = calculateTotal(expenseTable);
+        const goalsTotal = calculateTotal(goalTable);
+
+        const incomeRow = budgetTable.rows[0]; // Updated index
+    const expensesRow = budgetTable.rows[1]; // Updated index
+    const goalsRow = budgetTable.rows[2]; // Updated index
+
+        incomeRow.cells[1].innerText = "$" + incomeTotal.toFixed(2);
+        expensesRow.cells[1].innerText = "$" + expensesTotal.toFixed(2);
+        goalsRow.cells[1].innerText = "$" + goalsTotal.toFixed(2);
+
+        const finalIncome = incomeTotal - expensesTotal - goalsTotal;
+        budgetTable.rows[3].cells[1].innerText = "$" + finalIncome.toFixed(2);
+    }
+
+    // Function to calculate the total amount for a table
+    function calculateTotal(table) {
+        const tableBody = table.getElementsByTagName("tbody")[0];
+        let total = 0;
+
+        for (let i = 0; i < tableBody.rows.length; i++) {
+            const amountCell = tableBody.rows[i].cells[2];
+            const amount = parseFloat(amountCell.innerText.replace("$", ""));
+            total += amount;
+        }
+
+        return total;
+    }
+
+    // Call updateBudgetTable to initialize values
+    updateBudgetTable();
+});
+ 
