@@ -62,8 +62,6 @@ const renderBudget = async (req, res) => {
 
     const processedGoalData = processGoalData(goalData);
 
-    console.log(processedGoalData);
-
     res.render("budget", {
       incomeData,
       expenseData,
@@ -96,8 +94,6 @@ const renderGoals = async (req, res) => {
     const goalData = await Goal.findAll(goalsOptions);
     const processedGoalData = processGoalData(goalData);
 
-    console.log(processedGoalData);
-
     res.render("goals", processedGoalData);
   } catch (err) {
     res.status(500).json(err);
@@ -107,7 +103,7 @@ const renderGoals = async (req, res) => {
 /**
  * @summary GET /dashboard/goals
  */
-router.get("/goals", withAuth, renderGoals);
+router.get("/goals", renderGoals);
 
 // ================================ STREAM ======================================
 
