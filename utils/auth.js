@@ -4,5 +4,10 @@
  * @method withAuth
  */
 export default (req, res, next) => {
-  req.session.logged_in ? next() : res.redirect("/login");
+  if (req.session.logged_in) {
+    next();
+  } else {
+    console.log("----------------- Logging out -----------------");
+    res.redirect("/");
+  }
 };
