@@ -18,8 +18,8 @@
 
                         {{!-- Content Card --}}
 
-                        {{#each goalData}}
-                        {{>goals-progress-bar this}}
+                        {{#each goalData as |goal|}}
+                        {{>goals-progress-bar goal}}
                         {{/each}}
 
                 </div>
