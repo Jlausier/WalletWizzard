@@ -9,6 +9,8 @@ import {
   processGoalData,
   sumData,
   testUserId,
+  queryOptionsUser,
+  scheduledMonth,
 } from "../../utils/query.js";
 
 /**
@@ -44,10 +46,6 @@ router.get("/overview", async (req, res) => {
       raw: true,
     });
 
-    const totalAmount = expenseSums.reduce(sumData, 0);
-
-    console.log({ totalAmount, expenseSums });
-
     // ================================ Goals Progress Bars =============================
 
     // Find goals data
@@ -55,15 +53,39 @@ router.get("/overview", async (req, res) => {
     const goalData = await Goal.findAll(goalsOptions);
     const processedGoalData = processGoalData(goalData);
 
+    // ================================ Monthly Essential Spending ======================
+
+    const nonessentialDataOptions = queryOptionsUser(req.session.userId);
+    nonessentialDataOptions.include = [
+      {
+        model: ExpenseType,
+        where: { category: "nonessential" },
+        attributes: [],
+      },
+    ];
+    nonessentialDataOptions.attributes = [
+      [Sequelize.col("expense_type.category"), "category"],
+      [scheduledMonth, "month"],
+      [Sequelize.fn("SUM", Sequelize.col("amount")), "total_amount"],
+    ];
+    nonessentialDataOptions.group = [scheduledMonth];
+    // Find essential data
+    const nonessentialData = await Expense.findAll(nonessentialDataOptions);
+
+    console.log(nonessentialData);
+
     // Render overview page with data
     res.render("overview", {
       expenseData: {
-        totalAmount,
-        sums: expenseSums,
+        total: expenseSums.reduce(sumData, 0),
+        labels: expenseSums.map((s) => s.category),
+        data: expenseSums.map((s) => s.amount),
       },
       goalsData: processedGoalData,
+      nonessentialData,
     });
   } catch (err) {
+    console.error(err);
     res.status(500).json(err);
   }
 });
