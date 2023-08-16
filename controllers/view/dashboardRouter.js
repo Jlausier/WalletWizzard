@@ -170,7 +170,7 @@ const renderGoals = async (req, res) => {
     const goalData = await Goal.findAll(goalsOptions);
     const processedGoalData = processGoalData(goalData);
 
-    res.render("goals", processedGoalData);
+    res.render("goals", { goalData: processedGoalData });
   } catch (err) {
     res.status(500).json(err);
   }
