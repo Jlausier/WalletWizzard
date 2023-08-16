@@ -4,22 +4,25 @@ import withAuth from "../../utils/auth.js";
 
 const router = express.Router();
 
+// ================================ EXPENSE ===================================
+
 const createExpense = async (req, res) => {
   try {
-    const expenseData = await Expense.create(req.body, {
-      where: {
-        id: req.params.id,
-      },
-    });
+    const expenseData = await Expense.create(req.body);
 
-    res.status(200).json(expenseData);
+    if (!expenseData) {
+      res.status(400).json({ message: "Could not create expense instance." });
+      return;
+    }
+
+    res.status(201).json(expenseData);
   } catch (err) {
     console.error(err);
-    res.status(500).json(err);
+    res.status(400).json(err);
   }
 };
 
-router.post("/expense/:id", createExpense);
+router.post("/expense", createExpense);
 
 const updateExpense = async (req, res) => {
   try {
@@ -29,10 +32,15 @@ const updateExpense = async (req, res) => {
       },
     });
 
-    res.status(200).json(expenseData);
+    if (!expenseData) {
+      res.status(404).json({ message: "Could not find expense with that ID." });
+      return;
+    }
+
+    res.status(201).json(expenseData);
   } catch (err) {
     console.error(err);
-    res.status(500).json(err);
+    res.status(400).json(err);
   }
 };
 
@@ -46,18 +54,82 @@ const deleteExpense = async (req, res) => {
       },
     });
 
-    if (!product) {
+    if (!expenseData) {
       res.status(404).json({ message: "Could not find expense with that ID." });
       return;
     }
 
-    res.status(200).json(expenseData);
+    res.status(201).json(expenseData);
   } catch (err) {
     console.error(err);
-    res.status(500).json(err);
+    res.status(400).json(err);
   }
 };
 
 router.delete("/expense/:id", deleteExpense);
+
+// ================================ GOAL ======================================
+
+const createGoal = async (req, res) => {
+  try {
+    const goalData = await Goal.create(req.body);
+
+    if (!goalData) {
+      res.status(400).json({ message: "Could not create goal instance." });
+      return;
+    }
+
+    res.status(201).json(goalData);
+  } catch (err) {
+    console.error(err);
+    res.status(400).json(err);
+  }
+};
+
+router.post("/goal", createGoal);
+
+const updateGoal = async (req, res) => {
+  try {
+    const goalData = await Goal.update(req.body, {
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    if (!goalData) {
+      res.status(404).json({ message: "Could not find goal with that ID." });
+      return;
+    }
+
+    res.status(201).json(goalData);
+  } catch (err) {
+    console.error(err);
+    res.status(400).json(err);
+  }
+};
+
+router.put("/goal/:id", updateGoal);
+
+const deleteGoal = async (req, res) => {
+  try {
+    const goalData = await Goal.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    if (!goalData) {
+      res.status(404).json({ message: "Could not find goal with that ID." });
+      return;
+    }
+
+    res.status(201).json(goalData);
+  } catch (err) {
+    console.error(err);
+    res.status(400).json(err);
+  }
+};
+
+router.delete("/expense/:id", deleteGoal);
 
 export default router;
