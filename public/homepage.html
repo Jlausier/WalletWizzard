@@ -18,14 +18,22 @@
       .gradient {
         background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
       }
+
+      .img-background {
+        background-image: linear-gradient(90deg, rgba(213, 51, 105, 0.4), rgba(218, 175, 81, 0.4)), url(./images/pexels-andrea-piacquadio-3764557.jpg);
+        background-size: cover;
+        background-position: center;
+      }
+
       
     </style>
   </head>
   <body class="leading-normal tracking-normal text-white gradient" style="font-family: 'Source Sans Pro', sans-serif;">
     <!--Nav-->
-    <nav id="header" class="fixed w-full z-30 top-0 text-white">
-      <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-2">
-        <div class="pl-4 flex items-center">
+    <nav id="header" class=" fixed w-full z-30 top-0 text-white">
+      <div class=" w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-2">
+        <div class=" pl-4 flex items-center">
+          <img src="./images/chicken-gradient.png" class="h-16">
         </div>
         <div class="block lg:hidden pr-4">
           <button id="nav-toggle" class="flex items-center p-1 text-pink-800 hover:text-gray-900 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
@@ -53,13 +61,14 @@
       <hr class="border-b border-gray-100 opacity-25 my-0 py-0" />
     </nav>
     <!--Hero-->
-    <div class="pt-24">
-      <div class="container px-3 mx-auto flex flex-wrap flex-col md:flex-row items-center">
+    <div class="img-background py-48">
+      
+      <div class=" container px-3 mx-auto flex flex-wrap flex-col justify-center md:flex-row items-center">
         <!--Left Col-->
-        <div class="flex flex-col w-full md:w-2/5 justify-center items-start text-center md:text-left">
-          <p class="uppercase tracking-loose w-full">Make the magic happen</p>
+        <div class=" flex flex-col w-full md:w-2/5 justify-center items-start text-center md:text-left">
+          <p class="uppercase tracking-loose w-full">Welcome to WalletWizard</p>
           <h1 class="my-4 text-5xl font-bold leading-tight">
-           Welcome to WalletWizard!
+           The Magic Money<br>Managing App
           </h1>
           <p class="leading-normal text-2xl mb-8">
            Meet all your savings goals!
@@ -69,11 +78,11 @@
           </button>
         </div>
         <!--Right Col-->
-        <div class="w-full md:w-3/5 py-6 text-center">
-          <img class="w-full md:w-4/5 z-50" src="./images/new wizard.png" />
+        <div class=" w-full md:w-2/5 py-6 text-center">
         </div>
       </div>
     </div>
+    <!-- SVG -->
     <div class="relative -mt-12 lg:-mt-24 ">
       <svg viewBox="0 0 1428 174" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
