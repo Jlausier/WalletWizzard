@@ -46,6 +46,8 @@ router.get("/overview", async (req, res) => {
 
     const totalAmount = expenseSums.reduce(sumData, 0);
 
+    console.log({ totalAmount, expenseSums });
+
     // ================================ Goals Progress Bars =============================
 
     // Find goals data
