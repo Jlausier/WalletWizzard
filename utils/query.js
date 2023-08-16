@@ -110,14 +110,22 @@ export const getGoalsOptions = (userId) => {
         "end",
       ],
     ],
-    group: ["goal.id", "goal.name", "goal.desired_amount"],
+    group: [
+      "goal.id",
+      "goal.name",
+      "goal.desired_amount",
+      "amount",
+      "start",
+      "end",
+    ],
+    raw: true,
   };
 };
 
 export const processGoalData = (goalData) => {
-  return goalData.map((data) => {
-    const values = data.dataValues;
-    const amountInt = parseFloat(!values.amount ? "0.00" : values.amount);
+  return goalData.map((values) => {
+    const amount = values.amount ? values.amount : "0.00";
+    const amountInt = parseFloat(amount);
     const desiredAmountInt = parseFloat(values.desired_amount);
     const complete = amountInt > desiredAmountInt;
 
