@@ -55,23 +55,59 @@ document.addEventListener("DOMContentLoaded", function () {
         },
         body: JSON.stringify(data),
       })
-        .then((response) => response.json())
-        .then((newEntry) => {
-          const table = entryType === "income" ? "incomeTable" : "expenseTable";
-          appendRow(table, newEntry);
+      .then(response => response.json())
+      .then(newEntry => {
+        const table = entryType === "income" ? "incomeTable" : "expenseTable";
+        appendRow(table, newEntry);
+        closeModal(modal);
+        updateBudgetTable();
 
-          // Clear the input fields and hide the modal
-          document.getElementById("entryName").value = "";
-          document.getElementById("entryMonth").value = "";
-          document.getElementById("entryAmount").value = "";
-          modal.classList.add("hidden");
-
-          // Update the budget table
-          updateBudgetTable();
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
+        // Clear the input fields and hide the modal
+        document.getElementById("entryName").value = "";
+        document.getElementById("entryMonth").value = "";
+        document.getElementById("entryAmount").value = "";
+        modal.classList.add("hidden");
+        function appendRow(tableId, entry) {
+          const tableBody = document.getElementById(tableId).getElementsByTagName("tbody")[0];
+          const newRow = tableBody.insertRow(-1);
+        
+          // Create cells and populate them with entry data
+          const cell1 = newRow.insertCell(0);
+          cell1.classList.add("py-2", "text-gray-400");
+          cell1.innerText = formatDate(entry.month);
+        
+          const cell2 = newRow.insertCell(1);
+          cell2.classList.add("w-1/2", "pl-5", "text-gray-300");
+          cell2.innerText = entry.name;
+        
+          const cell3 = newRow.insertCell(2);
+          cell3.classList.add("text-right", "text-gray-300");
+          cell3.innerText = "$" + parseFloat(entry.amount).toFixed(2);
+        
+          const cell4 = newRow.insertCell(3);
+          cell4.classList.add("text-right");
+          const editButton = document.createElement("button");
+          editButton.classList.add("px-1", "fas", "fa-edit", "edit-button", "text-gray-500", "hover:text-gray-200");
+          cell4.appendChild(editButton);
+        
+          const deleteButton = document.createElement("button");
+          deleteButton.classList.add("px-1", "fas", "fa-trash", "delete-button", "text-gray-500", "hover:text-red-900");
+          cell4.appendChild(deleteButton);
+        
+          // Add an event listener to the delete button
+          deleteButton.addEventListener("click", () => {
+            handleDelete(deleteButton);
+          });
+        
+          // Add an event listener to the edit button
+          editButton.addEventListener("click", () => {
+            openEditModal(editButton);
+          });
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
     } else {
       alert("Please fill in all fields.");
     }
@@ -81,6 +117,14 @@ document.addEventListener("DOMContentLoaded", function () {
     // Hide the modal without making any changes
     modal.classList.add("hidden");
   });
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US");
+  }
+  function closeModal(modalElement) {
+    modalElement.classList.add("hidden");
+    // Additional code to clear input fields or perform other actions after closing the modal
+  }
 
   function handleDelete(deleteButton) {
     const row = deleteButton.parentNode.parentNode;
