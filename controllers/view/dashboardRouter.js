@@ -181,16 +181,6 @@ const renderGoals = async (req, res) => {
  */
 router.get("/goals", renderGoals);
 
-// ================================ STREAM ======================================
-
-router.get("/stream", withAuth, async (req, res) => {
-  try {
-    res.render("stream");
-  } catch (err) {
-    res.status(500).json({ message: "" });
-  }
-});
-
 // ================================ SETTINGS ====================================
 
 router.get("/settings", withAuth, async (req, res) => {
