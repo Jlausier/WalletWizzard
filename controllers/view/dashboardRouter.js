@@ -199,8 +199,11 @@ router.get("/settings", withAuth, async (req, res) => {
 
 // ================================ SPLASH PAGE =================================
 
+import path from "path";
+import { __dirname } from "../../utils/fsUtils.js";
+
 router.get("/", (req, res) => {
-  res.render("homepage");
+  res.sendFile(path.join(__dirname, "public/homepage.html"));
 });
 
 export default router;
