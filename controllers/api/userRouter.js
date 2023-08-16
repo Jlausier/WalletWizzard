@@ -17,7 +17,7 @@ router.post("/", async (req, res) => {
     });
 
     req.session.save(() => {
-      req.session.user_id = userData.id;
+      req.session.userId = userData.id;
       req.session.logged_in = true;
       res
         .status(200)
@@ -28,7 +28,7 @@ router.post("/", async (req, res) => {
     res.status(500).json(err);
   }
 });
-
+``;
 /**
  * Login and redirect to the overview page, otherwise return an error message and code.
  *
@@ -53,7 +53,7 @@ router.post("/login", async (req, res) => {
     }
 
     req.session.save(() => {
-      req.session.user_id = userData.id;
+      req.session.userId = userData.id;
       req.session.logged_in = true;
       res
         .status(200)

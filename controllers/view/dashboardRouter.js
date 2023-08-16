@@ -1,5 +1,7 @@
 import express from "express";
 import { Sequelize } from "sequelize";
+import path from "path";
+import { __dirname } from "../../utils/fsUtils.js";
 import { Income, Expense, Goal, ExpenseType } from "../../models/index.js";
 import withAuth from "../../utils/auth.js";
 
@@ -27,7 +29,7 @@ const router = express.Router();
 
 // ================================ OVERVIEW ====================================
 
-router.get("/overview", async (req, res) => {
+router.get("/overview", withAuth, async (req, res) => {
   try {
     /**
      * @TODO Get overview data
@@ -152,7 +154,7 @@ const renderBudget = async (req, res) => {
 /**
  * @summary GET /dashboard/budget
  */
-router.get("/budget", renderBudget);
+router.get("/budget", withAuth, renderBudget);
 
 // ================================ GOALS =======================================
 
@@ -181,7 +183,7 @@ const renderGoals = async (req, res) => {
 /**
  * @summary GET /dashboard/goals
  */
-router.get("/goals", renderGoals);
+router.get("/goals", withAuth, renderGoals);
 
 // ================================ SETTINGS ====================================
 
@@ -198,9 +200,6 @@ router.get("/settings", withAuth, async (req, res) => {
 });
 
 // ================================ SPLASH PAGE =================================
-
-import path from "path";
-import { __dirname } from "../../utils/fsUtils.js";
 
 router.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public/homepage.html"));

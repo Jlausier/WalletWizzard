@@ -49,9 +49,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Make a POST request to the appropriate endpoint
       fetch(`/api/${entryType}`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
       })
@@ -140,16 +140,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Make a DELETE request to the appropriate endpoint
     fetch(`/api/${entryType}/${entryId}`, {
-      method: 'DELETE',
+      method: "DELETE",
     })
-    .then(response => response.json())
-    .then(data => {
-      // Handle the response data as needed
-      console.log(data);
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
+      .then((response) => response.json())
+      .then((data) => {
+        // Handle the response data as needed
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   }
 
   function openEditModal(editButton) {
@@ -185,35 +185,36 @@ document.addEventListener("DOMContentLoaded", function () {
       };
 
       // Determine the entry type based on the table
-      const entryType = row.closest("table").id === "incomeTable" ? "income" : "expense";
+      const entryType =
+        row.closest("table").id === "incomeTable" ? "income" : "expense";
 
       // Extract the entry ID from the row
       const entryId = row.dataset.entryId;
 
       // Make a PUT request to the appropriate endpoint
       fetch(`/api/${entryType}/${entryId}`, {
-        method: 'PUT',
+        method: "PUT",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(updatedData),
       })
-      .then(response => response.json())
-      .then(updatedEntry => {
-        // Update the row with new values
-        row.cells[0].innerText = formatDate(updatedMonth);
-        row.cells[1].innerText = updatedName;
-        row.cells[2].innerText = "$" + parseFloat(updatedAmount).toFixed(2);
+        .then((response) => response.json())
+        .then((updatedEntry) => {
+          // Update the row with new values
+          row.cells[0].innerText = formatDate(updatedMonth);
+          row.cells[1].innerText = updatedName;
+          row.cells[2].innerText = "$" + parseFloat(updatedAmount).toFixed(2);
 
-        // Hide the edit modal
-        editModal.classList.add("hidden");
+          // Hide the edit modal
+          editModal.classList.add("hidden");
 
-        // Update the budget table
-        updateBudgetTable();
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
+          // Update the budget table
+          updateBudgetTable();
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
     });
 
     // Handle cancel button click
@@ -221,9 +222,7 @@ document.addEventListener("DOMContentLoaded", function () {
       // Hide the edit modal without making any changes
       editModal.classList.add("hidden");
     });
-  };
-  
-  
+  }
 
   // Function to update the Your Budget table
   function updateBudgetTable() {
@@ -250,8 +249,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Function to calculate the total amount for a table
   function calculateTotal(table) {
+    if (!table) return;
     const tableBody = table.getElementsByTagName("tbody")[0];
     let total = 0;
+    if (!tableBody) return;
 
     for (let i = 0; i < tableBody.rows.length; i++) {
       const amountCell = tableBody.rows[i].cells[2];
