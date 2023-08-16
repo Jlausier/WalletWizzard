@@ -6,6 +6,14 @@ document.addEventListener("DOMContentLoaded", function () {
   const cancelEditBtn = document.getElementById("cancelEditBtn");
   const cancelBtn = document.getElementById("cancelBtn");
 
+  // const deleteButtons = document.querySelectorAll(".delete-button");
+  // deleteButtons.forEach((del) => {
+  //   del.addEventListener("click", (event) => {
+  //     console.log(event.target);
+  //     handleDelete(event.target);
+  //   });
+  // });
+
   // Delegate event handling for income and expense buttons
   document.addEventListener("click", function (event) {
     if (event.target.classList.contains("income-btn")) {
@@ -47,6 +55,8 @@ document.addEventListener("DOMContentLoaded", function () {
         amount: parseFloat(entryAmount),
       };
 
+      console.log(entryType);
+
       // Make a POST request to the appropriate endpoint
       fetch(`/api/${entryType}`, {
         method: "POST",
@@ -72,6 +82,8 @@ document.addEventListener("DOMContentLoaded", function () {
               .getElementById(tableId)
               .getElementsByTagName("tbody")[0];
             const newRow = tableBody.insertRow(-1);
+
+            newRow.dataset.entryId = newEntry.id;
 
             // Create cells and populate them with entry data
             const cell1 = newRow.insertCell(0);
@@ -147,24 +159,33 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function handleDelete(deleteButton) {
     const row = deleteButton.parentNode.parentNode;
-    const table = row.parentNode.parentNode;
-    table.deleteRow(row.rowIndex);
-    updateBudgetTable();
 
     // Extract the entry ID from the row
-    const entryId = row.dataset.entryId;
+    const entryId = row.dataset.entryid;
+    console.log(entryId);
+
+    const tableId = row.dataset.table;
+    const table = document.getElementById(tableId);
+
+    table.deleteRow(row.rowIndex);
 
     // Determine the entry type based on the table
-    const entryType = table.id === "incomeTable" ? "income" : "expense";
+    const entryType = tableId === "incomeTable" ? "income" : "expense";
 
     // Make a DELETE request to the appropriate endpoint
     fetch(`/api/${entryType}/${entryId}`, {
       method: "DELETE",
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error("Could not delete " + entryType);
+      })
       .then((data) => {
         // Handle the response data as needed
         console.log(data);
+        updateBudgetTable();
       })
       .catch((error) => {
         console.error("Error:", error);
