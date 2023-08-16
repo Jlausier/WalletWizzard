@@ -32,7 +32,8 @@ router.get("/overview", async (req, res) => {
      * - Get expenses broken down by category type
      */
 
-    const expenseData = await Expense.findAll({
+    // ================================ Expense Pie Chart ===============================
+    const expenseSums = await Expense.findAll({
       where: { userId: req.session.userId || testUserId },
       include: [{ model: ExpenseType, attributes: [] }],
       attributes: [
@@ -43,23 +44,24 @@ router.get("/overview", async (req, res) => {
       raw: true,
     });
 
-    const totalAmount = expenseData.reduce(sumData, 0);
+    const totalAmount = expenseSums.reduce(sumData, 0);
 
-    const percentageData = expenseData.map(({ amount, category }) => {
-      return {
-        category,
-        percentage: Math.round((amount / totalAmount) * 100, "nearest"),
-      };
-    });
+    console.log({ totalAmount, expenseSums });
 
-    console.log(totalAmount);
-    console.log(percentageData);
+    // ================================ Goals Progress Bars =============================
 
+    // Find goals data
+    const goalsOptions = getGoalsOptions(req.session.userId);
+    const goalData = await Goal.findAll(goalsOptions);
+    const processedGoalData = processGoalData(goalData);
+
+    // Render overview page with data
     res.render("overview", {
       expenseData: {
         totalAmount,
-        percentageData,
+        sums: expenseSums,
       },
+      goalsData: processedGoalData,
     });
   } catch (err) {
     res.status(500).json(err);

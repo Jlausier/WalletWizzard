@@ -1,10 +1,30 @@
 <div id="budget-chart-container" class="w-full relative">
-  <canvas id="myChart" width="400" height="400"></canvas>
-<script>
-    const ctx = document.getElementById('myChart').getContext('2d');
-    const chart = new Chart(ctx, {
-        type: '{{chartType}}',
-        data: {{{chartData}}}
-    });
-</script>
+     <canvas id="myDoughnutChart" width="100" height="100"></canvas>
+
+    <script>
+      // Get the canvas element
+      const ctx = document.getElementById("myDoughnutChart").getContext("2d");
+
+      const expenseData = {{{json this}}};
+
+      // Data for the doughnut chart
+      const data = {
+        labels: ["Essential Expenses", "Non-Essential Expenses", "Savings"],
+        datasets: [
+          {
+            data: expenseData.sums.map(e => e.amount),
+            backgroundColor: ["#d53369", "#daae51", "#D97560"],
+          },
+        ],
+      };
+
+      // Create the doughnut chart
+      new Chart(ctx, {
+        type: "doughnut",
+        data: data,
+        options: {
+          cutout: "50%", // Adjust the hole size
+        },
+      });
+    </script>
 </div>
