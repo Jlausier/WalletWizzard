@@ -1,25 +1,28 @@
-<div class=" pt-6  flex">  
+<div class=" p-6 flex">  
   {{!-- Card Body --}}
   <div class=" bg-gray-800 rounded-lg shadow-xl w-full">
       {{!-- Card Header Info (Money Left, Title, Contribute Button, and Edit) --}}
       <div class="p-6 flex justify-between text-gray-200">
           {{!-- Left Side Header --}}
           <div class="flex flex-col items-start">
-              <div id="goalLeft" class="px-3 py-1 mb-2  bg-gray-700 border-gray-400 text-gray-300 rounded-full text-xl"></div>
-              <h3 id="goalName" class="tracking-wider text-left text-3xl"></h3>
+              <div id="goalLeft" class="px-3 py-1 mb-2  bg-gray-700 border-gray-400 text-gray-300 rounded-full text-xl">Amount Left</div>
+              <h3 id="goalName" class="tracking-wider text-left text-3xl">Title</h3>
           </div>
 
           <div class="flex flex-col items-end">
-              <a class="mb-2 px-4 py-2 sidebar  rounded">Contribute to Goal</a>
-              <button class="px-1 fas fa-edit edit-button text-gray-500 hover:text-gray-200"></button>
-              <button class="px-1 fas fa-trash delete-button text-gray-500 hover:text-red-900 "></button>
+              <button class="mb-2 px-4 py-2 sidebar rounded">Contribute to Goal</button>
+              <div class="in-line">
+                <button class="px-1 fas fa-edit edit-button text-gray-500 hover:text-gray-200 transition ease-in-out"></button>
+              <button class="px-1 fas fa-trash delete-button text-gray-500 hover:text-red-900 transition ease-in-out"></button>
+              </div>
+              
           </div>
 
       </div>
       {{!-- Chart Portion --}}
       <div class=" p-6">
            <div>
-      <canvas id="myChart" width="10000" height="500"></canvas>
+      <canvas id="myChart" width="100" height="500"></canvas>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -27,10 +30,11 @@
     <script>
         const ctx = document.getElementById("myChart");
 
-        const goalInfo = {{ json this }};
+        const goalInfo = {{json this}};
+        console.log("-------------------------------------" + goalInfo);
 
-        document.getElementById('goalName').textContent(goalInfo.name);
-        document.getElementById('goalLeft').textContent(goalInfo.remaining);
+        document.getElementById('goalName').textContent = goalInfo.name;
+        document.getElementById('goalLeft').textContent = goalInfo.remaining;
 
 
       new Chart(ctx, {
