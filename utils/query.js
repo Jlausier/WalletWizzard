@@ -41,7 +41,7 @@ export const getTableOptions = (userId) => {
 };
 
 /** @const testUserId Test {@linkcode User} UUID string */
-export const testUserId = "6d5a9341-0fb2-413a-9f21-cfc2d304f893";
+export const testUserId = "6d62c578-578f-448c-8e3d-e37475d25b26";
 
 /**
  * Returns query options for finding objects associated with a user
