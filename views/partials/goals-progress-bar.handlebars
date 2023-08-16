@@ -1,15 +1,15 @@
 <div class=" pt-6  flex">  
   {{!-- Card Body --}}
   <div class=" bg-gray-800 rounded-lg shadow-xl w-full">
-
+     {{#each this}}
       {{!-- Card Header Info (Money Left, Title, Contribute Button, and Edit) --}}
       <div class="p-6 flex justify-between text-gray-200">
           {{!-- Left Side Header --}}
           <div class="flex flex-col items-start">
                     {{!--    vvv   id to connect the remaining money left for the goal --}}
-              <div id="goalAmounttLeft" class="px-3 py-1 mb-2  bg-gray-700 border-gray-400 text-gray-300 rounded-full text-xl">$325 Left</div>
+              <div id="{{desired_amount}}" class="px-3 py-1 mb-2  bg-gray-700 border-gray-400 text-gray-300 rounded-full text-xl"></div>
                                                       {{!--      vvv     I added this for the name, change if it isn't correct  --}}
-              <h3 class="tracking-wider text-left text-3xl">{{goalName}}</h3>
+              <h3 class="tracking-wider text-left text-3xl">{{name}}</h3>
           </div>
 
           <div class="flex flex-col items-end">
@@ -34,5 +34,5 @@
       </div>
       
   </div>
-  
+  {{/each}}
 </div>

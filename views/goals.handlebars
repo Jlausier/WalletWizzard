@@ -1,3 +1,4 @@
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
      <section>
         <div id="main" class=" main-content flex-1 bg-gray-700 mx-10 mb-10 p-12 rounded-2xl bg-gray-700">
 
@@ -7,9 +8,9 @@
            {{!-- Content Container --}}
             <div class=" pt-6 flex flex-col bg-gray-700">
                 <div class="flex justify-end">
-                    <a class="mr-2 px-5 py-2 rounded-full border-2 border-gray-200 text-sm text-gray-100 font-bold drop-shadow-lg">
-                        +  Add New
-                    </a>
+                    <button class="mr-2 px-5 py-2 rounded-full border-2 border-gray-200 text-sm text-gray-100 font-bold drop-shadow-lg sidebar">
+                      <i class="fas fa-plus income-btn"> Add New</i>
+                    </button>
                 </div>
 
                 {{!-- card container --}}
@@ -17,8 +18,8 @@
 
                         {{!-- Content Card --}}
 
-                        {{#each goal}}
-                        {{>goals-progress-bar goal=.}}
+                        {{#each goalData}}
+                        {{>goals-progress-bar this}}
                         {{/each}}
 
                 </div>
