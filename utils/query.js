@@ -30,7 +30,7 @@ export const sumAmount = (tableName) => [
 ];
 
 /** @const tableAttributes Sequelize query attributes for budget table */
-export const tableAttributes = ["scheduled_date", "amount", "name"];
+export const tableAttributes = ["scheduled_date", "amount", "name", "id"];
 
 export const getTableOptions = (userId) => {
   return {
@@ -42,7 +42,6 @@ export const getTableOptions = (userId) => {
 
 /** @const testUserId Test {@linkcode User} UUID string */
 export const testUserId = "95d841ea-da81-46f2-9294-18d20cbc8977";
-
 
 /**
  * Returns query options for finding objects associated with a user
