@@ -232,25 +232,25 @@
           </div>
         </div>
         
-        <form class="space-y-4 text-center">
+        <form id="signupForm" class="space-y-4 text-center">
           <div class="flex flex-col ">
             <label for="first_name" class="text-white">First Name</label>
-            <input type="text" id="first_name" name="first_name" class="input rounded p-2" placeholder="John" required>
+            <input type="text" id="first_name" name="first_name" class="input rounded p-2 text-black" placeholder="John" required>
           </div>
           
           <div class="flex flex-col">
             <label for="last_name" class="text-white">Last Name</label>
-            <input type="text" id="last_name" name="last_name" class="input rounded p-2" placeholder="Doe" required>
+            <input type="text" id="last_name" name="last_name" class="input rounded p-2 text-black" placeholder="Doe" required>
           </div>
 
           <div class="flex flex-col">
             <label for="email" class="text-white">Email</label>
-            <input type="email" id="email" name="email" class="input rounded p-2" placeholder="johndoe@example.com" required>
+            <input type="email" id="email" name="email" class="input rounded p-2 text-black" placeholder="johndoe@example.com" required>
           </div>
           
           <div class="flex flex-col">
             <label for="password" class="text-white">Password</label>
-            <input type="password" id="signup-password" name="password" class="input rounded p-2" placeholder="" required>
+            <input type="password" id="password" name="password" class="input rounded p-2 text-black" placeholder="********" required>
           </div>
           
           <button type="submit" class="btn btn-primary w-full">Sign Up</button>
@@ -309,6 +309,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   
   <script src="/js/script.js"> </script>
+  <script src="/js/signup.js"></script>
   <script src="/js/login.js"></script>
   </body>
 </html>
