@@ -5,23 +5,20 @@
       // Get the canvas element
       const ctx = document.getElementById("myDoughnutChart").getContext("2d");
 
-      const expenseData = {{{json this}}};
-
-      // Data for the doughnut chart
-      const data = {
-        labels: ["Essential Expenses", "Non-Essential Expenses", "Savings"],
-        datasets: [
-          {
-            data: expenseData.sums.map(e => e.amount),
-            backgroundColor: ["#d53369", "#daae51", "#D97560"],
-          },
-        ],
-      };
+      const { labels, data } = {{{json this}}};
 
       // Create the doughnut chart
       new Chart(ctx, {
         type: "doughnut",
-        data: data,
+        data: {
+          labels,
+          datasets: [
+            {
+              data,
+              backgroundColor: ["#d53369", "#daae51", "#D97560"],
+            },
+          ],
+        },
         options: {
           cutout: "50%", // Adjust the hole size
         },
