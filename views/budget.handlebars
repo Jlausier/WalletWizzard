@@ -22,9 +22,9 @@
                                 </button>
                         </div>                            
                              <div class="p-6">
-                                
-                                 {{> income-table incomeData}}
-                               
+                               {{#with incomeData}}
+                                 {{> income-table this}}
+                               {{/with}}
                              </div>
                             {{!- {{> income-table}}
 
@@ -42,9 +42,9 @@
                                 </button>
                             </div>
                         <div class="p-6">
-                            
-                             {{> expense-table expenseData}}
-                            
+                            {{#with expenseData}}
+                             {{> expense-table this}}
+                            {{/with}}
                         </div>
                     </div>
                 </div>
@@ -59,9 +59,9 @@
                                 </button>
                        </div>
                         <div class="p-6">
-                             
-                                {{> goal-table goalData}}
-                             
+                            {{#with goalData}}
+                                {{> goal-table this}}
+                            {{/with}}
                         </div>
                     </div>
                 </div>
@@ -76,7 +76,7 @@
                     <div class=" bg-gray-800 border-transparent rounded-lg shadow-xl w-full">
                         <h3 class="p-6 tracking-wider uppercase text-left text-gray-200">Your Budget</h3>
                             <div class="p-6">
-                                {{#with expenseData}}
+                                {{#with budgetData}}
                                     {{> budget-table this}}
                                 {{/with}}
                             </div>
@@ -115,7 +115,7 @@
         <button id="cancelEditBtn" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-2 rounded ml-2">Cancel</button>
     </div>
 </div>
-{{!-- <script src="/js/budget.js"></script> --}}
+<script src="/js/budget.js"></script>
 {{!-- <script>
     // Data objects
 const incomeEntries = [
