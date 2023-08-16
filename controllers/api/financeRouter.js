@@ -9,7 +9,10 @@ const router = express.Router();
 // CREATE
 const createExpense = async (req, res) => {
   try {
-    const expenseData = await Expense.create(req.body);
+    const expenseData = await Expense.create({
+      ...req.body,
+      userId: req.session.userId,
+    });
 
     if (!expenseData) {
       res.status(400).json({ message: "Could not create expense instance." });
@@ -23,7 +26,7 @@ const createExpense = async (req, res) => {
   }
 };
 
-router.post("/expense", createExpense);
+router.post("/expense", withAuth, createExpense);
 
 // UPDATE
 const updateExpense = async (req, res) => {
@@ -46,7 +49,7 @@ const updateExpense = async (req, res) => {
   }
 };
 
-router.put("/expense/:id", updateExpense);
+router.put("/expense/:id", withAuth, updateExpense);
 
 // DELETE
 const deleteExpense = async (req, res) => {
@@ -69,14 +72,17 @@ const deleteExpense = async (req, res) => {
   }
 };
 
-router.delete("/expense/:id", deleteExpense);
+router.delete("/expense/:id", withAuth, deleteExpense);
 
 // ================================ GOAL ======================================
 
 // CREATE
 const createGoal = async (req, res) => {
   try {
-    const goalData = await Goal.create(req.body);
+    const goalData = await Goal.create({
+      ...req.body,
+      userId: req.session.userId,
+    });
 
     if (!goalData) {
       res.status(400).json({ message: "Could not create goal instance." });
@@ -90,7 +96,7 @@ const createGoal = async (req, res) => {
   }
 };
 
-router.post("/goal", createGoal);
+router.post("/goal", withAuth, createGoal);
 
 // UPDATE
 const updateGoal = async (req, res) => {
@@ -113,7 +119,7 @@ const updateGoal = async (req, res) => {
   }
 };
 
-router.put("/goal/:id", updateGoal);
+router.put("/goal/:id", withAuth, updateGoal);
 
 // DELETE
 const deleteGoal = async (req, res) => {
@@ -136,14 +142,17 @@ const deleteGoal = async (req, res) => {
   }
 };
 
-router.delete("/goal/:id", deleteGoal);
+router.delete("/goal/:id", withAuth, deleteGoal);
 
 // ================================ GOAL PROGRESSION ==========================
 
 // CREATE
 const createGoalProgression = async (req, res) => {
   try {
-    const goalProgressionData = await GoalProgression.create(req.body);
+    const goalProgressionData = await GoalProgression.create({
+      ...req.body,
+      userId: req.session.userId,
+    });
 
     if (!goalProgressionData) {
       res.status(400).json({ message: "Could not create goal instance." });
@@ -157,7 +166,7 @@ const createGoalProgression = async (req, res) => {
   }
 };
 
-router.post("/goal-progression", createGoalProgression);
+router.post("/goal-progression", withAuth, createGoalProgression);
 
 // UPDATE
 const updateGoalProgression = async (req, res) => {
@@ -182,7 +191,7 @@ const updateGoalProgression = async (req, res) => {
   }
 };
 
-router.put("/goal-progression/:id", updateGoalProgression);
+router.put("/goal-progression/:id", withAuth, updateGoalProgression);
 
 // DELETE
 const deleteGoalProgression = async (req, res) => {
@@ -207,14 +216,17 @@ const deleteGoalProgression = async (req, res) => {
   }
 };
 
-router.delete("/goal-progression/:id", deleteGoalProgression);
+router.delete("/goal-progression/:id", withAuth, deleteGoalProgression);
 
 // ================================ INCOME ====================================
 
 // CREATE
 const createIncome = async (req, res) => {
   try {
-    const incomeData = await Income.create(req.body);
+    const incomeData = await Income.create({
+      ...req.body,
+      userId: req.session.userId,
+    });
 
     if (!incomeData) {
       res.status(400).json({ message: "Could not create income instance." });
@@ -228,7 +240,7 @@ const createIncome = async (req, res) => {
   }
 };
 
-router.post("/income", createIncome);
+router.post("/income", withAuth, createIncome);
 
 // UPDATE
 const updateIncome = async (req, res) => {
@@ -251,7 +263,7 @@ const updateIncome = async (req, res) => {
   }
 };
 
-router.put("/income/:id", updateIncome);
+router.put("/income/:id", withAuth, updateIncome);
 
 // DELETE
 const deleteIncome = async (req, res) => {
@@ -274,6 +286,6 @@ const deleteIncome = async (req, res) => {
   }
 };
 
-router.delete("/income/:id", deleteIncome);
+router.delete("/income/:id", withAuth, deleteIncome);
 
 export default router;
