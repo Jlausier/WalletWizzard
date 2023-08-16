@@ -128,16 +128,18 @@ document.addEventListener("DOMContentLoaded", function () {
       alert("Please fill in all fields.");
     }
   });
+
   // Handle cancel button click for add modal
   cancelBtn.addEventListener("click", () => {
     // Hide the modal without making any changes
     modal.classList.add("hidden");
   });
+
   function formatDate(dateString) {
-    console.log(dateString);
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US");
   }
+
   function closeModal(modalElement) {
     modalElement.classList.add("hidden");
     // Additional code to clear input fields or perform other actions after closing the modal
