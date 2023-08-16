@@ -82,39 +82,43 @@ router.get("/overview", async (req, res) => {
  */
 const renderBudget = async (req, res) => {
   try {
+    // Get table options
     const options = getTableOptions(req.session.userId);
-    console.log(options);
 
+    // Find income data
     const incomeData = await Income.findAll(options);
     console.log();
+    // Find expense data
     const expenseData = await Expense.findAll(options);
 
+    // Find goals data
     const goalsOptions = getGoalsOptions(req.session.userId);
-    console.log(goalsOptions);
     const goalData = await Goal.findAll(goalsOptions);
     const processedGoalData = processGoalData(goalData);
 
-    /**
-     * @TODO Breakdown goals by amount remaining and months remaining.
-     *   If there is no scheduled date then set a default monthly amount
-     */
+    // Calculate net data
+    const netData = {
+      income: incomeData.reduce(sumData, 0),
+      expenses: expenseData.reduce(sumData, 0),
+      goals: processedGoalData.reduce((prev, curr) => {
+        if (curr.end) {
+          let monthsBetween =
+            (new Date(curr.end) - Date.now()) / (1000 * 60 * 60 * 24 * 30);
+          return prev + parseFloat(curr.remaining) / monthsBetween;
+        }
+        return prev;
+      }, 0),
+    };
 
+    // Calculate total net income
+    netData.total = netData.income - netData.total - netData.goals;
+
+    // Render budget page with data
     res.render("budget", {
       incomeData,
       expenseData,
       goalData: processedGoalData,
-      netData: {
-        income: incomeData.reduce(sumData, 0),
-        expenses: expenseData.reduce(sumData, 0),
-        goals: processedGoalData.reduce((prev, curr) => {
-          if (curr.end) {
-            let monthsBetween =
-              (new Date(curr.end) - Date.now()) / (1000 * 60 * 60 * 24 * 30);
-            return prev + parseFloat(curr.remaining) / monthsBetween;
-          }
-          return prev;
-        }, 0),
-      },
+      netData,
     });
   } catch (err) {
     res.status(500).json(err);
