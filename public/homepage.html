@@ -13,19 +13,54 @@
     <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css"/>
    
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
     
     <style>
       .gradient {
         background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
       }
+
+      .img-background {
+        background-image: linear-gradient(90deg, rgba(213, 51, 105, 0.4), rgba(218, 175, 81, 0.4)), url(./images/pexels-andrea-piacquadio-3764557.jpg);
+        background-size: cover;
+        background-position: center;
+      }
+
+      .jacob {
+        background-image: url(./images/jake.jpg);
+        background-size: cover;
+        background-position: center;
+      }
+
+      .brian {
+        background-image: url(./images/brian.jpg);
+        background-size: cover;
+        background-position: center;
+      }
+
+      .matthew {
+        background-image: url(./images/matthew.png);
+        background-size: cover;
+        background-position: center;
+      }
+
+      .rodney {
+        background-image: url(./images/rodney.jpg);
+        background-size: cover;
+        background-position: center;
+      }
+
       
     </style>
   </head>
   <body class="leading-normal tracking-normal text-white gradient" style="font-family: 'Source Sans Pro', sans-serif;">
     <!--Nav-->
-    <nav id="header" class="fixed w-full z-30 top-0 text-white">
-      <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-2">
-        <div class="pl-4 flex items-center">
+    <nav id="header" class=" fixed w-full z-30 top-0 text-white">
+      <div class=" w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-2">
+        <div class=" pl-4 flex items-center">
+          <img src="./images/chicken-gradient.png" class="h-16">
         </div>
         <div class="block lg:hidden pr-4">
           <button id="nav-toggle" class="flex items-center p-1 text-pink-800 hover:text-gray-900 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
@@ -53,13 +88,14 @@
       <hr class="border-b border-gray-100 opacity-25 my-0 py-0" />
     </nav>
     <!--Hero-->
-    <div class="pt-24">
-      <div class="container px-3 mx-auto flex flex-wrap flex-col md:flex-row items-center">
+    <div class="img-background py-48">
+      
+      <div class=" container px-3 mx-auto flex flex-wrap flex-col justify-center md:flex-row items-center">
         <!--Left Col-->
-        <div class="flex flex-col w-full md:w-2/5 justify-center items-start text-center md:text-left">
-          <p class="uppercase tracking-loose w-full">Make the magic happen</p>
+        <div class=" flex flex-col w-full md:w-2/5 justify-center items-start text-center md:text-left">
+          <p class="uppercase tracking-loose w-full">Welcome to WalletWizard</p>
           <h1 class="my-4 text-5xl font-bold leading-tight">
-           Welcome to WalletWizard!
+           The Magic Money<br>Managing App
           </h1>
           <p class="leading-normal text-2xl mb-8">
            Meet all your savings goals!
@@ -69,11 +105,11 @@
           </button>
         </div>
         <!--Right Col-->
-        <div class="w-full md:w-3/5 py-6 text-center">
-          <img class="w-full md:w-4/5 z-50" src="./images/new wizard.png" />
+        <div class=" w-full md:w-2/5 py-6 text-center">
         </div>
       </div>
     </div>
+    <!-- SVG -->
     <div class="relative -mt-12 lg:-mt-24 ">
       <svg viewBox="0 0 1428 174" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -161,61 +197,48 @@
     </svg>
     <section class="container mx-auto text-center py-6 mb-12" id="Contact">
         <h2 class="w-full my-2 text-5xl font-bold leading-tight text-center text-white">
-          Contact us
+          Our Team
         </h2>
+        
         <div class="w-full mb-4">
           <div class="h-1 mx-auto bg-white w-1/6 opacity-25 my-0 py-0 rounded-t"></div>
         </div>
-        <h3 class="my-4 text-3xl leading-tight no-bullets-list">
-           <!-- JACOB -->
-           <a
-           href="https://github.com/Jlausier"
-           target="_blank"
-           class="p-2 rounded-full shadow-lg opacity-60 bg-gray-900 flex items-center transition hover:opacity-90 hover:-translate-y-1"
-         >
-           <img
-             src="./images/jake.jpg"
-             class="h-12 w-12 object-cover rounded-full"
-           />
-           <p class="p-2">Jacob Lausier</p>
-         </a>
-         <!-- BRIAN -->
-         <a
-           href="https://github.com/GormanBrian"
-           target="_blank"
-           class="p-2 rounded-full shadow-lg opacity-60 bg-gray-900 flex items-center transition hover:opacity-90 hover:-translate-y-1"
-         >
-           <img
-             src="./images/brian.jpg"
-             class="h-12 w-12 rounded-full"
-           />
-           <p class="p-2">Brian Gorman</p>
-         </a>
-         <!-- MATTHEW -->
-         <a
-           href="https://github.com/alfaro-matttthew"
-           target="_blank"
-           class="p-2 rounded-full shadow-lg opacity-60 bg-gray-900 flex items-center transition hover:opacity-90 hover:-translate-y-1"
-         >
-           <img
-             src="./images/matthew.png"
-             class="h-12 w-12 rounded-full"
-           />
-           <p class="p-2">Alfaro Matthew</p>
-         </a>
-           <!--Rodney-->
-           <a
-           href="https://github.com/Graydude98"
-           target="_blank"
-           class="p-2 rounded-full shadow-lg opacity-60 bg-gray-900 flex items-center transition hover:opacity-90 hover:-translate-y-1"
-         >
-           <img
-             src="./images/rodney.jpg"
-             class="h-12 w-12 rounded-full"
-           />
-           <p class="p-2">Rodney Christopher</p>
-         </a>
-        </h3>
+        <div class="mt-5 flex justify-around">
+        <!-- JACOB -->
+        
+          <div class="p-10 w-64 shadow bg-gray-200 rounded flex flex-col items-center">
+            <div class="jacob w-24 h-24 rounded-full"></div>
+            <div class="mt-6 text-gray-700 text-2xl">Jacob Lausier</div>
+            <div class="text-gray-500">Web Developer</div>
+            <a href="https://github.com/Jlausier"
+            class="fab fa-github mt-6 text-gray-700 text-2xl"></a>
+          </div>
+       
+        <!-- Brian -->
+          <div class="p-10 w-64 shadow bg-gray-200 rounded flex flex-col items-center">
+            <div class="brian w-24 h-24 rounded-full"></div>
+            <div class="mt-6 text-gray-700 text-2xl">Brian Gorman</div>
+            <div class="text-gray-500">Web Developer</div>
+            <a href="https://github.com/GormanBrian"
+            class="fab fa-github mt-6 text-gray-700 text-2xl"></a>
+          </div>
+        <!-- Matthew -->
+          <div class="p-10 w-64 shadow bg-gray-200 rounded flex flex-col items-center">
+            <div class="matthew w-24 h-24 rounded-full"></div>
+            <div class="mt-6 text-gray-700 text-2xl">Matthew Alfaro</div>
+            <div class="text-gray-500">Web Developer</div>
+            <a href="https://github.com/alfaro-matttthew"
+            class="fab fa-github mt-6 text-gray-700 text-2xl"></a>
+          </div>
+        <!-- Rodney -->
+          <div class="p-10 w-64 shadow bg-gray-200 rounded flex flex-col items-center">
+            <div class="rodney w-24 h-24 rounded-full"></div>
+            <div class="mt-6 text-gray-700 text-2xl">Rodney Christopher</div>
+            <div class="text-gray-500">Web Developer</div>
+            <a href="https://github.com/Graydude98"
+            class="fab fa-github mt-6 text-gray-700 text-2xl"></a>
+          </div>
+        </div>
     </section>
  <!-- Modal -->
  <div id="signupModal" class="modal hidden fixed inset-0 z-50 overflow-hidden flex justify-center items-center">
