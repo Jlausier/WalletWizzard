@@ -1,10 +1,13 @@
 import express from "express";
-import { Income, Expense, Goal } from "../../models/index.js";
+import { Sequelize } from "sequelize";
+import { Income, Expense, Goal, ExpenseType } from "../../models/index.js";
 import withAuth from "../../utils/auth.js";
 
 import {
+  getTableOptions,
   getGoalsOptions,
   processGoalData,
+  sumData,
   testUserId,
 } from "../../utils/query.js";
 
@@ -21,14 +24,45 @@ const router = express.Router();
 
 // ================================ OVERVIEW ====================================
 
-router.get("/overview", withAuth, async (req, res) => {
+router.get("/overview", async (req, res) => {
   try {
     /**
      * @TODO Get overview data
+     *
+     * - Get expenses broken down by category type
      */
-    res.render("overview");
+
+    const expenseData = await Expense.findAll({
+      where: { userId: req.session.userId || testUserId },
+      include: [{ model: ExpenseType, attributes: [] }],
+      attributes: [
+        [Sequelize.fn("SUM", Sequelize.col("amount")), "amount"],
+        [Sequelize.col("expense_type.category"), "category"],
+      ],
+      group: [Sequelize.col("expense_type.category")],
+      raw: true,
+    });
+
+    const totalAmount = expenseData.reduce(sumData, 0);
+
+    const percentageData = expenseData.map(({ amount, category }) => {
+      return {
+        category,
+        percentage: Math.round((amount / totalAmount) * 100, "nearest"),
+      };
+    });
+
+    console.log(totalAmount);
+    console.log(percentageData);
+
+    res.render("overview", {
+      expenseData: {
+        totalAmount,
+        percentageData,
+      },
+    });
   } catch (err) {
-    res.status(500).json({ message: "" });
+    res.status(500).json(err);
   }
 });
 
@@ -48,29 +82,41 @@ router.get("/overview", withAuth, async (req, res) => {
  */
 const renderBudget = async (req, res) => {
   try {
-    const options = {
-      where: { userId: req.session.userId || testUserId },
-      attributes: ["scheduled_date", "amount", "name"],
-      raw: true,
-    };
+    const options = getTableOptions(req.session.userId);
+    console.log(options);
 
     const incomeData = await Income.findAll(options);
+    console.log();
     const expenseData = await Expense.findAll(options);
 
-    const goalsOptions = getGoalsOptions(req.session.userId || testUserId);
+    const goalsOptions = getGoalsOptions(req.session.userId);
+    console.log(goalsOptions);
     const goalData = await Goal.findAll(goalsOptions);
-
     const processedGoalData = processGoalData(goalData);
 
-    console.log(processedGoalData);
+    /**
+     * @TODO Breakdown goals by amount remaining and months remaining.
+     *   If there is no scheduled date then set a default monthly amount
+     */
 
     res.render("budget", {
       incomeData,
       expenseData,
       goalData: processedGoalData,
+      netData: {
+        income: incomeData.reduce(sumData, 0),
+        expenses: expenseData.reduce(sumData, 0),
+        goals: processedGoalData.reduce((prev, curr) => {
+          if (curr.end) {
+            let monthsBetween =
+              (new Date(curr.end) - Date.now()) / (1000 * 60 * 60 * 24 * 30);
+            return prev + parseFloat(curr.remaining) / monthsBetween;
+          }
+          return prev;
+        }, 0),
+      },
     });
   } catch (err) {
-    console.error(err);
     res.status(500).json(err);
   }
 };
@@ -92,11 +138,9 @@ router.get("/budget", renderBudget);
  */
 const renderGoals = async (req, res) => {
   try {
-    const goalsOptions = getGoalsOptions(req.session.userId || testUserId);
+    const goalsOptions = getGoalsOptions(req.session.userId);
     const goalData = await Goal.findAll(goalsOptions);
     const processedGoalData = processGoalData(goalData);
-
-    console.log(processedGoalData);
 
     res.render("goals", processedGoalData);
   } catch (err) {
@@ -107,7 +151,7 @@ const renderGoals = async (req, res) => {
 /**
  * @summary GET /dashboard/goals
  */
-router.get("/goals", withAuth, renderGoals);
+router.get("/goals", renderGoals);
 
 // ================================ STREAM ======================================
 
@@ -131,6 +175,12 @@ router.get("/settings", withAuth, async (req, res) => {
    *
    * @TODO Render settings page
    */
+});
+
+// ================================ SPLASH PAGE =================================
+
+router.get("/", (req, res) => {
+  res.render("homepage");
 });
 
 export default router;

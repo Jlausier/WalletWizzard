@@ -21,6 +21,12 @@ const goalProgressionData = require("./goalProgressionData.json");
 const expenseData = require("./expenseData.json");
 const expenseTypeData = require("./expenseTypeData.json");
 
+const randomInt = (min, max) => {
+  const res = Math.floor(Math.random() * (max - min + 1)) + min;
+  console.log(res);
+  return res;
+};
+
 const seedDatabase = async () => {
   await sequelize.sync({ force: true });
 
@@ -71,7 +77,7 @@ const seedDatabase = async () => {
     expenseData.map((e) => ({
       ...e,
       userId: users[0].id,
-      typeId: expenseTypes[0].id,
+      typeId: expenseTypes[randomInt(0, 14)].id,
     })),
     {
       individualHooks: true,
