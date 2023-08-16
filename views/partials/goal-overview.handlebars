@@ -1,0 +1,30 @@
+<div id="goals-chart-container" class="w-full relative">
+    <table>
+        <tbody>
+            <tr>
+                <td id="nameOne"></td>
+                <td id="amountOne"></td>
+            </tr>
+            <tr>
+                <td id="nameTwo"></td>
+                <td id="amountTwo"></td>
+            </tr>
+            <tr>
+                <td id="nameThree"></td>
+                <td id="amountThree"></td>
+            </tr>
+        </tbody>
+    </table>
+    <script>
+        const goals = {{{json this}}}
+        
+        document.getElementById('nameOne').textContent(goals[0].name);
+        document.getElementById('amountOne').textContent(goals[0].remaining);
+
+        document.getElementById('nameTwo').textContent(goals[1].name);
+        document.getElementById('amountTwo').textContent(goals[1].remaining);
+
+        document.getElementById('nameThree').textContent(goals[2].name);
+        document.getElementById('amountThree').textContent(goals[2].remaining);
+    </script>
+</div>

@@ -74,6 +74,8 @@ router.get("/overview", async (req, res) => {
 
     console.log(nonessentialData);
 
+    console.log(expenseSums);
+
     // Render overview page with data
     res.render("overview", {
       expenseData: {
