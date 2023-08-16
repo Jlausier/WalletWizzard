@@ -20,24 +20,24 @@
 
       </div>
       {{!-- Chart Portion --}}
-      <div class=" p-6">
+      <div class="flex h-64 p-6">
            <div>
-      <canvas id="myChart" width="100" height="500"></canvas>
+      <canvas id="goalProgressBar_" width="10" height="10"></canvas>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
-        const ctx = document.getElementById("myChart");
+        const goalProgressChart_ctx = document.getElementById("myChart");
 
-        const goalInfo = {{json this}};
+        const goalInfo = {{{json this}}};
         console.log("-------------------------------------" + goalInfo);
 
         document.getElementById('goalName').textContent = goalInfo.name;
         document.getElementById('goalLeft').textContent = goalInfo.remaining;
 
 
-      new Chart(ctx, {
+      new Chart(goalProgressChart_ctx, {
         type: "bar",
         data: {
           labels: [""],
