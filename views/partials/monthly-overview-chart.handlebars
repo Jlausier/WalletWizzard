@@ -1,5 +1,5 @@
 <div id="monthly-chart-container" class="w-full relative">
-    <canvas id="monthlyOverviewChart" width="400" height="400"></canvas>
+    <canvas id="monthlyOverviewChart" width="500" height="400"></canvas>
 
     <script>
       // Get the canvas element
@@ -32,6 +32,11 @@
               beginAtZero: true,
             },
           },
+          plugins: {
+            legend: {
+                display: false,
+            }
+          }
         },
       });
     </script>
