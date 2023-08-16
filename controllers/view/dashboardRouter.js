@@ -170,7 +170,7 @@ const renderGoals = async (req, res) => {
     const goalData = await Goal.findAll(goalsOptions);
     const processedGoalData = processGoalData(goalData);
 
-    res.render("goals", processedGoalData);
+    res.render("goals", { goalData: processedGoalData });
   } catch (err) {
     res.status(500).json(err);
   }
@@ -180,16 +180,6 @@ const renderGoals = async (req, res) => {
  * @summary GET /dashboard/goals
  */
 router.get("/goals", renderGoals);
-
-// ================================ STREAM ======================================
-
-router.get("/stream", withAuth, async (req, res) => {
-  try {
-    res.render("stream");
-  } catch (err) {
-    res.status(500).json({ message: "" });
-  }
-});
 
 // ================================ SETTINGS ====================================
 
