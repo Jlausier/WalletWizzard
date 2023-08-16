@@ -218,7 +218,7 @@
         </h3>
     </section>
  <!-- Modal -->
- <div id="myModal" class="modal hidden fixed inset-0 z-50 overflow-hidden flex justify-center items-center">
+ <div id="signupModal" class="modal hidden fixed inset-0 z-50 overflow-hidden flex justify-center items-center">
     <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
     
     <div class="modal-container bg-gray-900 w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
@@ -242,21 +242,16 @@
             <label for="last_name" class="text-white">Last Name</label>
             <input type="text" id="last_name" name="last_name" class="input rounded p-2" placeholder="Doe" required>
           </div>
-          
-          <div class="flex flex-col">
-            <label for="username" class="text-white">Username</label>
-            <input type="text" id="username" name="username" class="input rounded p-2" placeholder="johndoe" required>
-          </div>
-          <div class="flex flex-col">
-            <label for="username" class="text-white">Password</label>
-            <input type="text" id="username" name="username" class="input rounded p-2" placeholder="johndoe" required>
-          </div>
+
           <div class="flex flex-col">
             <label for="email" class="text-white">Email</label>
             <input type="email" id="email" name="email" class="input rounded p-2" placeholder="johndoe@example.com" required>
           </div>
           
-          <!-- Add more fields or buttons as needed -->
+          <div class="flex flex-col">
+            <label for="password" class="text-white">Password</label>
+            <input type="password" id="signup-password" name="password" class="input rounded p-2" placeholder="" required>
+          </div>
           
           <button type="submit" class="btn btn-primary w-full">Sign Up</button>
         </form>
@@ -286,15 +281,15 @@
           </div>
         </div>
         
-        <form class="space-y-4 text-center">
+        <form id="loginForm" class="space-y-4 text-center">
           <div class="flex flex-col">
-            <label for="username" class="text-white">Username</label>
-            <input type="text" id="username" name="username" class="input rounded p-2" placeholder="johndoe"  required>
+            <label for="email" class="text-white">Email</label>
+            <input type="email" id="login-email" name="email" class="input rounded p-2 text-black" placeholder="johndoe"  required>
           </div>
           
           <div class="flex flex-col">
             <label for="password" class="text-white">Password</label>
-            <input type="password" id="password" name="password" class="input rounded p-2" placeholder="********" required>
+            <input type="password" id="login-password" name="password" class="input rounded p-2 text-black" placeholder="********" required>
           </div>
           
           <button type="submit" class="btn btn-primary w-full">Login</button>
@@ -313,6 +308,7 @@
     
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   
-  <script src="./js/script.js"> </script>
+  <script src="/js/script.js"> </script>
+  <script src="/js/login.js"></script>
   </body>
 </html>
