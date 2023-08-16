@@ -63,7 +63,7 @@ export const getTableOptions = (userId) => {
 };
 
 /** @const testUserId Test {@linkcode User} UUID string */
-export const testUserId = "3b86ae51-4f08-4833-a073-7405f042befe";
+export const testUserId = "cd652d0e-35e4-4dff-b2d1-e90d12a99a5c";
 
 /**
  * Returns query options for finding objects associated with a user
@@ -125,19 +125,25 @@ export const getGoalsOptions = (userId) => {
 export const processGoalData = (goalData) => {
   return goalData.map((values) => {
     const amount = values.amount ? values.amount : "0.00";
-    const amountInt = parseFloat(amount);
-    const desiredAmountInt = parseFloat(values.desired_amount);
-    const complete = amountInt > desiredAmountInt;
+    const amountFloat = parseFloat(amount);
+    const desiredAmountFloat = parseFloat(values.desired_amount);
+    const complete = amountFloat > desiredAmountFloat;
 
-    const processed = {
+    return {
       name: values.name,
       start: values.start,
       end: values.end,
-      dataset: [amountInt, desiredAmountInt],
+      amount: amountFloat,
+      desiredAmount: desiredAmountFloat,
       complete,
-      remaining: complete ? 0 : desiredAmountInt - amountInt,
+      remaining: complete ? 0 : desiredAmountFloat - amountFloat,
     };
-
-    return processed;
   });
+};
+
+export const processMonthlyExpenseData = (expenseData) => {
+  return {
+    labels: expenseData.map((e) => e.month),
+    data: expenseData.map((e) => e.total_amount),
+  };
 };

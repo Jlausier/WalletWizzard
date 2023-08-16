@@ -16,9 +16,7 @@
                         <div class=" bg-gray-800 rounded-lg shadow-xl w-full">
                             <h3 class="p-6 tracking-wider uppercase text-left text-gray-200">Budget</h3>
                            <div class=" p-6">
-                                {{#with expenseData}}
-                                    {{> budget-overview-chart this}}
-                                {{/with}}
+                                {{> budget-overview-chart expenseData}}
                             </div>
                         </div>
                     </div>
@@ -31,9 +29,7 @@
                              <div class=" bg-gray-800 rounded-lg shadow-xl w-full">
                             <h3 class="p-6 tracking-wider uppercase text-left text-gray-200">Monthly Comparison</h3>
                            <div class=" p-6">
-                                {{#with expenseData}}
-                                    {{> monthly-overview-chart this}}
-                                {{/with}}
+                                {{> monthly-overview-chart nonessentialData}}
                             </div>
                         </div>
                         </div>

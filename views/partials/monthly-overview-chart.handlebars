@@ -1,9 +1,9 @@
 <div id="monthly-chart-container" class="w-full relative">
-    <canvas id="expenseChart" width="400" height="400"></canvas>
+    <canvas id="monthlyOverviewChart" width="400" height="400"></canvas>
 
     <script>
       // Get the canvas element
-      const ctx = document.getElementById("expenseChart").getContext("2d");
+      const monthlyOverviewChart_ctx = document.getElementById("monthlyOverviewChart").getContext("2d");
 
       const monthlyExpenses = {{{json this}}};
 
@@ -12,14 +12,14 @@
       const months = ["January", "February", "March", "April", "May"];
 
       // Create the bar graph
-      new Chart(ctx, {
+      new Chart(monthlyOverviewChart_ctx, {
         type: "bar",
         data: {
-          labels: months,
+          labels: monthlyExpenses.labels,
           datasets: [
             {
               label: "Expenses",
-              data: expenses,
+              data: monthlyExpenses.data,
               backgroundColor: "rgba(75, 192, 192, 0.6)", // Bar fill color
               borderColor: "rgba(75, 192, 192, 1)", // Bar border color
               borderWidth: 1, // Border width of the bars
