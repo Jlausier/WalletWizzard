@@ -38,7 +38,7 @@
                         <div class="p-6 flex justify-between">
                             <h3 class="tracking-wider uppercase text-left text-gray-200">Expenses</h3>
                                 <button class="rounded text-gray-800 text-2xl sidebar w-8 h-8 flex justify-center items-center expense-btn">
-                                    <i class="fas fa-plus"></i>
+                                    <i class="fas fa-plus expense-btn"></i>
                                 </button>
                             </div>
                         <div class="p-6">
@@ -55,7 +55,7 @@
                        <div class="p-6 flex justify-between">
                             <h3 class="tracking-wider uppercase text-left text-gray-200">Goals</h3>
                                 <button class="rounded text-gray-800 text-2xl sidebar w-8 h-8 flex justify-center items-center  expense-btn">
-                                    <i class="fas fa-plus"></i>
+                                    <i class="fas fa-plus goals-btn"></i>
                                 </button>
                        </div>
                         <div class="p-6">
@@ -93,14 +93,14 @@
     </div>
 </section>
 <!-- Modal for adding new entry -->
-            <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+<div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
     <div class="bg-white p-8 rounded-lg shadow-lg">
         <h2 class="text-lg font-semibold mb-4">Add New Entry</h2>
         <input type="hidden" id="entryType" /> <!-- Add this line -->
         <input type="text" id="entryName" class="mb-4 p-2 border rounded" placeholder="Name">
-        <input type="text" id="entryMonth" class="mb-4 p-2 border rounded" placeholder="Month">
+        <input type="text" id="entryMonth" class="mb-4 p-2 border rounded" placeholder="Date">
         <input type="text" id="entryAmount" class="mb-4 p-2 border rounded" placeholder="Amount">
-        <button id="addEntryBtn" class="bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded">Add</button>
+        <button id="addEntryBtn" class="sidebar text-white px-3 py-2 rounded">Add</button>
         <button id="cancelBtn" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-2 rounded ml-2">Cancel</button>
     </div>
 </div>
@@ -111,40 +111,8 @@
         <input type="text" id="editEntryName" class="mb-4 p-2 border rounded" placeholder="Name">
         <input type="text" id="editEntryMonth" class="mb-4 p-2 border rounded" placeholder="Month">
         <input type="text" id="editEntryAmount" class="mb-4 p-2 border rounded" placeholder="Amount">
-        <button id="updateEntryBtn" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded">Update</button>
+        <button id="updateEntryBtn" class="sidebar text-white px-3 py-2 rounded">Update</button>
         <button id="cancelEditBtn" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-2 rounded ml-2">Cancel</button>
     </div>
 </div>
 <script src="/js/budget.js"></script>
-{{!-- <script>
-    // Data objects
-const incomeEntries = [
-  { date: "08/20/2023", name: "Paycheck", amount: "$1,000.00" },
-  // ... other income entries ...
-];
-
-const expenseEntries = [
-  { date: "08/09/2023", name: "Internet", amount: "$78.00" },
-  // ... other expense entries ...
-];
-
-const goalEntries = [
-  { date: "08/20/2023", name: "Vacation", amount: "$50.00" },
-  // ... other goal entries ...
-];
-
-const budgetItems = [
-  { label: "Income", amount: "$1,000.00" },
-  { label: "Expenses", amount: "$78.00" },
-  { label: "Goals", amount: "$50.00" },
-  // ... other budget items ...
-];
-
-// Combine data with the template
-const combinedTemplate = template({
-  incomeEntries: incomeEntries,
-  expenseEntries: expenseEntries,
-  goalEntries: goalEntries,
-  budgetItems: budgetItems,
-});
-</script> --}}

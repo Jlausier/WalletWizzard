@@ -14,11 +14,9 @@ document.addEventListener("DOMContentLoaded", function () {
     if (event.target.classList.contains("expense-btn")) {
       openModal("expense");
     }
-    // Handle delete button clicks here
     if (event.target.classList.contains("delete-button")) {
       handleDelete(event.target);
     }
-    // Handle edit button clicks here
     if (event.target.classList.contains("edit-button")) {
       openEditModal(event.target);
     }
@@ -43,76 +41,42 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (entryName && entryMonth && entryAmount) {
-      const table = entryType === "income" ? "incomeTable" : "expenseTable";
-      const tableBody = document
-        .getElementById(table)
-        .getElementsByTagName("tbody")[0];
+      const data = {
+        name: entryName,
+        scheduledDate: entryMonth,
+        amount: parseFloat(entryAmount),
+      };
 
-      const newRow = tableBody.insertRow(-1);
+      // Make a POST request to the appropriate endpoint
+      fetch(`/api/${entryType}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+      .then(response => response.json())
+      .then(newEntry => {
+        const table = entryType === "income" ? "incomeTable" : "expenseTable";
+        appendRow(table, newEntry);
 
-      const cell1 = newRow.insertCell(0);
-      cell1.classList.add(
-        "border-t-2",
-        "border-gray-700",
-        "text-left",
-        "text-gray-300",
-        "w-1/5"
-      );
-      cell1.innerText = formatDate(entryMonth);
+        // Clear the input fields and hide the modal
+        document.getElementById("entryName").value = "";
+        document.getElementById("entryMonth").value = "";
+        document.getElementById("entryAmount").value = "";
+        modal.classList.add("hidden");
 
-      const cell2 = newRow.insertCell(1);
-      cell2.classList.add(
-        "border-t-2",
-        "border-gray-700",
-        "text-left",
-        "text-gray-300",
-        "w-3/5"
-      );
-      cell2.innerText = entryName;
-
-      const cell3 = newRow.insertCell(2);
-      cell3.classList.add(
-        "border-t-2",
-        "border-gray-700",
-        "text-left",
-        "text-gray-300",
-        "w-1/5"
-      );
-      cell3.innerText = "$" + parseFloat(entryAmount).toFixed(2);
-
-      const cell4 = newRow.insertCell(3);
-      cell4.classList.add("border-t-2", "border-gray-700", "text-right");
-      const editButton = document.createElement("button");
-      editButton.classList.add(
-        "edit-button",
-        "fas",
-        "fa-edit",
-        "text-gray-300",
-        "mr-2"
-      );
-      editButton.innerText = "Edit";
-      cell4.appendChild(editButton);
-      const deleteButton = document.createElement("button");
-      deleteButton.classList.add("delete-button", "text-red-600");
-      deleteButton.innerText = "Delete";
-      cell4.appendChild(deleteButton);
-
-      // Add an event listener to the newly created delete button
-      deleteButton.addEventListener("click", () => {
-        handleDelete(deleteButton);
+        // Update the budget table
+        updateBudgetTable();
+      })
+      .catch(error => {
+        console.error('Error:', error);
       });
-
-      document.getElementById("entryName").value = "";
-      document.getElementById("entryMonth").value = "";
-      document.getElementById("entryAmount").value = "";
-
-      modal.classList.add("hidden");
     } else {
       alert("Please fill in all fields.");
     }
-    updateBudgetTable();
   });
-  // Handle cancel button click
+  // Handle cancel button click for add modal
   cancelBtn.addEventListener("click", () => {
     // Hide the modal without making any changes
     modal.classList.add("hidden");
@@ -123,21 +87,33 @@ document.addEventListener("DOMContentLoaded", function () {
     const table = row.parentNode.parentNode;
     table.deleteRow(row.rowIndex);
     updateBudgetTable();
+
+    // Extract the entry ID from the row
+    const entryId = row.dataset.entryId;
+
+    // Determine the entry type based on the table
+    const entryType = table.id === "incomeTable" ? "income" : "expense";
+
+    // Make a DELETE request to the appropriate endpoint
+    fetch(`/api/${entryType}/${entryId}`, {
+      method: 'DELETE',
+    })
+    .then(response => response.json())
+    .then(data => {
+      // Handle the response data as needed
+      console.log(data);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
   }
 
-  // Function to format the date as MM/DD/YYYY
-  function formatDate(dateString) {
-    const [month, day, year] = dateString.split("/");
-    return `${month.padStart(2, "0")}/${day.padStart(2, "0")}/${year}`;
-  }
-  // Function to open the edit modal with pre-filled values
   function openEditModal(editButton) {
     const row = editButton.parentNode.parentNode;
     const date = row.cells[0].querySelector(".date-cell").innerText;
     const name = row.cells[1].innerText;
     const amount = parseFloat(row.cells[2].innerText.replace("$", ""));
 
-    // Populate edit modal fields
     document.getElementById("editEntryMonth").value = date;
     document.getElementById("editEntryName").value = name;
     document.getElementById("editEntryAmount").value = amount.toFixed(2);
@@ -147,17 +123,53 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Handle update button click
     updateEntryBtn.addEventListener("click", () => {
-      // Update the row with new values
-      row.cells[0].innerText = formatDate(
-        document.getElementById("editEntryMonth").value
-      );
-      row.cells[1].innerText = document.getElementById("editEntryName").value;
-      row.cells[2].innerText =
-        "$" +
-        parseFloat(document.getElementById("editEntryAmount").value).toFixed(2);
+      const updatedMonth = document.getElementById("editEntryMonth").value;
+      const updatedName = document.getElementById("editEntryName").value;
+      const updatedAmount = document.getElementById("editEntryAmount").value;
 
-      // Hide the edit modal
-      editModal.classList.add("hidden");
+      // Validate the format of the updatedMonth using a regular expression
+      const datePattern = /^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/\d{4}$/;
+      if (!datePattern.test(updatedMonth)) {
+        alert("Please enter a valid date in MM/DD/YYYY format.");
+        return;
+      }
+
+      const updatedData = {
+        name: updatedName,
+        scheduledDate: updatedMonth,
+        amount: parseFloat(updatedAmount),
+      };
+
+      // Determine the entry type based on the table
+      const entryType = row.closest("table").id === "incomeTable" ? "income" : "expense";
+
+      // Extract the entry ID from the row
+      const entryId = row.dataset.entryId;
+
+      // Make a PUT request to the appropriate endpoint
+      fetch(`/api/${entryType}/${entryId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedData),
+      })
+      .then(response => response.json())
+      .then(updatedEntry => {
+        // Update the row with new values
+        row.cells[0].innerText = formatDate(updatedMonth);
+        row.cells[1].innerText = updatedName;
+        row.cells[2].innerText = "$" + parseFloat(updatedAmount).toFixed(2);
+
+        // Hide the edit modal
+        editModal.classList.add("hidden");
+
+        // Update the budget table
+        updateBudgetTable();
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
     });
 
     // Handle cancel button click
@@ -165,7 +177,9 @@ document.addEventListener("DOMContentLoaded", function () {
       // Hide the edit modal without making any changes
       editModal.classList.add("hidden");
     });
-  }
+  };
+  
+  
 
   // Function to update the Your Budget table
   function updateBudgetTable() {
