@@ -8,7 +8,7 @@
            {{!-- Content Container --}}
             <div class=" pt-6 flex flex-col bg-gray-700">
                 <div class="flex justify-end">
-                    <button class="mr-2 px-5 py-2 rounded-full border-2 border-gray-200 text-sm text-gray-100 font-bold drop-shadow-lg sidebar">
+                    <button class="mr-2 px-5 py-2 rounded-full border-2 border-gray-200 text-sm text-gray-100 font-bold drop-shadow-lg hover:bg-gray-100 hover:text-gray-700 transition ease-in-out">
                       <i class="fas fa-plus income-btn"> Add New</i>
                     </button>
                 </div>
@@ -18,8 +18,8 @@
 
                         {{!-- Content Card --}}
 
-                        {{#each goalData as |goal|}}
-                        {{>goals-progress-bar goal}}
+                        {{#each processedGoalData}}
+                            {{>goals-progress-bar this}}
                         {{/each}}
 
                 </div>
