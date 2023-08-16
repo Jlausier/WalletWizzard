@@ -30,6 +30,11 @@
           scales: {
             y: {
               beginAtZero: true,
+              ticks: {
+                callback: function(value, index, ticks) {
+                  return '$' + value;
+                }
+              }
             },
           },
           plugins: {
