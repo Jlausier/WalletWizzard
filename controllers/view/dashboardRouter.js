@@ -75,10 +75,6 @@ router.get("/overview", async (req, res) => {
     const processedNonessentialData =
       processMonthlyExpenseData(nonessentialData);
 
-    console.log(nonessentialData);
-
-    console.log(expenseSums);
-
     // Render overview page with data
     res.render("overview", {
       expenseData: {
@@ -116,7 +112,6 @@ const renderBudget = async (req, res) => {
 
     // Find income data
     const incomeData = await Income.findAll(options);
-    console.log();
     // Find expense data
     const expenseData = await Expense.findAll(options);
 

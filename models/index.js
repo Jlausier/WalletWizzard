@@ -1,20 +1,10 @@
 import User from "./User.js";
-import UserConfig from "./UserConfig.js";
 import Income from "./Income.js";
 import Expense from "./Expense.js";
 import ExpenseType from "./ExpenseType.js";
 import Goal from "./Goal.js";
 import GoalCategory from "./GoalCategory.js";
 import GoalProgression from "./GoalProgression.js";
-
-// ------------------------- Config Associations -------------------------
-
-UserConfig.belongsTo(User, {
-  foreignKey: "user_id",
-  onDelete: "CASCADE",
-});
-
-User.hasMany(UserConfig);
 
 // ------------------------- Income Associations -------------------------
 
@@ -23,7 +13,9 @@ Income.belongsTo(User, {
   onDelete: "CASCADE",
 });
 
-User.hasMany(Income);
+User.hasMany(Income, {
+  foreignKey: "user_id",
+});
 
 // ------------------------- Expense Associations ------------------------
 
@@ -32,21 +24,18 @@ Expense.belongsTo(User, {
   onDelete: "CASCADE",
 });
 
-User.hasMany(Expense);
+User.hasMany(Expense, {
+  foreignKey: "user_id",
+});
 
 Expense.belongsTo(ExpenseType, {
   foreignKey: "type_id",
   onDelete: "CASCADE",
 });
 
-ExpenseType.hasMany(Expense);
-
-// ExpenseType.belongsTo(ExpenseCategory, {
-//   foreignKey: "category_id",
-//   onDelete: "CASCADE",
-// });
-
-// ExpenseCategory.hasMany(ExpenseType);
+ExpenseType.hasMany(Expense, {
+  foreignKey: "type_id",
+});
 
 // -------------------------- Goal Associations --------------------------
 
@@ -55,27 +44,32 @@ Goal.belongsTo(User, {
   onDelete: "CASCADE",
 });
 
-User.hasMany(Goal);
+User.hasMany(Goal, {
+  foreignKey: "user_id",
+});
 
 Goal.belongsTo(GoalCategory, {
   foreignKey: "category_id",
   onDelete: "CASCADE",
 });
 
-GoalCategory.hasMany(Goal);
+GoalCategory.hasMany(Goal, {
+  foreignKey: "category_id",
+});
 
 GoalProgression.belongsTo(Goal, {
   foreignKey: "goal_id",
   onDelete: "CASCADE",
 });
 
-Goal.hasMany(GoalProgression);
+Goal.hasMany(GoalProgression, {
+  foreignKey: "goal_id",
+});
 
 // ------------------------------- Exports -------------------------------
 
 export {
   User,
-  UserConfig,
   Income,
   Expense,
   ExpenseType,

@@ -1,29 +1,7 @@
 import { Sequelize } from "sequelize";
-import { UserConfig, GoalProgression } from "../models/index.js";
+import { GoalProgression } from "../models/index.js";
 
 export const sumData = (prev, curr) => prev + parseFloat(curr.amount);
-
-/**
- * Find or create a config object for a user
- *
- * @param {string} type Config type
- * @param {string} userId User ID string
- * @returns {UserConfig} User config object
- */
-// export const findOrCreateConfig = async (type, userId) => {
-//   const res = await UserConfig.findOrCreate({
-//     where: {
-//       userId,
-//       type,
-//     },
-//     defaults: {
-//       userId,
-//       type,
-//     },
-//   });
-
-//   return res;
-// };
 
 /** @const scheduledMonth Formats the `scheduled_date` column of a table */
 export const scheduledMonth = Sequelize.fn(
@@ -63,7 +41,7 @@ export const getTableOptions = (userId) => {
 };
 
 /** @const testUserId Test {@linkcode User} UUID string */
-export const testUserId = "d6e5be71-08dd-4d42-bc37-82e75cc5c447";
+export const testUserId = "dbc7c874-227a-42cf-b043-f12bdcdb5d46";
 
 /**
  * Returns query options for finding objects associated with a user

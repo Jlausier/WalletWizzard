@@ -22,41 +22,41 @@
   {
     "name": "Entertainment",
     "amount": 50.0,
-    "scheduledDate": "08-15-2023"
+    "scheduledDate": "2023-08-15"
   },
   {
     "name": "Rent",
     "amount": 1300.0,
-    "scheduledDate": "07-15-2023"
+    "scheduledDate": "2023-07-15"
   },
   {
     "name": "Groceries",
     "amount": 250.0,
-    "scheduledDate": "07-15-2023"
+    "scheduledDate": "2023-07-15"
   },
   {
     "name": "Utilities",
     "amount": 120.0,
-    "scheduledDate": "07-15-2023"
+    "scheduledDate": "2023-07-15"
   },
   {
     "name": "Travel",
     "amount": 200.0,
-    "scheduledDate": "07-15-2023"
+    "scheduledDate": "2023-07-15"
   },
   {
     "name": "Rent",
     "amount": 1100.0,
-    "scheduledDate": "06-15-2023"
+    "scheduledDate": "2023-06-15"
   },
   {
     "name": "Groceries",
     "amount": 350.0,
-    "scheduledDate": "06-15-2023"
+    "scheduledDate": "2023-06-15"
   },
   {
     "name": "Utilities",
     "amount": 130.0,
-    "scheduledDate": "06-15-2023"
+    "scheduledDate": "2023-06-15"
   }
 ]
