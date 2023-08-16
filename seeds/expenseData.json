@@ -1,50 +1,62 @@
 [
   {
     "name": "Rent",
-    "amount": 1200.0
+    "amount": 1200.0,
+    "scheduledDate": "08-15-2023"
   },
   {
     "name": "Groceries",
-    "amount": 300.0
+    "amount": 300.0,
+    "scheduledDate": "08-15-2023"
   },
   {
     "name": "Utilities",
-    "amount": 150.0
+    "amount": 150.0,
+    "scheduledDate": "08-15-2023"
   },
   {
     "name": "Dining Out",
-    "amount": 100.0
+    "amount": 100.0,
+    "scheduledDate": "08-15-2023"
   },
   {
     "name": "Entertainment",
-    "amount": 50.0
+    "amount": 50.0,
+    "scheduledDate": "08-15-2023"
   },
   {
     "name": "Rent",
-    "amount": 1300.0
+    "amount": 1300.0,
+    "scheduledDate": "07-15-2023"
   },
   {
     "name": "Groceries",
-    "amount": 250.0
+    "amount": 250.0,
+    "scheduledDate": "07-15-2023"
   },
   {
     "name": "Utilities",
-    "amount": 120.0
+    "amount": 120.0,
+    "scheduledDate": "07-15-2023"
   },
   {
     "name": "Travel",
-    "amount": 200.0
+    "amount": 200.0,
+    "scheduledDate": "07-15-2023"
   },
   {
     "name": "Rent",
-    "amount": 1100.0
+    "amount": 1100.0,
+    "scheduledDate": "06-15-2023"
   },
   {
     "name": "Groceries",
-    "amount": 350.0
+    "amount": 350.0,
+    "scheduledDate": "06-15-2023"
   },
   {
     "name": "Utilities",
-    "amount": 130.0
+    "amount": 130.0,
+    "scheduledDate": "06-15-2023"
   }
 ]

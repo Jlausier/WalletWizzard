@@ -23,7 +23,6 @@ const expenseTypeData = require("./expenseTypeData.json");
 
 const randomInt = (min, max) => {
   const res = Math.floor(Math.random() * (max - min + 1)) + min;
-  console.log(res);
   return res;
 };
 

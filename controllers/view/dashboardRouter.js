@@ -7,6 +7,7 @@ import {
   getTableOptions,
   getGoalsOptions,
   processGoalData,
+  processMonthlyExpenseData,
   sumData,
   testUserId,
   queryOptionsUser,
@@ -71,6 +72,8 @@ router.get("/overview", async (req, res) => {
     nonessentialDataOptions.group = [scheduledMonth];
     // Find essential data
     const nonessentialData = await Expense.findAll(nonessentialDataOptions);
+    const processedNonessentialData =
+      processMonthlyExpenseData(nonessentialData);
 
     console.log(nonessentialData);
 
@@ -84,7 +87,7 @@ router.get("/overview", async (req, res) => {
         data: expenseSums.map((s) => s.amount),
       },
       goalsData: processedGoalData,
-      nonessentialData,
+      nonessentialData: processedNonessentialData,
     });
   } catch (err) {
     console.error(err);
