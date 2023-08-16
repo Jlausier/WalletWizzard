@@ -43,6 +43,7 @@ export const getTableOptions = (userId) => {
 /** @const testUserId Test {@linkcode User} UUID string */
 export const testUserId = "95d841ea-da81-46f2-9294-18d20cbc8977";
 
+
 /**
  * Returns query options for finding objects associated with a user
  *
@@ -88,14 +89,7 @@ export const getGoalsOptions = (userId) => {
         "end",
       ],
     ],
-    group: [
-      "goal.id",
-      "goal.name",
-      "goal.desired_amount",
-      "amount",
-      "start",
-      "end",
-    ],
+    group: ["goal.id", "goal.name"],
     raw: true,
   };
 };
@@ -108,6 +102,7 @@ export const processGoalData = (goalData) => {
     const complete = amountFloat > desiredAmountFloat;
 
     return {
+      id: values.id,
       name: values.name,
       start: values.start,
       end: values.end,

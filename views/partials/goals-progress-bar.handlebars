@@ -5,8 +5,8 @@
       <div class="p-6 flex justify-between text-gray-200">
           {{!-- Left Side Header --}}
           <div class="flex flex-col items-start">
-              <div id="goalLeft" class="px-3 py-1 mb-2  bg-gray-700 border-gray-400 text-gray-300 rounded-full text-xl">Amount Left</div>
-              <h3 id="goalName" class="tracking-wider text-left text-3xl">Title</h3>
+              <div id="goalLeft_{{{cleanId id}}}" class="px-3 py-1 mb-2  bg-gray-700 border-gray-400 text-gray-300 rounded-full text-xl">Amount Left</div>
+              <h3 id="goalName_{{{cleanId id}}}" class="tracking-wider text-left text-3xl">Title</h3>
           </div>
 
           <div class="flex flex-col items-end">
@@ -15,53 +15,47 @@
                 <button class="px-1 fas fa-edit edit-button text-gray-500 hover:text-gray-200 transition ease-in-out"></button>
               <button class="px-1 fas fa-trash delete-button text-gray-500 hover:text-red-900 transition ease-in-out"></button>
               </div>
-              
           </div>
 
       </div>
       {{!-- Chart Portion --}}
-      <div class=" p-6">
+      <div class="flex h-64 p-6">
            <div>
-      <canvas id="myChart" width="100" height="500"></canvas>
+      <canvas id="goalProgressBar_{{{cleanId id}}}" width="400" height="100"></canvas>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
-        const ctx = document.getElementById("myChart");
+      var goalInfo = {{{json this}}};
+      var chartName = `goalProgressBar_${goalInfo.id.split("-").join("")}`
 
-        const goalInfo = {{json this}};
-        console.log("-------------------------------------" + goalInfo);
+      this[`${chartName}_ctx`] = document.getElementById(chartName);
 
-        document.getElementById('goalName').textContent = goalInfo.name;
-        document.getElementById('goalLeft').textContent = goalInfo.remaining;
+      document.getElementById(`goalName_${goalInfo.id.split("-").join("")}`).textContent = goalInfo.name;
+      document.getElementById(`goalLeft_${goalInfo.id.split("-").join("")}`).textContent = goalInfo.remaining;
 
-
-      new Chart(ctx, {
+      new Chart(this[`${chartName}_ctx`], {
         type: "bar",
         data: {
           labels: [""],
           datasets: [
             {
-              label: "name",
-              data: [ goalInfo.amount, goalInfo.desiredAmount],
+              label: goalInfo.name,
+              data: [goalInfo.amount, goalInfo.desiredAmount],
               borderColor: "red",
               backgroundColor: "red",
               borderWidth: 2,
-              borderRadius: Number.MAX_VALUE,
-              borderSkipped: false,
+              borderRadius: 100,
+              borderSkipped: 'false',
             },
           ],
         },
         options: {
           indexAxis: "y",
           scales: {
-            xAxes: [
-              {
-                barPercentage: 0.4,
-              },
-            ],
             x: {
+              barPercentage: 0.4,
               ticks: {
                 // Include a dollar sign in the ticks
                 callback: function (value, index, ticks) {
