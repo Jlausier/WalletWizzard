@@ -16,7 +16,7 @@
                     {{!-- Content Card 1 --}}
                     <div class="p-6 flex w-3/5">
                         <div class=" bg-gray-800 rounded-lg shadow-xl w-full">
-                            <h3 class="px-8 pt-6 pb-3 w-full border-b border-gray-600 tracking-wider uppercase text-left text-gray-200">Budget</h3>
+                            <h3 class="px-8 pt-6 pb-3 w-full border-b border-gray-600 tracking-wider uppercase text-left text-gray-200">Spending Overview</h3>
                             <div class="p-6 flex">
                                 <div class="mx-6 w-2/5 ">
                                     {{> budget-overview-chart expenseData}}
@@ -31,36 +31,39 @@
                     </div>
 
                     {{!-- side portion --}}
-                    <div class="flex flex-col w-2/5">
+                    {{!-- <div class="flex flex-col w-2/5"> --}}
 
                         {{!-- Content Card 2 --}}
-                        <div class=" p-6 flex">
+                        <div class=" p-6 w-2/5 flex">
                              <div class=" bg-gray-800 rounded-lg shadow-xl w-full">
-                            <h3 class="p-6 tracking-wider uppercase text-left text-gray-200">Monthly Comparison</h3>
+                            <h3 class="px-8 pt-6 pb-3 w-full border-b border-gray-600 tracking-wider uppercase text-left text-gray-200">Monthly Comparison</h3>
                            <div class=" p-6">
                                 {{> monthly-overview-chart nonessentialData}}
+                                
+                                
                             </div>
                         </div>
                         </div>
-
-                        {{!-- Content Card 3 --}}
-                        <div class=" p-6  flex">
-                            <div class=" bg-gray-800 rounded-lg shadow-xl w-full">
-                                <h3 class="p-6 tracking-wider uppercase text-left text-gray-200">Spending Habits</h3>
-                                <div class=" p-6">
-                                {{#with processedGoalData}}
-                                    {{> goal-overview this}}
-                                {{/with}}
-                                </div>
-                            </div>
+            </div>
+            {{!-- Bottom Portion --}}
+                {{!-- Content Card 3 --}}
+                <div class=" p-6 w-full flex">
+                    <div class=" bg-gray-800 rounded-lg shadow-xl w-full">
+                        <h3 class="px-8 pt-6 pb-3 w-full border-b border-gray-600 tracking-wider uppercase text-left text-gray-200">Goals</h3>
+                        <div class="flex h-48 p-6">
+                            {{#with processedGoalData}}
+                                {{> goal-overview this}}
+                            {{/with}}
                         </div>
-                     {{!-- top portion closer --}}
                     </div>
+                </div>
+                {{!-- top portion closer --}}
+            </div>
                  
 
                 {{!- bottom Side }}
                 {{!-- Content Container Closer --}}
-            </div>
+            
 
         </div>
     </section>
