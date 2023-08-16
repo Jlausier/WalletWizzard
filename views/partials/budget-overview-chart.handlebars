@@ -1,5 +1,5 @@
 <div id="budget-chart-container" class="w-full relative">
-     <canvas id="expensePieChart" width="100" height="100"></canvas>
+     <canvas id="expensePieChart"></canvas>
 
     <script>
       // Get the canvas element
@@ -21,7 +21,13 @@
           ],
         },
         options: {
-          cutout: "50%", // Adjust the hole size
+          cutout: "50%",
+          plugins: {
+            legend: {
+              position: 'right',
+              display: false,
+            }
+          } // Adjust the hole size
         },
       });
     </script>
