@@ -1,0 +1,23 @@
+<!-- expense-table.handlebars -->
+<table id="expenseTable" class="table-fixed w-full">  <thead>
+    <tr class="text-left text-gray-500 w-1/5">
+      <th>Date</th>
+      <th class="w-3/5">Name</th>
+      <th class="text-right">Amount</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{!-- Loop through exspense entries --}}
+    {{#each this}}
+    <tr class="border-t-2 border-gray-700 text-left text-gray-300 w-1/5">
+      <td>{{scheduled_date}}</td>
+      <td class="w-3/5">{{name}}</td>
+      <td class="text-right">{{amount}}</td>
+      <td class="text-right">
+        <button class="fas fa-edit edit-button">Edit</button>
+        <button class="delete-button text-red-600">Delete</button>
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>

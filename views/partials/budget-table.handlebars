@@ -1,0 +1,12 @@
+<!-- budget-table.handlebars -->
+<table id="budgetTable" class="table-fixed w-full">
+  <tbody>
+    {{!-- Loop through budget items --}}
+    {{#each budgetItems}}
+    <tr class="pb-2 text-left text-gray-400 w-1/5">
+      <td class="py-2 w-3/5">{{this.label}}</td>
+      <td class="text-right">{{this.amount}}</td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
