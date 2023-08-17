@@ -22,6 +22,9 @@ document.addEventListener("DOMContentLoaded", function () {
     if (event.target.classList.contains("expense-btn")) {
       openModal("expense");
     }
+    if (event.target.classList.contains("goal-btn")) {
+      openModal("goal")
+    }
     if (event.target.classList.contains("delete-button")) {
       handleDelete(event.target);
     }
@@ -194,7 +197,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function openEditModal(editButton) {
     const row = editButton.parentNode.parentNode;
-    const date = row.cells[0].querySelector(".date-cell").innerText;
+    const date = row.cells[0].innerText;
     const name = row.cells[1].innerText;
     const amount = parseFloat(row.cells[2].innerText.replace("$", ""));
 
