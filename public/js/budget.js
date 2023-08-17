@@ -271,6 +271,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const goalTable = document.getElementById("goalTable");
     const budgetTable = document.getElementById("budgetTable");
 
+    // if (incomeTable && expenseTable && goalTable && budgetTable) {
+    //   updateBudgetTable();
+    // }else {
+    //   console.error("One or more tables not found.");
+    // }
+
+   
+    
     const incomeTotal = calculateTotal(incomeTable);
     const expensesTotal = calculateTotal(expenseTable);
     const goalsTotal = calculateTotal(goalTable);
@@ -285,15 +293,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const finalIncome = incomeTotal - expensesTotal - goalsTotal;
     budgetTable.rows[3].cells[1].innerText = "$" + finalIncome.toFixed(2);
-  }
+  
+}
 
   // Function to calculate the total amount for a table
   function calculateTotal(table) {
-    if (!table) return;
-    const tableBody = table.getElementsByTagName("tbody")[0];
-    let total = 0;
-    if (!tableBody) return;
+    if (!table) return 0;
 
+    const tableBody = table.getElementsByTagName("tbody")[0];
+    if (!tableBody) return 0;
+
+    let total = 0;
     for (let i = 0; i < tableBody.rows.length; i++) {
       const amountCell = tableBody.rows[i].cells[2];
       const amount = parseFloat(amountCell.innerText.replace("$", ""));
