@@ -24,8 +24,6 @@
       <canvas id="goalProgressBar_{{{cleanId id}}}" width="400" height="100"></canvas>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     <script>
       var goalInfo = {{{json this}}};
       var chartName = `goalProgressBar_${goalInfo.id.split("-").join("")}`

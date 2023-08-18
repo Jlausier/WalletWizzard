@@ -1,3 +1,13 @@
+const isValidDate = (string) => {
+  const date = new Date(string);
+  console.log(string);
+  return date.getTime() === date.getTime();
+};
+
+function formatDate(dateString) {
+  return new Date(dateString).toLocaleDateString("en-US");
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   const modal = document.getElementById("modal");
   const editModal = document.getElementById("editModal");
@@ -6,29 +16,17 @@ document.addEventListener("DOMContentLoaded", function () {
   const cancelEditBtn = document.getElementById("cancelEditBtn");
   const cancelBtn = document.getElementById("cancelBtn");
 
-  // const deleteButtons = document.querySelectorAll(".delete-button");
-  // deleteButtons.forEach((del) => {
-  //   del.addEventListener("click", (event) => {
-  //     console.log(event.target);
-  //     handleDelete(event.target);
-  //   });
-  // });
-
   // Delegate event handling for income and expense buttons
   document.addEventListener("click", function (event) {
     if (event.target.classList.contains("income-btn")) {
       openModal("income");
-    }
-    if (event.target.classList.contains("expense-btn")) {
+    } else if (event.target.classList.contains("expense-btn")) {
       openModal("expense");
-    }
-    if (event.target.classList.contains("goal-btn")) {
-      openModal("goal")
-    }
-    if (event.target.classList.contains("delete-button")) {
+    } else if (event.target.classList.contains("goal-btn")) {
+      openModal("goal");
+    } else if (event.target.classList.contains("delete-button")) {
       handleDelete(event.target);
-    }
-    if (event.target.classList.contains("edit-button")) {
+    } else if (event.target.classList.contains("edit-button")) {
       openEditModal(event.target);
     }
   });
@@ -38,15 +36,15 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("entryType").value = type;
   }
 
+  // ==================================================== ADD ENTRY ====================================================
+
   addEntryBtn.addEventListener("click", () => {
     const entryType = document.getElementById("entryType").value;
     const entryName = document.getElementById("entryName").value;
     const entryMonth = document.getElementById("entryMonth").value;
     const entryAmount = document.getElementById("entryAmount").value;
 
-    // Validate the format of the entryMonth using a regular expression
-    const datePattern = /^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/\d{4}$/;
-    if (!datePattern.test(entryMonth)) {
+    if (!isValidDate(entryMonth)) {
       alert("Please enter a valid date in MM/DD/YYYY format.");
       return;
     }
@@ -57,10 +55,8 @@ document.addEventListener("DOMContentLoaded", function () {
         scheduledDate: entryMonth,
         dateCompleted: entryMonth,
         amount: parseFloat(entryAmount),
-        desiredAmount: parseFloat(entryAmount)
+        desiredAmount: parseFloat(entryAmount),
       };
-
-      console.log(entryType);
 
       // Make a POST request to the appropriate endpoint
       fetch(`/api/${entryType}`, {
@@ -72,7 +68,12 @@ document.addEventListener("DOMContentLoaded", function () {
       })
         .then((response) => response.json())
         .then((newEntry) => {
-          const table = entryType === "income" ? "incomeTable" : entryType === "expense" ? "expenseTable" : "goalTable"; 
+          const table =
+            entryType === "income"
+              ? "incomeTable"
+              : entryType === "expense"
+              ? "expenseTable"
+              : "goalTable";
           appendRow(table, newEntry);
           closeModal(modal);
           updateBudgetTable();
@@ -82,19 +83,18 @@ document.addEventListener("DOMContentLoaded", function () {
           document.getElementById("entryMonth").value = "";
           document.getElementById("entryAmount").value = "";
           modal.classList.add("hidden");
+
           function appendRow(tableId, entry) {
             const tableBody = document
               .getElementById(tableId)
               .getElementsByTagName("tbody")[0];
             const newRow = tableBody.insertRow(-1);
 
-             // Remove placeholder row if it exists
-                const placeholderRow = tableBody.querySelector(".placeholder-row");
-                if (placeholderRow) {
-                  placeholderRow.remove();
-                }
+            // Remove placeholder row if it exists
+            const placeholderRow = tableBody.querySelector(".placeholder-row");
+            if (placeholderRow) placeholderRow.remove();
 
-            newRow.dataset.entryId = newEntry.id;
+            newRow.dataset.entryid = newEntry.id;
 
             // Create cells and populate them with entry data
             const cell1 = newRow.insertCell(0);
@@ -132,22 +132,11 @@ document.addEventListener("DOMContentLoaded", function () {
               "hover:text-red-900"
             );
             cell4.appendChild(deleteButton);
-
-            // Add an event listener to the delete button
-            deleteButton.addEventListener("click", () => {
-              handleDelete(deleteButton);
-            });
-
-            // Add an event listener to the edit button
-            editButton.addEventListener("click", () => {
-              openEditModal(editButton);
-            });
-            
           }
         })
-        // .catch((error) => {
-        //   console.error("Error:", error);
-        // });
+        .catch((err) => {
+          console.error(err);
+        });
     } else {
       alert("Please fill in all fields.");
     }
@@ -159,50 +148,47 @@ document.addEventListener("DOMContentLoaded", function () {
     modal.classList.add("hidden");
   });
 
-  function formatDate(dateString) {
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-US");
-  }
-
   function closeModal(modal) {
     modal.classList.add("hidden");
     // Additional code to clear input fields or perform other actions after closing the modal
   }
 
+  // ==================================================== DELETE ENTRY =================================================
+
   function handleDelete(deleteButton) {
-    const row = deleteButton.parentNode.parentNode;
+    const row = deleteButton.closest("tr");
 
     // Extract the entry ID from the row
     const entryId = row.dataset.entryid;
-    console.log(entryId);
 
-    const tableId = row.dataset.table;
-    const table = document.getElementById(tableId);
+    if (!entryId) {
+      alert("Could not delete row, try again.");
+      return;
+    }
 
+    const table = row.closest("table");
     table.deleteRow(row.rowIndex);
 
     // Determine the entry type based on the table
-    const entryType = tableId === "incomeTable" ? "income" : "expense";
+    const entryType = table.dataset.tablename;
 
     // Make a DELETE request to the appropriate endpoint
     fetch(`/api/${entryType}/${entryId}`, {
       method: "DELETE",
     })
       .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
+        if (response.ok) return response.json();
         throw new Error("Could not delete " + entryType);
       })
-      .then((data) => {
-        // Handle the response data as needed
-        console.log(data);
+      .then((_) => {
         updateBudgetTable();
       })
       .catch((error) => {
         console.error("Error:", error);
       });
   }
+
+  // ==================================================== UPDATE ENTRY =================================================
 
   function openEditModal(editButton) {
     const row = editButton.parentNode.parentNode;
@@ -223,10 +209,8 @@ document.addEventListener("DOMContentLoaded", function () {
       const updatedName = document.getElementById("editEntryName").value;
       const updatedAmount = document.getElementById("editEntryAmount").value;
 
-      // Validate the format of the updatedMonth using a regular expression
-      const datePattern = /^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/\d{4}$/;
-      if (!datePattern.test(updatedMonth)) {
-        alert("Please enter a valid date in MM/DD/YYYY format.");
+      if (!isValidDate(updatedMonth)) {
+        alert("Please enter a valid date");
         return;
       }
 
@@ -241,7 +225,7 @@ document.addEventListener("DOMContentLoaded", function () {
         row.closest("table").id === "incomeTable" ? "income" : "expense";
 
       // Extract the entry ID from the row
-      const entryId = row.dataset.entryId;
+      const entryId = row.dataset.entryid;
 
       // Make a PUT request to the appropriate endpoint
       fetch(`/api/${entryType}/${entryId}`, {
@@ -252,7 +236,7 @@ document.addEventListener("DOMContentLoaded", function () {
         body: JSON.stringify(updatedData),
       })
         .then((response) => response.json())
-        .then((updatedEntry) => {
+        .then((_) => {
           // Update the row with new values
           row.cells[0].innerText = formatDate(updatedMonth);
           row.cells[1].innerText = updatedName;
@@ -282,14 +266,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const expenseTable = document.getElementById("expenseTable");
     const goalTable = document.getElementById("goalTable");
     const budgetTable = document.getElementById("budgetTable");
-    
-    // if (incomeTable && expenseTable && goalTable && budgetTable) {
-    //   updateBudgetTable();
-    // }else {
-    //   console.error("One or more tables not found.");
-    // }
-
-   
 
     const incomeTotal = calculateTotal(incomeTable);
     const expensesTotal = calculateTotal(expenseTable);
@@ -305,13 +281,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const finalIncome = incomeTotal - expensesTotal - goalsTotal;
     budgetTable.rows[3].cells[1].innerText = "$" + finalIncome.toFixed(2);
-  
-}
+  }
 
   // Function to calculate the total amount for a table
   function calculateTotal(table) {
     if (!table) return 0;
-
     const tableBody = table.getElementsByTagName("tbody")[0];
     if (!tableBody) return 0;
 

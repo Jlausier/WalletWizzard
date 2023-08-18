@@ -1,7 +1,5 @@
 import express from "express";
 import { Sequelize } from "sequelize";
-import path from "path";
-import { __dirname } from "../../utils/fsUtils.js";
 import { Income, Expense, Goal, ExpenseType } from "../../models/index.js";
 import withAuth from "../../utils/auth.js";
 
@@ -11,7 +9,6 @@ import {
   processGoalData,
   processMonthlyExpenseData,
   sumData,
-  testUserId,
   queryOptionsUser,
   scheduledMonth,
 } from "../../utils/query.js";
@@ -22,7 +19,7 @@ import {
  */
 
 /**
- * Express router for dashboard routes
+ * Express router for private dashboard routes
  * @const router
  */
 const router = express.Router();
@@ -39,7 +36,7 @@ router.get("/overview", withAuth, async (req, res) => {
 
     // ================================ Expense Pie Chart ===============================
     const expenseSums = await Expense.findAll({
-      where: { userId: req.session.userId || testUserId },
+      where: { userId: req.session.userId },
       include: [{ model: ExpenseType, attributes: [] }],
       attributes: [
         [Sequelize.fn("SUM", Sequelize.col("amount")), "amount"],
@@ -170,8 +167,6 @@ const renderGoals = async (req, res) => {
   try {
     const goalsOptions = getGoalsOptions(req.session.userId);
     const goalData = await Goal.findAll(goalsOptions);
-
-    console.log(goalData);
     const processedGoalData = processGoalData(goalData);
 
     res.render("goals", { goalData: processedGoalData });
@@ -200,9 +195,5 @@ router.get("/settings", withAuth, async (req, res) => {
 });
 
 // ================================ SPLASH PAGE =================================
-
-router.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public/homepage.html"));
-});
 
 export default router;
