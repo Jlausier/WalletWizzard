@@ -21,11 +21,9 @@
                                     <i class="fas fa-plus income-btn"></i>
                                 </button>
                         </div>                            
-                             <div class="p-6">
-                                {{> income-table incomeData}}
-                             </div>
-                            {{!- {{> income-table}}
-
+                            <div class="p-6">
+                            {{> budget-table data=incomeData name="income"}}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -40,7 +38,7 @@
                                 </button>
                             </div>
                         <div class="p-6">
-                            {{> expense-table expenseData}}
+                            {{> budget-table data=expenseData name="expense"}}
                         </div>
                     </div>
                 </div>
@@ -55,7 +53,7 @@
                                 </button>
                        </div>
                         <div class="p-6">
-                            {{> goal-table goalData}}
+                            {{> budget-table data=goalData name="goal"}}
                         </div>
                     </div>
                 </div>
@@ -70,7 +68,7 @@
                     <div class=" bg-gray-800 border-transparent rounded-lg shadow-xl w-full">
                         <h3 class="p-6 tracking-wider uppercase text-left text-gray-200">Your Budget</h3>
                             <div class="p-6">
-                                {{> budget-table expenseData}}
+                                {{> net-budget-table }}
                             </div>
                     </div>
                 </div>

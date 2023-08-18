@@ -149,11 +149,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     const table = row.closest("table");
-
     table.deleteRow(row.rowIndex);
 
     // Determine the entry type based on the table
-    const entryType = table.id === "incomeTable" ? "income" : "expense";
+    const entryType = table.dataset.tablename;
 
     // Make a DELETE request to the appropriate endpoint
     fetch(`/api/${entryType}/${entryId}`, {
@@ -269,7 +268,6 @@ document.addEventListener("DOMContentLoaded", function () {
   // Function to calculate the total amount for a table
   function calculateTotal(table) {
     if (!table) return 0;
-
     const tableBody = table.getElementsByTagName("tbody")[0];
     if (!tableBody) return 0;
 
