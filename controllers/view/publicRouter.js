@@ -8,7 +8,7 @@ import { pathFromRoot } from "../../utils/fsUtils.js";
 const router = express.Router();
 
 router.get("/", (_, res) => {
-  res.sendFile(pathFromRoot("public", "homepage.html"));
+  res.sendFile(pathFromRoot("public", "splashpage.html"));
 });
 
 export default router;

@@ -1,0 +1,51 @@
+:root {
+  --action-color: #d53369;
+}
+
+body {
+  font-family: "Source Sans Pro", sans-serif;
+}
+
+.gradient {
+  background: linear-gradient(90deg, var(--action-color) 0%, #daae51 100%);
+}
+
+.img-background {
+  background-image: linear-gradient(
+      90deg,
+      rgba(213, 51, 105, 0.4),
+      rgba(218, 175, 81, 0.4)
+    ),
+    url(/images/pexels-andrea-piacquadio-3764557.jpg);
+  background-size: cover;
+  background-position: center;
+}
+
+.jacob {
+  background-image: url(/images/jake.jpg);
+  background-size: cover;
+  background-position: center;
+}
+
+.brian {
+  background-image: url(/images/brian.jpg);
+  background-size: cover;
+  background-position: center;
+}
+
+.matthew {
+  background-image: url(/images/matthew.png);
+  background-size: cover;
+  background-position: center;
+}
+
+.rodney {
+  background-image: url(/images/rodney.jpg);
+  background-size: cover;
+  background-position: center;
+}
+
+#login-btn,
+#signup-btn {
+  background-color: var(--action-color);
+}
