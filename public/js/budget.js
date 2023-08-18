@@ -1,3 +1,9 @@
+const isValidDate = (string) => {
+  const date = new Date(string);
+  console.log(string);
+  return date.getTime() === date.getTime();
+};
+
 document.addEventListener("DOMContentLoaded", function () {
   const modal = document.getElementById("modal");
   const editModal = document.getElementById("editModal");
@@ -26,6 +32,8 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("entryType").value = type;
   }
 
+  // ==================================================== ADD ENTRY ====================================================
+
   addEntryBtn.addEventListener("click", () => {
     const entryType = document.getElementById("entryType").value;
     const entryName = document.getElementById("entryName").value;
@@ -33,8 +41,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const entryAmount = document.getElementById("entryAmount").value;
 
     // Validate the format of the entryMonth using a regular expression
-    const datePattern = /^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/\d{4}$/;
-    if (!datePattern.test(entryMonth)) {
+    // const datePattern = /^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/\d{4}$/;
+    // if (!datePattern.test(entryMonth)) {
+    //   alert("Please enter a valid date in MM/DD/YYYY format.");
+    //   return;
+    // }
+
+    if (!isValidDate(entryMonth)) {
       alert("Please enter a valid date in MM/DD/YYYY format.");
       return;
     }
@@ -136,6 +149,8 @@ document.addEventListener("DOMContentLoaded", function () {
     // Additional code to clear input fields or perform other actions after closing the modal
   }
 
+  // ==================================================== DELETE ENTRY =================================================
+
   function handleDelete(deleteButton) {
     const row = deleteButton.closest("tr");
 
@@ -169,6 +184,8 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   }
 
+  // ==================================================== UPDATE ENTRY =================================================
+
   function openEditModal(editButton) {
     const row = editButton.parentNode.parentNode;
     const date = row.cells[0].innerText;
@@ -189,9 +206,14 @@ document.addEventListener("DOMContentLoaded", function () {
       const updatedAmount = document.getElementById("editEntryAmount").value;
 
       // Validate the format of the updatedMonth using a regular expression
-      const datePattern = /^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/\d{4}$/;
-      if (!datePattern.test(updatedMonth)) {
-        alert("Please enter a valid date in MM/DD/YYYY format.");
+      // const datePattern = /^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/\d{4}$/;
+      // if (!datePattern.test(updatedMonth)) {
+      //   alert("Please enter a valid date in MM/DD/YYYY format.");
+      //   return;
+      // }
+
+      if (!isValidDate(updatedMonth)) {
+        alert("Please enter a valid date");
         return;
       }
 
@@ -218,6 +240,7 @@ document.addEventListener("DOMContentLoaded", function () {
       })
         .then((response) => response.json())
         .then((updatedEntry) => {
+          console.log(updatedEntry);
           // Update the row with new values
           row.cells[0].innerText = formatDate(updatedMonth);
           row.cells[1].innerText = updatedName;
