@@ -57,31 +57,26 @@
                         </div>
                     </div>
                 </div>
+        {{!-- left portion closer --}}
+        </div>
 
-                {{!-- left portion closer --}}
-            </div>
-
-            {{!- Right Side }}
-            <div class="fixed right-16 top-56 w-1/4">
-                {{!-- Content Card 4 --}}
-                 <div class=" p-6 flex w-full h-80">
-                    <div class=" bg-gray-800 border-transparent rounded-lg shadow-xl w-full">
-                        <h3 class="p-6 tracking-wider uppercase text-left text-gray-200">Your Budget</h3>
-                            <div class="p-6">
-                                {{> net-budget-table }}
-                            </div>
+        {{!- Right Side }}
+        <div class="fixed right-16 top-56 w-1/4">
+            {{!-- Content Card 4 --}}
+                <div class=" p-6 flex w-full h-80">
+                <div class=" bg-gray-800 border-transparent rounded-lg shadow-xl w-full">
+                    <h3 class="p-6 tracking-wider uppercase text-left text-gray-200">Your Budget</h3>
+                    <div class="p-6">
+                        {{> net-budget-table }}
                     </div>
                 </div>
-
-                {{!- Right Side Closer }}
             </div>
-
-            {{!-- Content Container Closer --}}
         </div>
-       
 
+    {{!-- Content Container Closer --}}
     </div>
 </section>
+
 <!-- Modal for adding new entry -->
 <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
     <div class="bg-white p-8 rounded-lg shadow-lg">

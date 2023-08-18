@@ -128,8 +128,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   function formatDate(dateString) {
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-US");
+    return new Date(dateString).toLocaleDateString("en-US");
   }
 
   function closeModal(modalElement) {
