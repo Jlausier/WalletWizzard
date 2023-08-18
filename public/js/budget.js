@@ -4,6 +4,10 @@ const isValidDate = (string) => {
   return date.getTime() === date.getTime();
 };
 
+function formatDate(dateString) {
+  return new Date(dateString).toLocaleDateString("en-US");
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   const modal = document.getElementById("modal");
   const editModal = document.getElementById("editModal");
@@ -39,13 +43,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const entryName = document.getElementById("entryName").value;
     const entryMonth = document.getElementById("entryMonth").value;
     const entryAmount = document.getElementById("entryAmount").value;
-
-    // Validate the format of the entryMonth using a regular expression
-    // const datePattern = /^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/\d{4}$/;
-    // if (!datePattern.test(entryMonth)) {
-    //   alert("Please enter a valid date in MM/DD/YYYY format.");
-    //   return;
-    // }
 
     if (!isValidDate(entryMonth)) {
       alert("Please enter a valid date in MM/DD/YYYY format.");
@@ -137,9 +134,9 @@ document.addEventListener("DOMContentLoaded", function () {
             cell4.appendChild(deleteButton);
           }
         });
-      // .catch((error) => {
-      //   console.error("Error:", error);
-      // });
+      .catch((err) => {
+        console.error(err);
+      });
     } else {
       alert("Please fill in all fields.");
     }
@@ -150,10 +147,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // Hide the modal without making any changes
     modal.classList.add("hidden");
   });
-
-  function formatDate(dateString) {
-    return new Date(dateString).toLocaleDateString("en-US");
-  }
 
   function closeModal(modal) {
     modal.classList.add("hidden");
@@ -215,13 +208,6 @@ document.addEventListener("DOMContentLoaded", function () {
       const updatedMonth = document.getElementById("editEntryMonth").value;
       const updatedName = document.getElementById("editEntryName").value;
       const updatedAmount = document.getElementById("editEntryAmount").value;
-
-      // Validate the format of the updatedMonth using a regular expression
-      // const datePattern = /^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/\d{4}$/;
-      // if (!datePattern.test(updatedMonth)) {
-      //   alert("Please enter a valid date in MM/DD/YYYY format.");
-      //   return;
-      // }
 
       if (!isValidDate(updatedMonth)) {
         alert("Please enter a valid date");
