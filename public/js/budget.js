@@ -133,10 +133,10 @@ document.addEventListener("DOMContentLoaded", function () {
             );
             cell4.appendChild(deleteButton);
           }
+        })
+        .catch((err) => {
+          console.error(err);
         });
-      .catch((err) => {
-        console.error(err);
-      });
     } else {
       alert("Please fill in all fields.");
     }
@@ -236,8 +236,7 @@ document.addEventListener("DOMContentLoaded", function () {
         body: JSON.stringify(updatedData),
       })
         .then((response) => response.json())
-        .then((updatedEntry) => {
-          console.log(updatedEntry);
+        .then((_) => {
           // Update the row with new values
           row.cells[0].innerText = formatDate(updatedMonth);
           row.cells[1].innerText = updatedName;
