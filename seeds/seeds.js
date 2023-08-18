@@ -1,5 +1,3 @@
-import { createRequire } from "module"; // Bring in the ability to create the 'require' method
-
 import sequelize from "../config/connection.js";
 import {
   User,
@@ -10,9 +8,9 @@ import {
   GoalProgression,
   ExpenseType,
 } from "../models/index.js";
+import { require, randomInt } from "../utils/fsUtils.js";
 
-const require = createRequire(import.meta.url); // construct the require method
-
+/* Import Seed Data */
 const userData = require("./userData.json");
 const incomeData = require("./incomeData.json");
 const goalData = require("./goalData.json");
@@ -20,11 +18,6 @@ const goalCategoryData = require("./goalCategoryData.json");
 const goalProgressionData = require("./goalProgressionData.json");
 const expenseData = require("./expenseData.json");
 const expenseTypeData = require("./expenseTypeData.json");
-
-const randomInt = (min, max) => {
-  const res = Math.floor(Math.random() * (max - min + 1)) + min;
-  return res;
-};
 
 const seedDatabase = async () => {
   await sequelize.sync({ force: true });

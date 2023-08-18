@@ -1,6 +1,5 @@
 import express from "express";
-import path from "path";
-import { __dirname } from "../../utils/fsUtils.js";
+import { pathFromRoot } from "../../utils/fsUtils.js";
 
 /**
  * Express router for public routes
@@ -9,7 +8,7 @@ import { __dirname } from "../../utils/fsUtils.js";
 const router = express.Router();
 
 router.get("/", (_, res) => {
-  res.sendFile(path.join(__dirname, "public", "homepage.html"));
+  res.sendFile(pathFromRoot("public", "homepage.html"));
 });
 
 export default router;
