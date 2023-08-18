@@ -22,9 +22,7 @@
                                 </button>
                         </div>                            
                              <div class="p-6">
-                               {{#with incomeData}}
-                                 {{> income-table this}}
-                               {{/with}}
+                                {{> income-table incomeData}}
                              </div>
                             {{!- {{> income-table}}
 
@@ -42,9 +40,7 @@
                                 </button>
                             </div>
                         <div class="p-6">
-                            {{#with expenseData}}
-                             {{> expense-table this}}
-                            {{/with}}
+                            {{> expense-table expenseData}}
                         </div>
                     </div>
                 </div>
@@ -59,9 +55,7 @@
                                 </button>
                        </div>
                         <div class="p-6">
-                            {{#with goalData}}
-                                {{> goal-table this}}
-                            {{/with}}
+                            {{> goal-table goalData}}
                         </div>
                     </div>
                 </div>
@@ -76,9 +70,7 @@
                     <div class=" bg-gray-800 border-transparent rounded-lg shadow-xl w-full">
                         <h3 class="p-6 tracking-wider uppercase text-left text-gray-200">Your Budget</h3>
                             <div class="p-6">
-                                {{#with expenseData}}
-                                    {{> budget-table this}}
-                                {{/with}}
+                                {{> budget-table expenseData}}
                             </div>
                     </div>
                 </div>

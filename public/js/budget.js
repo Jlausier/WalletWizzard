@@ -6,29 +6,17 @@ document.addEventListener("DOMContentLoaded", function () {
   const cancelEditBtn = document.getElementById("cancelEditBtn");
   const cancelBtn = document.getElementById("cancelBtn");
 
-  // const deleteButtons = document.querySelectorAll(".delete-button");
-  // deleteButtons.forEach((del) => {
-  //   del.addEventListener("click", (event) => {
-  //     console.log(event.target);
-  //     handleDelete(event.target);
-  //   });
-  // });
-
   // Delegate event handling for income and expense buttons
   document.addEventListener("click", function (event) {
     if (event.target.classList.contains("income-btn")) {
       openModal("income");
-    }
-    if (event.target.classList.contains("expense-btn")) {
+    } else if (event.target.classList.contains("expense-btn")) {
       openModal("expense");
-    }
-    if (event.target.classList.contains("goal-btn")) {
-      openModal("goal")
-    }
-    if (event.target.classList.contains("delete-button")) {
+    } else if (event.target.classList.contains("goal-btn")) {
+      openModal("goal");
+    } else if (event.target.classList.contains("delete-button")) {
       handleDelete(event.target);
-    }
-    if (event.target.classList.contains("edit-button")) {
+    } else if (event.target.classList.contains("edit-button")) {
       openEditModal(event.target);
     }
   });
@@ -58,8 +46,6 @@ document.addEventListener("DOMContentLoaded", function () {
         amount: parseFloat(entryAmount),
       };
 
-      console.log(entryType);
-
       // Make a POST request to the appropriate endpoint
       fetch(`/api/${entryType}`, {
         method: "POST",
@@ -80,13 +66,14 @@ document.addEventListener("DOMContentLoaded", function () {
           document.getElementById("entryMonth").value = "";
           document.getElementById("entryAmount").value = "";
           modal.classList.add("hidden");
+
           function appendRow(tableId, entry) {
             const tableBody = document
               .getElementById(tableId)
               .getElementsByTagName("tbody")[0];
             const newRow = tableBody.insertRow(-1);
 
-            newRow.dataset.entryId = newEntry.id;
+            newRow.dataset.entryid = newEntry.id;
 
             // Create cells and populate them with entry data
             const cell1 = newRow.insertCell(0);
@@ -124,16 +111,6 @@ document.addEventListener("DOMContentLoaded", function () {
               "hover:text-red-900"
             );
             cell4.appendChild(deleteButton);
-
-            // Add an event listener to the delete button
-            deleteButton.addEventListener("click", () => {
-              handleDelete(deleteButton);
-            });
-
-            // Add an event listener to the edit button
-            editButton.addEventListener("click", () => {
-              openEditModal(editButton);
-            });
           }
         })
         .catch((error) => {
@@ -161,33 +138,32 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function handleDelete(deleteButton) {
-    const row = deleteButton.parentNode.parentNode;
+    const row = deleteButton.closest("tr");
 
     // Extract the entry ID from the row
     const entryId = row.dataset.entryid;
-    console.log(entryId);
 
-    const tableId = row.dataset.table;
-    const table = document.getElementById(tableId);
+    if (!entryId) {
+      alert("Could not delete row, try again.");
+      return;
+    }
+
+    const table = row.closest("table");
 
     table.deleteRow(row.rowIndex);
 
     // Determine the entry type based on the table
-    const entryType = tableId === "incomeTable" ? "income" : "expense";
+    const entryType = table.id === "incomeTable" ? "income" : "expense";
 
     // Make a DELETE request to the appropriate endpoint
     fetch(`/api/${entryType}/${entryId}`, {
       method: "DELETE",
     })
       .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
+        if (response.ok) return response.json();
         throw new Error("Could not delete " + entryType);
       })
-      .then((data) => {
-        // Handle the response data as needed
-        console.log(data);
+      .then((_) => {
         updateBudgetTable();
       })
       .catch((error) => {
@@ -232,7 +208,7 @@ document.addEventListener("DOMContentLoaded", function () {
         row.closest("table").id === "incomeTable" ? "income" : "expense";
 
       // Extract the entry ID from the row
-      const entryId = row.dataset.entryId;
+      const entryId = row.dataset.entryid;
 
       // Make a PUT request to the appropriate endpoint
       fetch(`/api/${entryType}/${entryId}`, {
@@ -274,14 +250,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const goalTable = document.getElementById("goalTable");
     const budgetTable = document.getElementById("budgetTable");
 
-    // if (incomeTable && expenseTable && goalTable && budgetTable) {
-    //   updateBudgetTable();
-    // }else {
-    //   console.error("One or more tables not found.");
-    // }
-
-   
-    
     const incomeTotal = calculateTotal(incomeTable);
     const expensesTotal = calculateTotal(expenseTable);
     const goalsTotal = calculateTotal(goalTable);
@@ -296,8 +264,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const finalIncome = incomeTotal - expensesTotal - goalsTotal;
     budgetTable.rows[3].cells[1].innerText = "$" + finalIncome.toFixed(2);
-  
-}
+  }
 
   // Function to calculate the total amount for a table
   function calculateTotal(table) {
