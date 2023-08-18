@@ -55,7 +55,9 @@ document.addEventListener("DOMContentLoaded", function () {
       const data = {
         name: entryName,
         scheduledDate: entryMonth,
+        dateCompleted: entryMonth,
         amount: parseFloat(entryAmount),
+        desiredAmount: parseFloat(entryAmount)
       };
 
       console.log(entryType);
@@ -70,7 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
       })
         .then((response) => response.json())
         .then((newEntry) => {
-          const table = entryType === "income" ? "incomeTable" : "expenseTable";
+          const table = entryType === "income" ? "incomeTable" : entryType === "expense" ? "expenseTable" : "goalTable"; 
           appendRow(table, newEntry);
           closeModal(modal);
           updateBudgetTable();
@@ -85,6 +87,12 @@ document.addEventListener("DOMContentLoaded", function () {
               .getElementById(tableId)
               .getElementsByTagName("tbody")[0];
             const newRow = tableBody.insertRow(-1);
+
+             // Remove placeholder row if it exists
+                const placeholderRow = tableBody.querySelector(".placeholder-row");
+                if (placeholderRow) {
+                  placeholderRow.remove();
+                }
 
             newRow.dataset.entryId = newEntry.id;
 
@@ -134,11 +142,12 @@ document.addEventListener("DOMContentLoaded", function () {
             editButton.addEventListener("click", () => {
               openEditModal(editButton);
             });
+            
           }
         })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
+        // .catch((error) => {
+        //   console.error("Error:", error);
+        // });
     } else {
       alert("Please fill in all fields.");
     }
@@ -155,8 +164,8 @@ document.addEventListener("DOMContentLoaded", function () {
     return date.toLocaleDateString("en-US");
   }
 
-  function closeModal(modalElement) {
-    modalElement.classList.add("hidden");
+  function closeModal(modal) {
+    modal.classList.add("hidden");
     // Additional code to clear input fields or perform other actions after closing the modal
   }
 
@@ -273,7 +282,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const expenseTable = document.getElementById("expenseTable");
     const goalTable = document.getElementById("goalTable");
     const budgetTable = document.getElementById("budgetTable");
-
+    
     // if (incomeTable && expenseTable && goalTable && budgetTable) {
     //   updateBudgetTable();
     // }else {
@@ -281,7 +290,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // }
 
    
-    
+
     const incomeTotal = calculateTotal(incomeTable);
     const expensesTotal = calculateTotal(expenseTable);
     const goalsTotal = calculateTotal(goalTable);

@@ -21,8 +21,9 @@
                                     <i class="fas fa-plus income-btn"></i>
                                 </button>
                         </div>                            
-                             <div class="p-6">
-                               {{#with incomeData}}
+                             <div id="Table" class="p-6 ">  
+                                 
+                               {{#with  incomeData}}
                                  {{> income-table this}}
                                {{/with}}
                              </div>
@@ -41,7 +42,8 @@
                                     <i class="fas fa-plus expense-btn"></i>
                                 </button>
                             </div>
-                        <div class="p-6">
+                        <div id="table" class="p-6 ">
+                           
                             {{#with expenseData}}
                              {{> expense-table this}}
                             {{/with}}
@@ -55,10 +57,11 @@
                        <div class="p-6 flex justify-between">
                             <h3 class="tracking-wider uppercase text-left text-gray-200">Goals</h3>
                                 <button class="rounded text-gray-800 text-2xl sidebar w-8 h-8 flex justify-center items-center  ">
-                                    <i class="fas fa-plus goals-btn"></i>
+                                    <i class="fas fa-plus goal-btn"></i>
                                 </button>
                        </div>
-                        <div class="p-6">
+                        <div id="table"class="p-6">
+                           
                             {{#with goalData}}
                                 {{> goal-table this}}
                             {{/with}}
