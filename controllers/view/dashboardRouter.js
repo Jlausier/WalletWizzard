@@ -170,8 +170,6 @@ const renderGoals = async (req, res) => {
   try {
     const goalsOptions = getGoalsOptions(req.session.userId);
     const goalData = await Goal.findAll(goalsOptions);
-
-    console.log(goalData);
     const processedGoalData = processGoalData(goalData);
 
     res.render("goals", { goalData: processedGoalData });
