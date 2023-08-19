@@ -1,6 +1,6 @@
 <section>
     <div class="main-content flex-1 bg-gray-700 mx-10 mb-10 pb-24 md:pb-5 rounded-2xl bg-gray-700">
-        {{!-- Title --}}
+
         <h1 class="rounded-t-3xl pl-12 pt-12 text-5xl text-gray-100">Budget</h1>
 
         {{!-- Budget Tables --}}
@@ -26,34 +26,9 @@
     </div>
 </section>
 
-{{!-- Modal for adding new entry --}}
-{{!-- <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-    <div class="bg-white p-8 rounded-lg shadow-lg">
-        <h2 class="text-lg font-semibold mb-4">Add New Entry</h2>
-        <input type="hidden" id="entryType" />
-        <input type="text" id="entryName" class="mb-4 p-2 border rounded" placeholder="Name">
-        <input type="text" id="entryMonth" class="mb-4 p-2 border rounded" placeholder="Date">
-        <input type="text" id="entryAmount" class="mb-4 p-2 border rounded" placeholder="Amount">
-        <button id="addEntryBtn" class="sidebar text-white px-3 py-2 rounded">Add</button>
-        <button id="cancelBtn" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-2 rounded ml-2">Cancel</button>
-    </div>
-</div> --}}
-
+{{!-- Modals --}}
 {{> budget-modal name="add" title="Add New Entry" action="Add" }}
 {{> budget-modal name="edit" title="Edit Entry" action="Update" }}
-
-{{!-- Edit Modal --}}
-{{!-- <div id="editModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-    <div class="bg-white p-8 rounded-lg shadow-lg">
-        <h2 class="text-lg font-semibold mb-4">Edit Entry</h2>
-        <input type="hidden" id="entryType" />
-        <input type="text" id="editEntryName" class="mb-4 p-2 border rounded" placeholder="Name">
-        <input type="text" id="editEntryMonth" class="mb-4 p-2 border rounded" placeholder="Date">
-        <input type="text" id="editEntryAmount" class="mb-4 p-2 border rounded" placeholder="Amount">
-        <button id="updateEntryBtn" class="sidebar text-white px-3 py-2 rounded">Update</button>
-        <button id="cancelEditBtn" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-2 rounded ml-2">Cancel</button>
-    </div>
-</div> --}}
 
 {{!-- Budget Script --}}
 <script src="/js/budget.js"></script>
