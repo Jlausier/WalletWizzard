@@ -1,21 +1,18 @@
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
      <section>
-        <div id="main" class=" main-content flex-1 bg-gray-700 mx-10 mb-10 pb-24 md:pb-5 rounded-2xl bg-gray-700">
+        <div class="main-content flex-1 bg-gray-700 mx-10 mb-10 pb-24 md:pb-5 rounded-2xl bg-gray-700">
+            {{!-- Title --}}
+            <h1 class="rounded-t-3xl pl-12 pt-12 text-5xl text-gray-100">Overview</h1>
 
-            {{!-- Title Container --}}
-                <h1 class=" rounded-t-3xl pl-12 pt-12 text-5xl text-gray-100">Overview</h1>
-
-
-           {{!-- Content Container --}}
-   {{!-- Content Container --}}
+            {{!-- Content Container --}}
             <div class="p-6 flex flex-col bg-gray-700">
 
                 {{!-- top portion --}}
-                <div class=" flex">
+                <div class="flex">
 
                     {{!-- Content Card 1 --}}
                     <div class="p-6 flex w-3/5">
-                        <div class=" bg-gray-800 rounded-lg shadow-xl w-full">
+                        <div class="bg-gray-800 rounded-lg shadow-xl w-full">
                             <h3 class="px-8 pt-6 pb-3 w-full border-b border-gray-600 tracking-wider uppercase text-left text-gray-200">Spending Overview</h3>
                             <div class="p-6 flex">
                                 <div class="mx-6 w-2/5 ">
@@ -30,40 +27,28 @@
                         </div>
                     </div>
 
-                    {{!-- side portion --}}
-                    {{!-- <div class="flex flex-col w-2/5"> --}}
-
-                        {{!-- Content Card 2 --}}
-                        <div class=" p-6 w-2/5 flex">
-                             <div class=" bg-gray-800 rounded-lg shadow-xl w-full">
+                    {{!-- Content Card 2 --}}
+                    <div class="p-6 w-2/5 flex">
+                        <div class="bg-gray-800 rounded-lg shadow-xl w-full">
                             <h3 class="px-8 pt-6 pb-3 w-full border-b border-gray-600 tracking-wider uppercase text-left text-gray-200">Monthly Comparison</h3>
-                           <div class=" p-6">
+                            <div class="p-6">
                                 {{> monthly-overview-chart nonessentialData}}
-                                
-                                
                             </div>
                         </div>
-                        </div>
-            </div>
-            {{!-- Bottom Portion --}}
+                    </div>
+                {{!-- top portion closer --}}
+                </div>
+
                 {{!-- Content Card 3 --}}
-                <div class=" p-6 w-full flex">
-                    <div class=" bg-gray-800 rounded-lg shadow-xl w-full">
-                        <h3 class="px-8 pt-6 pb-3 w-full border-b border-gray-600 tracking-wider uppercase text-left text-gray-200">Goals</h3>
-                        <div class="flex h-48 p-6">
-                            {{#with processedGoalData}}
-                                {{> goal-overview this}}
-                            {{/with}}
+                <div class="p-6 w-full flex">
+                    <div class="bg-gray-800 rounded-lg shadow-xl w-full">
+                        <h3 class="px-8 pt-6 pb-3 w-full tracking-wider uppercase text-left text-gray-200">Goals</h3>
+                        <div class="flex p-6">
+                            {{> budget-table data=goalsData name="goalsOverview"}}
                         </div>
                     </div>
                 </div>
-                {{!-- top portion closer --}}
+            {{!-- Content Container Closer --}}
             </div>
-                 
-
-                {{!- bottom Side }}
-                {{!-- Content Container Closer --}}
-            
-
         </div>
     </section>

@@ -1,0 +1,11 @@
+<div id="{{ name }}Modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-lg">
+        <h2 class="text-lg font-semibold mb-4">{{title}}</h2>
+        <input type="hidden" id="{{ name }}EntryType" />
+        <input type="text" id="{{ name }}EntryName" class="mb-4 p-2 border rounded" placeholder="Name">
+        <input type="text" id="{{ name }}EntryMonth" class="mb-4 p-2 border rounded" placeholder="Date">
+        <input type="text" id="{{ name }}EntryAmount" class="mb-4 p-2 border rounded" placeholder="Amount">
+        <button id="{{ name }}EntryBtn" class="sidebar text-white px-3 py-2 rounded">{{ action }}</button>
+        <button id="{{ name }}CancelBtn" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-2 rounded ml-2">Cancel</button>
+    </div>
+</div>

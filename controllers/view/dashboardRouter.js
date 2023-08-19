@@ -81,8 +81,8 @@ router.get("/overview", withAuth, async (req, res) => {
         labels: expenseSums.map((s) => s.category),
         data: expenseSums.map((s) => s.amount),
       },
-      goalsData: processedGoalData,
       nonessentialData: processedNonessentialData,
+      goalsData: processedGoalData,
     });
   } catch (err) {
     console.error(err);

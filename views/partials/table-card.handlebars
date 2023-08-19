@@ -1,0 +1,13 @@
+<div class="p-6 flex" >
+    <div class="bg-gray-800 rounded-lg shadow-xl w-full">
+        <div class="p-6 flex justify-between">
+            <h3 class="tracking-wider uppercase text-left text-gray-200">{{name}}</h3>
+            <button class="rounded text-gray-800 text-2xl sidebar w-8 h-8 flex justify-center items-center ">
+                <i class="fas fa-plus {{tableName}}-btn"></i>
+            </button>
+        </div>
+        <div class="p-6">
+            {{> budget-table data=data name=tableName}}
+        </div>
+    </div>
+</div>
