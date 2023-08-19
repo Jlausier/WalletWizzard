@@ -1,29 +1,25 @@
 const isValidDate = (string) => {
   const date = new Date(string);
-  console.log(string);
   return date.getTime() === date.getTime();
 };
 
-function formatDate(dateString) {
-  return new Date(dateString).toLocaleDateString("en-US");
-}
+const formatDate = (dateString) =>
+  new Date(dateString).toLocaleDateString("en-US");
 
 document.addEventListener("DOMContentLoaded", function () {
-  const modal = document.getElementById("modal");
+  let row;
+
+  const addModal = document.getElementById("addModal");
   const editModal = document.getElementById("editModal");
-  const addEntryBtn = document.getElementById("addEntryBtn");
-  const updateEntryBtn = document.getElementById("updateEntryBtn");
-  const cancelEditBtn = document.getElementById("cancelEditBtn");
-  const cancelBtn = document.getElementById("cancelBtn");
 
   // Delegate event handling for income and expense buttons
   document.addEventListener("click", function (event) {
     if (event.target.classList.contains("income-btn")) {
-      openModal("income");
+      openAddModal("income");
     } else if (event.target.classList.contains("expense-btn")) {
-      openModal("expense");
+      openAddModal("expense");
     } else if (event.target.classList.contains("goal-btn")) {
-      openModal("goal");
+      openAddModal("goal");
     } else if (event.target.classList.contains("delete-button")) {
       handleDelete(event.target);
     } else if (event.target.classList.contains("edit-button")) {
@@ -31,121 +27,138 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  function openModal(type) {
-    modal.classList.remove("hidden");
-    document.getElementById("entryType").value = type;
+  function openAddModal(type) {
+    addModal.classList.remove("hidden");
+    document.getElementById("addEntryType").value = type;
   }
 
   // ==================================================== ADD ENTRY ====================================================
 
-  addEntryBtn.addEventListener("click", () => {
-    const entryType = document.getElementById("entryType").value;
-    const entryName = document.getElementById("entryName").value;
-    const entryMonth = document.getElementById("entryMonth").value;
-    const entryAmount = document.getElementById("entryAmount").value;
+  document.getElementById("addEntryBtn").addEventListener("click", (e) => {
+    e.stopPropagation();
+    e.preventDefault();
 
-    if (!isValidDate(entryMonth)) {
-      alert("Please enter a valid date in MM/DD/YYYY format.");
+    const entryTypeEl = document.getElementById("addEntryType");
+    const entryNameEl = document.getElementById("addEntryName");
+    const entryMonthEl = document.getElementById("addEntryMonth");
+    const entryAmountEl = document.getElementById("addEntryAmount");
+
+    const entryType = entryTypeEl.value;
+    const entryName = entryNameEl.value;
+    const entryMonth = entryMonthEl.value;
+    const entryAmount = entryAmountEl.value;
+
+    if (!isValidDate(entryMonthEl.value)) {
+      alert("Please enter a valid date.");
       return;
     }
 
-    if (entryName && entryMonth && entryAmount) {
-      const data = {
-        name: entryName,
-        scheduledDate: entryMonth,
-        dateCompleted: entryMonth,
-        amount: parseFloat(entryAmount),
-        desiredAmount: parseFloat(entryAmount),
-      };
-
-      // Make a POST request to the appropriate endpoint
-      fetch(`/api/${entryType}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      })
-        .then((response) => response.json())
-        .then((newEntry) => {
-          const table =
-            entryType === "income"
-              ? "incomeTable"
-              : entryType === "expense"
-              ? "expenseTable"
-              : "goalTable";
-          appendRow(table, newEntry);
-          closeModal(modal);
-          updateBudgetTable();
-
-          // Clear the input fields and hide the modal
-          document.getElementById("entryName").value = "";
-          document.getElementById("entryMonth").value = "";
-          document.getElementById("entryAmount").value = "";
-          modal.classList.add("hidden");
-
-          function appendRow(tableId, entry) {
-            const tableBody = document
-              .getElementById(tableId)
-              .getElementsByTagName("tbody")[0];
-            const newRow = tableBody.insertRow(-1);
-
-            // Remove placeholder row if it exists
-            const placeholderRow = tableBody.querySelector(".placeholder-row");
-            if (placeholderRow) placeholderRow.remove();
-
-            newRow.dataset.entryid = newEntry.id;
-
-            // Create cells and populate them with entry data
-            const cell1 = newRow.insertCell(0);
-            cell1.classList.add("py-2", "text-gray-400");
-            cell1.innerText = formatDate(entry.scheduledDate);
-
-            const cell2 = newRow.insertCell(1);
-            cell2.classList.add("w-1/2", "pl-5", "text-gray-300");
-            cell2.innerText = entry.name;
-
-            const cell3 = newRow.insertCell(2);
-            cell3.classList.add("text-right", "text-gray-300");
-            cell3.innerText = "$" + parseFloat(entry.amount).toFixed(2);
-
-            const cell4 = newRow.insertCell(3);
-            cell4.classList.add("text-right");
-            const editButton = document.createElement("button");
-            editButton.classList.add(
-              "px-1",
-              "fas",
-              "fa-edit",
-              "edit-button",
-              "text-gray-500",
-              "hover:text-gray-200"
-            );
-            cell4.appendChild(editButton);
-
-            const deleteButton = document.createElement("button");
-            deleteButton.classList.add(
-              "px-1",
-              "fas",
-              "fa-trash",
-              "delete-button",
-              "text-gray-500",
-              "hover:text-red-900"
-            );
-            cell4.appendChild(deleteButton);
-          }
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    } else {
+    if (!(entryName && entryMonth && entryAmount)) {
       alert("Please fill in all fields.");
+      return;
     }
+
+    const data = {
+      name: entryName,
+      scheduledDate: entryMonth,
+      amount: parseFloat(entryAmount),
+    };
+
+    // Make a POST request to the appropriate endpoint
+    fetch(`/api/${entryType}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((newEntry) => {
+        const table = entryType + "Table";
+        appendRow(table, newEntry);
+        closeModal(addModal);
+        updateBudgetTable();
+
+        // Clear the input fields and hide the modal
+        entryNameEl.value = "";
+        entryMonthEl.value = "";
+        entryAmountEl.value = "";
+        addModal.classList.add("hidden");
+
+        function appendRow(tableId, entry) {
+          const tableBody = document
+            .getElementById(tableId)
+            .getElementsByTagName("tbody")[0];
+          const newRow = tableBody.insertRow(-1);
+
+          // Remove placeholder row if it exists
+          const placeholderRow = tableBody.querySelector(".placeholder-row");
+          if (placeholderRow) placeholderRow.remove();
+
+          newRow.dataset.entryid = newEntry.id;
+          newRow.classList.add(
+            "py-4",
+            "border-t-2",
+            "border-gray-700",
+            "text-left",
+            "text-gray-300",
+            "w-full",
+            "h-12"
+          );
+
+          // Create date container
+          const dateCell = newRow.insertCell(0);
+          dateCell.classList.add("text-gray-400");
+          dateCell.innerText = formatDate(entry.scheduledDate);
+
+          // Create name container
+          const nameCell = newRow.insertCell(1);
+          nameCell.classList.add("w-1/2", "pl-5", "text-gray-300");
+          nameCell.innerText = entry.name;
+
+          // Create monetary amount container
+          const amountCell = newRow.insertCell(2);
+          amountCell.classList.add("text-right");
+          amountCell.innerText = "$" + parseFloat(entry.amount).toFixed(2);
+
+          // Create buttons container
+          const buttonsCell = newRow.insertCell(3);
+          buttonsCell.classList.add("text-right");
+          // Create edit button
+          const editButton = document.createElement("button");
+          editButton.classList.add(
+            "px-1",
+            "fas",
+            "fa-edit",
+            "edit-button",
+            "text-gray-500",
+            "hover:text-gray-200"
+          );
+          buttonsCell.appendChild(editButton);
+          // Create delete button
+          const deleteButton = document.createElement("button");
+          deleteButton.classList.add(
+            "px-1",
+            "fas",
+            "fa-trash",
+            "delete-button",
+            "text-gray-500",
+            "hover:text-red-900"
+          );
+          buttonsCell.appendChild(deleteButton);
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   });
 
   // Handle cancel button click for add modal
-  cancelBtn.addEventListener("click", () => {
+  document.getElementById("addCancelBtn").addEventListener("click", (e) => {
+    e.stopPropagation();
+    e.preventDefault();
     // Hide the modal without making any changes
-    modal.classList.add("hidden");
+    addModal.classList.add("hidden");
   });
 
   function closeModal(modal) {
@@ -191,74 +204,85 @@ document.addEventListener("DOMContentLoaded", function () {
   // ==================================================== UPDATE ENTRY =================================================
 
   function openEditModal(editButton) {
-    const row = editButton.parentNode.parentNode;
-    const date = row.cells[0].innerText;
-    const name = row.cells[1].innerText;
-    const amount = parseFloat(row.cells[2].innerText.replace("$", ""));
+    row = editButton.closest("tr");
 
-    document.getElementById("editEntryMonth").value = date;
-    document.getElementById("editEntryName").value = name;
-    document.getElementById("editEntryAmount").value = amount.toFixed(2);
+    document.getElementById("editEntryName").value = row.cells[1].innerText;
+    document.getElementById("editEntryMonth").value = row.cells[0].innerText;
+    document.getElementById("editEntryAmount").value = parseFloat(
+      row.cells[2].innerText.replace("$", "")
+    ).toFixed(2);
 
     // Show the edit modal
     editModal.classList.remove("hidden");
-
-    // Handle update button click
-    updateEntryBtn.addEventListener("click", () => {
-      const updatedMonth = document.getElementById("editEntryMonth").value;
-      const updatedName = document.getElementById("editEntryName").value;
-      const updatedAmount = document.getElementById("editEntryAmount").value;
-
-      if (!isValidDate(updatedMonth)) {
-        alert("Please enter a valid date");
-        return;
-      }
-
-      const updatedData = {
-        name: updatedName,
-        scheduledDate: updatedMonth,
-        amount: parseFloat(updatedAmount),
-      };
-
-      // Determine the entry type based on the table
-      const entryType =
-        row.closest("table").id === "incomeTable" ? "income" : "expense";
-
-      // Extract the entry ID from the row
-      const entryId = row.dataset.entryid;
-
-      // Make a PUT request to the appropriate endpoint
-      fetch(`/api/${entryType}/${entryId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedData),
-      })
-        .then((response) => response.json())
-        .then((_) => {
-          // Update the row with new values
-          row.cells[0].innerText = formatDate(updatedMonth);
-          row.cells[1].innerText = updatedName;
-          row.cells[2].innerText = "$" + parseFloat(updatedAmount).toFixed(2);
-
-          // Hide the edit modal
-          editModal.classList.add("hidden");
-
-          // Update the budget table
-          updateBudgetTable();
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    });
-
-    // Handle cancel button click
-    cancelEditBtn.addEventListener("click", () => {
-      // Hide the edit modal without making any changes
-      editModal.classList.add("hidden");
-    });
   }
+
+  // Handle update button click
+  document.getElementById("editEntryBtn").addEventListener("click", (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+
+    let editEntryNameEl = document.getElementById("editEntryName");
+    let editEntryMonthEl = document.getElementById("editEntryMonth");
+    let editEntryAmountEl = document.getElementById("editEntryAmount");
+
+    const updatedName = editEntryNameEl.value;
+    const updatedMonth = editEntryMonthEl.value;
+    const updatedAmount = editEntryAmountEl.value;
+
+    if (!isValidDate(updatedMonth)) {
+      alert("Please enter a valid date");
+      return;
+    }
+
+    const data = {
+      name: updatedName,
+      scheduledDate: updatedMonth,
+      amount: parseFloat(updatedAmount).toFixed(2),
+    };
+
+    // Determine the entry type based on the table
+    const entryType = row.closest("table").dataset.tablename;
+
+    // Extract the entry ID from the row
+    const entryId = row.dataset.entryid;
+
+    // Make a PUT request to the appropriate endpoint
+    fetch(`/api/${entryType}/${entryId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((_) => {
+        // Update the row with new values
+        row.cells[0].innerText = formatDate(data.scheduledDate);
+        row.cells[1].innerText = data.name;
+        row.cells[2].innerText = "$" + data.amount;
+
+        // Hide the edit modal
+        editModal.classList.add("hidden");
+
+        // Update the budget table
+        updateBudgetTable();
+        return;
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        return;
+      });
+    return;
+  });
+
+  // Handle cancel button click
+  document.getElementById("editCancelBtn").addEventListener("click", (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    // Hide the edit modal without making any changes
+    editModal.classList.add("hidden");
+    return;
+  });
 
   // Function to update the Your Budget table
   function updateBudgetTable() {
@@ -281,6 +305,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const finalIncome = incomeTotal - expensesTotal - goalsTotal;
     budgetTable.rows[3].cells[1].innerText = "$" + finalIncome.toFixed(2);
+    return;
   }
 
   // Function to calculate the total amount for a table

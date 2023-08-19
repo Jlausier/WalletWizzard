@@ -1,70 +1,21 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
 <section>
-    <div id="main" class=" main-content flex-1 bg-gray-700 mx-10 mb-10 pb-24 md:pb-5 rounded-2xl bg-gray-700">
+    <div class="main-content flex-1 bg-gray-700 mx-10 mb-10 pb-24 md:pb-5 rounded-2xl bg-gray-700">
 
-        {{!-- Title Container --}}
-            <h1 class=" rounded-t-3xl pl-12 pt-12 text-5xl text-gray-100">Budget</h1>
+        <h1 class="rounded-t-3xl pl-12 pt-12 text-5xl text-gray-100">Budget</h1>
 
-       {{!-- Content Container --}}
-        <div class=" p-6 flex flex-col bg-gray-700">
-
-            {{!-- left portion --}}
-            <div class=" flex flex-col w-2/3">
-
-                {{!-- Content Card 1 --}}
-                <div class="  p-6  flex">
-                    <div class=" bg-gray-800 rounded-lg shadow-xl w-full">
-                        <div class="p-6 flex justify-between">
-                            <h3 class="tracking-wider uppercase text-left text-gray-200">Income</h3>
-                                <button class="rounded text-gray-800 text-2xl sidebar w-8 h-8 flex justify-center items-center ">
-                                    <i class="fas fa-plus income-btn"></i>
-                                </button>
-                        </div>                            
-                            <div class="p-6">
-                            {{> budget-table data=incomeData name="income"}}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {{!-- Content Card 2 --}}
-                <div class=" p-6  flex w-2/3" >
-                    <div class=" bg-gray-800 rounded-lg shadow-xl w-full">
-                        <div class="p-6 flex justify-between">
-                            <h3 class="tracking-wider uppercase text-left text-gray-200">Expenses</h3>
-                                <button class="rounded text-gray-800 text-2xl sidebar w-8 h-8 flex justify-center items-center ">
-                                    <i class="fas fa-plus expense-btn"></i>
-                                </button>
-                            </div>
-                        <div class="p-6">
-                            {{> budget-table data=expenseData name="expense"}}
-                        </div>
-                    </div>
-                </div>
-
-                {{!-- Content Card 3 --}}
-                <div class=" p-6 flex w-2/3">
-                    <div class=" bg-gray-800 border-transparent rounded-lg shadow-xl w-full">
-                       <div class="p-6 flex justify-between">
-                            <h3 class="tracking-wider uppercase text-left text-gray-200">Goals</h3>
-                                <button class="rounded text-gray-800 text-2xl sidebar w-8 h-8 flex justify-center items-center  ">
-                                    <i class="fas fa-plus goal-btn"></i>
-                                </button>
-                       </div>
-                        <div class="p-6">
-                            {{> budget-table data=goalData name="goal"}}
-                        </div>
-                    </div>
-                </div>
-        {{!-- left portion closer --}}
+        {{!-- Budget Tables --}}
+        <div class="p-6 flex flex-col bg-gray-700">
+            <div class="flex flex-col w-2/3">
+                {{> table-card data=incomeData name="Income" tableName="income"}}
+                {{> table-card data=expenseData name="Expenses" tableName="expense"}}
+                {{> table-card data=goalData name="Goals" tableName="goal"}}
+            </div>
         </div>
 
-        {{!- Right Side }}
+        {{!-- Net Budget --}}
         <div class="fixed right-16 top-56 w-1/4">
-            {{!-- Content Card 4 --}}
-                <div class=" p-6 flex w-full h-80">
-                <div class=" bg-gray-800 border-transparent rounded-lg shadow-xl w-full">
+            <div class="p-6 flex w-full h-80">
+                <div class="bg-gray-800 border-transparent rounded-lg shadow-xl w-full">
                     <h3 class="p-6 tracking-wider uppercase text-left text-gray-200">Your Budget</h3>
                     <div class="p-6">
                         {{> net-budget-table }}
@@ -72,32 +23,12 @@
                 </div>
             </div>
         </div>
-
-    {{!-- Content Container Closer --}}
     </div>
 </section>
 
-<!-- Modal for adding new entry -->
-<div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-    <div class="bg-white p-8 rounded-lg shadow-lg">
-        <h2 class="text-lg font-semibold mb-4">Add New Entry</h2>
-        <input type="hidden" id="entryType" /> <!-- Add this line -->
-        <input type="text" id="entryName" class="mb-4 p-2 border rounded" placeholder="Name">
-        <input type="text" id="entryMonth" class="mb-4 p-2 border rounded" placeholder="Date">
-        <input type="text" id="entryAmount" class="mb-4 p-2 border rounded" placeholder="Amount">
-        <button id="addEntryBtn" class="sidebar text-white px-3 py-2 rounded">Add</button>
-        <button id="cancelBtn" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-2 rounded ml-2">Cancel</button>
-    </div>
-</div>
-<!-- Edit Modal -->
-<div id="editModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-    <div class="bg-white p-8 rounded-lg shadow-lg">
-        <h2 class="text-lg font-semibold mb-4">Edit Entry</h2>
-        <input type="text" id="editEntryName" class="mb-4 p-2 border rounded" placeholder="Name">
-        <input type="text" id="editEntryMonth" class="mb-4 p-2 border rounded" placeholder="Month">
-        <input type="text" id="editEntryAmount" class="mb-4 p-2 border rounded" placeholder="Amount">
-        <button id="updateEntryBtn" class="sidebar text-white px-3 py-2 rounded">Update</button>
-        <button id="cancelEditBtn" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-2 rounded ml-2">Cancel</button>
-    </div>
-</div>
+{{!-- Modals --}}
+{{> budget-modal name="add" title="Add New Entry" action="Add" }}
+{{> budget-modal name="edit" title="Edit Entry" action="Update" }}
+
+{{!-- Budget Script --}}
 <script src="/js/budget.js"></script>
